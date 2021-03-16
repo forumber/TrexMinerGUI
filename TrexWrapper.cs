@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 
 namespace TrexMinerGUI
 {
@@ -10,11 +8,11 @@ namespace TrexMinerGUI
     {
         public class TrexStatisctics
         {
-            public string Speed;
-            public string FanSpeed;
-            public string Power;
-            public string Temp;
-            public string LastUpdated;
+            public string Speed { get; set; }
+            public string FanSpeed { get; set; }
+            public string Power { get; set; }
+            public string Temp { get; set; }
+            public string LastUpdated { get; set; }
 
             public TrexStatisctics()
             {
@@ -28,17 +26,72 @@ namespace TrexMinerGUI
 
         public class TrexConfig
         {
-            public string Algorithm;
-            public string URL;
-            public string Address;
-            public string WorkerName;
+            public string Algorithm { get; set; }
+            public string URL { get; set; }
+            public string Address { get; set; }
+            public string WorkerName { get; set; }
+            public bool StartMiningOnAppStart { get; set; }
+            public bool ApplyAfterburnerProfileOnMinerStart { get; set; }
+            public bool ApplyAfterburnerProfileOnMinerClose { get; set; }
+            public string ProfileToApplyOnMinerStart { get; set; }
+            public string ProfileToApplyOnMinerClose { get; set; }
 
-            public TrexConfig(string Algorithm, string URL, string Address, string WorkerName)
+            public TrexConfig()
             {
+                var Lines = File.ReadAllLines(Program.ExecutionPath + "trex_gui.conf");
+
+                string Algorithm = "", URL = "", Address = "", WorkerName = "", StartMiningOnAppStartStr = "", 
+                    ApplyAfterburnerProfileOnMinerStartStr = "", ApplyAfterburnerProfileOnMinerCloseStr = "",
+                    ProfileToApplyOnMinerStartStr = "", ProfileToApplyOnMinerCloseStr = "";
+
+                foreach (string Line in Lines)
+                {
+                    string[] Sections = Line.Split("=");
+                    if (Sections[0] == "Algorithm")
+                        Algorithm = Sections[1];
+                    else if (Sections[0] == "URL")
+                        URL = Sections[1];
+                    else if (Sections[0] == "Address")
+                        Address = Sections[1];
+                    else if (Sections[0] == "WorkerName")
+                        WorkerName = Sections[1];
+                    else if (Sections[0] == "StartMiningOnAppStart")
+                        StartMiningOnAppStartStr = Sections[1];
+                    else if (Sections[0] == "ApplyAfterburnerProfileOnMinerStart")
+                        ApplyAfterburnerProfileOnMinerStartStr = Sections[1];
+                    else if (Sections[0] == "ApplyAfterburnerProfileOnMinerClose")
+                        ApplyAfterburnerProfileOnMinerCloseStr = Sections[1];
+                    else if (Sections[0] == "ProfileToApplyOnMinerStart")
+                        ProfileToApplyOnMinerStartStr = Sections[1];
+                    else if (Sections[0] == "ProfileToApplyOnMinerClose")
+                        ProfileToApplyOnMinerCloseStr = Sections[1];
+                }
+
                 this.Algorithm = Algorithm;
                 this.URL = URL;
                 this.Address = Address;
                 this.WorkerName = WorkerName;
+                this.StartMiningOnAppStart = StartMiningOnAppStartStr == "True";
+                this.ApplyAfterburnerProfileOnMinerStart = ApplyAfterburnerProfileOnMinerStartStr == "True";
+                this.ApplyAfterburnerProfileOnMinerClose = ApplyAfterburnerProfileOnMinerCloseStr == "True";
+                this.ProfileToApplyOnMinerStart = ProfileToApplyOnMinerStartStr;
+                this.ProfileToApplyOnMinerClose = ProfileToApplyOnMinerCloseStr;
+            }
+
+            public void SaveConfigToFile()
+            {
+                string TheFileContent =
+                    "Algorithm=" + Algorithm + Environment.NewLine +
+                    "URL=" + URL + Environment.NewLine +
+                    "Address=" + Address + Environment.NewLine +
+                    "WorkerName=" + WorkerName + Environment.NewLine +
+                    "StartMiningOnAppStart=" + StartMiningOnAppStart + Environment.NewLine +
+                    "ApplyAfterburnerProfileOnMinerStart=" + ApplyAfterburnerProfileOnMinerStart + Environment.NewLine +
+                    "ApplyAfterburnerProfileOnMinerClose=" + ApplyAfterburnerProfileOnMinerClose + Environment.NewLine +
+                    "ProfileToApplyOnMinerStart=" + ProfileToApplyOnMinerStart + Environment.NewLine +
+                    "ProfileToApplyOnMinerClose=" + ProfileToApplyOnMinerClose + Environment.NewLine;
+
+                File.WriteAllText(Program.ExecutionPath + "trex_gui.conf", TheFileContent);
             }
         }
 
@@ -49,11 +102,10 @@ namespace TrexMinerGUI
         public readonly string TrexWrapperErrorLogFileName;
         public readonly string WarnLogFileName;
 
-        private readonly string ConfigFileName;
-        private TrexConfig TheTrexConfig;
+        public TrexConfig TheTrexConfig;
 
-        public bool IsRunning;
-        private bool IsTerminatedByGUI;
+        public bool IsRunning { get; set; }
+        private bool IsTerminatedByGUI { get; set; }
         public readonly TrexStatisctics TheTrexStatisctics;
 
         public TrexWrapper()
@@ -73,36 +125,13 @@ namespace TrexMinerGUI
             LogFileName = "trex_log.txt";
             ErrorLogFileName = "trex_error_log.txt";
             WarnLogFileName = "trex_warn_log.txt";
-            ConfigFileName = "trex_gui.conf";
             TrexWrapperErrorLogFileName = "trex_gui_error_log.txt";
             IsRunning = false;
             IsTerminatedByGUI = false;
             TheTrexStatisctics = new TrexStatisctics();
 
-            GetTrexConfig();
+            TheTrexConfig = new TrexConfig();
             TrexProcess.StartInfo.Arguments = "-a " + TheTrexConfig.Algorithm + " -o " + TheTrexConfig.URL + " -u " + TheTrexConfig.Address + " -p x -w " + TheTrexConfig.WorkerName;
-        }
-
-        private void GetTrexConfig()
-        {
-            var Lines = File.ReadAllLines(Program.ExecutionPath + ConfigFileName);
-
-            string Algorithm = "", URL = "", Address = "", WorkerName = "";
-
-            foreach (string Line in Lines)
-            {
-                string[] Sections = Line.Split("=");
-                if (Sections[0] == "Algorithm")
-                    Algorithm = Sections[1];
-                else if (Sections[0] == "URL")
-                    URL = Sections[1];
-                else if (Sections[0] == "Address")
-                    Address = Sections[1];
-                else if (Sections[0] == "WorkerName")
-                    WorkerName = Sections[1];
-            }
-
-            TheTrexConfig = new TrexConfig(Algorithm, URL, Address, WorkerName);
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)
@@ -149,12 +178,13 @@ namespace TrexMinerGUI
             {
                 File.AppendAllText(Program.ExecutionPath + LogFileName, TheException.ToString() + Environment.NewLine);
             }
-
-            
         }
 
         private void WriteLogToFile(string LineToWrite)
         {
+            if (String.IsNullOrEmpty(LineToWrite))
+                return;
+
             if (LineToWrite.ToLower().Contains("error"))
             {
                 File.AppendAllText(Program.ExecutionPath + ErrorLogFileName, LineToWrite + Environment.NewLine);
@@ -177,6 +207,27 @@ namespace TrexMinerGUI
 
             IsRunning = true;
 
+            if (TheTrexConfig.ApplyAfterburnerProfileOnMinerStart)
+            {
+                bool IsAlreadyRunning = Process.GetProcessesByName("MSIAfterburner").Length >= 1;
+
+                Process TheAfterburnerProcess = new Process();
+                TheAfterburnerProcess.StartInfo.Arguments = @"/m -Profile" + TheTrexConfig.ProfileToApplyOnMinerStart;
+                TheAfterburnerProcess.StartInfo.UseShellExecute = true;
+                TheAfterburnerProcess.StartInfo.FileName = @"C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe";
+                TheAfterburnerProcess.Start();
+
+                if (!IsAlreadyRunning)
+                {
+                    ProcessStartInfo Info = new ProcessStartInfo();
+                    Info.Arguments = @"/C ping 127.0.0.1 -n 5 && taskkill /im msiafterburner.exe";
+                    Info.WindowStyle = ProcessWindowStyle.Hidden;
+                    Info.CreateNoWindow = true;
+                    Info.FileName = "cmd.exe";
+                    Process.Start(Info);
+                }
+            }
+
             //ExternalMethods.OpenConsole();
 
         }
@@ -185,6 +236,28 @@ namespace TrexMinerGUI
         {
             TrexProcess.CancelOutputRead();
             TrexProcess.CancelErrorRead();
+
+            if (TheTrexConfig.ApplyAfterburnerProfileOnMinerClose)
+            {
+                bool IsAlreadyRunning = Process.GetProcessesByName("MSIAfterburner").Length >= 1;
+
+                Process TheAfterburnerProcess = new Process();
+                TheAfterburnerProcess.StartInfo.Arguments = @"/m -Profile" + TheTrexConfig.ProfileToApplyOnMinerClose;
+                TheAfterburnerProcess.StartInfo.UseShellExecute = true;
+                TheAfterburnerProcess.StartInfo.FileName = @"C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe";
+                TheAfterburnerProcess.Start();
+
+                if (!IsAlreadyRunning)
+                {
+                    ProcessStartInfo Info = new ProcessStartInfo();
+                    Info.Arguments = @"/C ping 127.0.0.1 -n 5 && taskkill /im msiafterburner.exe";
+                    Info.WindowStyle = ProcessWindowStyle.Hidden;
+                    Info.CreateNoWindow = true;
+                    Info.FileName = "cmd.exe";
+                    Process.Start(Info);
+                }
+            }
+
             IsRunning = false;
 
             if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
@@ -206,7 +279,8 @@ namespace TrexMinerGUI
             {
                 TrexProcess.Kill();
                 TrexProcess.WaitForExit();
-            } catch (Exception)
+            } 
+            catch
             {
                 IsTerminatedByGUI = false;
 

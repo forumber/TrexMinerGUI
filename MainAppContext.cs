@@ -1,9 +1,7 @@
 ﻿using TrexMinerGUI.Properties;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace TrexMinerGUI
@@ -23,8 +21,7 @@ namespace TrexMinerGUI
             TheContextMenu.Items.Add("Güç: ", System.Drawing.SystemIcons.Information.ToBitmap(), null);
             TheContextMenu.Items.Add("Fan: ", System.Drawing.SystemIcons.Information.ToBitmap(), null);
             TheContextMenu.Items.Add(@"Log'u göster", null, ShowLog_Event);
-            TheContextMenu.Items.Add("Başlangıçta Aç", null, (sender, eventArgs) => TaskSchedulerOperations.AddToTS());
-            TheContextMenu.Items.Add("Başlangıçta Aç", null, (sender, eventArgs) => TaskSchedulerOperations.RemoveFromTS());
+            TheContextMenu.Items.Add("Ayarlar", null, OpenSettings_Event);
             TheContextMenu.Items.Add("Çalıştır", null, (sender, eventArgs) => Program.TheTrexWrapper.Start());
             TheContextMenu.Items.Add("Durdur", null, (sender, eventArgs) => Program.TheTrexWrapper.Stop());
             TheContextMenu.Items.Add("Kapat", System.Drawing.SystemIcons.Error.ToBitmap(), (sender, eventArgs) => {
@@ -41,8 +38,6 @@ namespace TrexMinerGUI
             TheContextMenu.Items[4].Enabled = false;
             TheContextMenu.Items[5].Enabled = false;
 
-            ((ToolStripMenuItem)TheContextMenu.Items[8]).Checked = true;
-
             // Initialize Tray Icon
             trayIcon = new NotifyIcon()
             {
@@ -53,6 +48,17 @@ namespace TrexMinerGUI
 
             trayIcon.Click += TrayIcon_Click;
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
+        }
+
+        private void OpenSettings_Event(object sender, EventArgs e)
+        {
+            if (Application.OpenForms.OfType<SettingsForm>().Count() == 0)
+            {
+                using (SettingsForm TheSettingsForm = new SettingsForm())
+                {
+                    TheSettingsForm.ShowDialog();
+                }
+            }
         }
 
         private void ShowLog_Event(object sender, EventArgs e)
@@ -134,24 +140,12 @@ namespace TrexMinerGUI
 
             if (Process.GetProcessesByName("t-rex").Length == 0)
             {
-                TheContextMenu.Items[9].Visible = true;
-                TheContextMenu.Items[10].Visible = false;
+                TheContextMenu.Items[8].Visible = true;
+                TheContextMenu.Items[9].Visible = false;
             } else
             {
-                TheContextMenu.Items[9].Visible = false;
-                TheContextMenu.Items[10].Visible = true;
-            }
-
-            // It is a bad practice, but clearing the events from EventHandler is much more complex than I thought.
-            if (TaskSchedulerOperations.IsItInTS())
-            {
-                TheContextMenu.Items[7].Visible = false;
-                TheContextMenu.Items[8].Visible = true;
-            }
-            else
-            {
-                TheContextMenu.Items[7].Visible = true;
                 TheContextMenu.Items[8].Visible = false;
+                TheContextMenu.Items[9].Visible = true;
             }
         }
     }

@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TrexMinerGUI
@@ -34,6 +31,11 @@ namespace TrexMinerGUI
                     Process.Start(Info);
                     System.Environment.Exit(0);
                 }
+                else if (args[0] == "-generatemd5first")
+                {
+                    File.WriteAllText(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\" + System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + ".bin" + ".md5", 
+                        ExternalMethods.CalculateMD5(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\" + System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + ".bin"));
+                }
             }
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
@@ -50,6 +52,9 @@ namespace TrexMinerGUI
             TheMainAppContext = new MainAppContext();
             TheStopWatchWrapper = new StopWatchWrapper();
             TheTrexWrapper = new TrexWrapper();
+
+            if (TheTrexWrapper.TheTrexConfig.StartMiningOnAppStart)
+                TheTrexWrapper.Start();
 
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnApplicationExit);

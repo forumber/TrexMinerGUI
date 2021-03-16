@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 
 namespace TrexMinerGUI
 {
@@ -22,13 +20,8 @@ namespace TrexMinerGUI
         {
             FileName = System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + ".bin";
             TheStopWatch = new Stopwatch();
-            try
-            {
-                LoadFromFile();
-            } catch (FileNotFoundException)
-            {
-                ElapsedTimeSoFar = new TimeSpan();
-            }
+            LoadFromFile();
+
 
             TheTimer = new System.Threading.Timer((e) => SaveToFile(), null, dueTime: TimeSpan.Zero, period: TimeSpan.FromMinutes(1));
         }
@@ -36,10 +29,26 @@ namespace TrexMinerGUI
         public void SaveToFile()
         {
             File.WriteAllText(Program.ExecutionPath + FileName, GetTotalElapsedTime().ToString("G"));
+            File.WriteAllText(Program.ExecutionPath + FileName + ".md5", ExternalMethods.CalculateMD5(Program.ExecutionPath + FileName));
         }
 
         private void LoadFromFile()
-        {   
+        {
+            if (File.Exists(Program.ExecutionPath + FileName) && File.Exists(Program.ExecutionPath + FileName + ".md5"))
+            {
+                if (ExternalMethods.CalculateMD5(Program.ExecutionPath + FileName) != File.ReadAllText(Program.ExecutionPath + FileName + ".md5"))
+                    throw new MD5Exception();
+            }
+            else if (File.Exists(Program.ExecutionPath + FileName) && !File.Exists(Program.ExecutionPath + FileName + ".md5"))
+            {
+                throw new MD5Exception();
+            }
+            else
+            {
+                ElapsedTimeSoFar = new TimeSpan();
+                return;
+            }
+
             string[] TheText = File.ReadAllText(Program.ExecutionPath + FileName).Split(":");
             ElapsedTimeSoFar = new TimeSpan(days: int.Parse(TheText[0]), hours: int.Parse(TheText[1]), minutes: int.Parse(TheText[2]), seconds: int.Parse(TheText[3].Substring(0,2)));
         }

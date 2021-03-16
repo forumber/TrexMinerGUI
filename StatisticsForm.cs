@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
+using TrexMinerGUI.Properties;
 
 namespace TrexMinerGUI
 {
@@ -13,9 +8,20 @@ namespace TrexMinerGUI
     {
         private readonly System.Windows.Forms.Timer TheTimer;
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                TheTimer.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         public StatisticsForm()
         {
             InitializeComponent();
+
+            this.Icon = Resources.AppIcon;
 
             TheTimer = new System.Windows.Forms.Timer();
             TheTimer.Tick += UpdateStatistics;

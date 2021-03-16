@@ -67,7 +67,7 @@ namespace TrexMinerGUI
             TrexProcess.EnableRaisingEvents = true;
 
             TrexProcess.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
-            TrexProcess.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler); // T-Rex does not give any output to stderr, lets put it in here anyway
+            TrexProcess.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
             TrexProcess.Exited += new EventHandler(ProcExitedHandler); 
 
             LogFileName = "trex_log.txt";

@@ -110,6 +110,7 @@ namespace TrexMinerGUI
         private static void OnApplicationExit(object sender, EventArgs e)
         {
             TheStopWatchWrapper.SaveToFile();
+            TheTrexWrapper.Stop();
         }
     }
 }

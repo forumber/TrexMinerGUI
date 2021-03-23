@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace TrexMinerGUI
 {
@@ -99,7 +100,6 @@ namespace TrexMinerGUI
 
         public readonly string LogFileName;
         public readonly string ErrorLogFileName;
-        public readonly string TrexWrapperErrorLogFileName;
         public readonly string WarnLogFileName;
 
         public TrexConfig TheTrexConfig;
@@ -125,7 +125,6 @@ namespace TrexMinerGUI
             LogFileName = "trex_log.txt";
             ErrorLogFileName = "trex_error_log.txt";
             WarnLogFileName = "trex_warn_log.txt";
-            TrexWrapperErrorLogFileName = "trex_gui_error_log.txt";
             IsRunning = false;
             IsTerminatedByGUI = false;
             TheTrexStatisctics = new TrexStatisctics();
@@ -137,10 +136,20 @@ namespace TrexMinerGUI
         private void OutputHandler(object sender, DataReceivedEventArgs e)
         {
             WriteLogToFile(e.Data);
+            //Console.WriteLine("OutputHandler: " + e.Data);
 
             try
             {
-                //Console.WriteLine("OutputHandler: " + e.Data);
+                if (e.Data.StartsWith("#"))
+                {
+                    if (e.Data.Contains("download"))
+                    {
+                        Task.Run(() => UpdateTrex(e.Data.Substring(12)));
+                        Stop();
+                    }
+
+                    return;
+                }
 
                 string DateTimeHeader = e.Data.Substring(0, 17);
                 string Info = e.Data.Substring(18);
@@ -152,8 +161,10 @@ namespace TrexMinerGUI
                 {
                     Program.TheStopWatchWrapper.TheStopWatch.Start();
                 }
-                else if (Info.ToLower().Contains("error"))
+                else if (Info.ToLower().Contains("error") || Info.ToLower().Contains("exception"))
                 {
+                    //new System.Threading.Thread(() => System.Windows.Forms.MessageBox.Show(@"GPU Hatası! Log'u kontrol edin!", "Error!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error)).Start();
+
                     if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
                         Program.TheStopWatchWrapper.TheStopWatch.Stop();
                 }
@@ -176,8 +187,27 @@ namespace TrexMinerGUI
             } 
             catch (Exception TheException)
             {
-                File.AppendAllText(Program.ExecutionPath + LogFileName, TheException.ToString() + Environment.NewLine);
+                File.AppendAllText(Program.ExecutionPath + Program.ExceptionLogFileName, TheException.ToString() + Environment.NewLine);
             }
+        }
+
+        private void UpdateTrex(string URL)
+        {
+            string updateFileName = "temp_update.zip";
+
+            using (var webClient = new System.Net.WebClient())
+            {
+                webClient.DownloadFile(URL, Program.ExecutionPath + updateFileName);
+            }
+
+            System.IO.Compression.ZipFile.ExtractToDirectory(Program.ExecutionPath + updateFileName, Program.ExecutionPath + @"temp_update\", overwriteFiles: true);
+
+            File.Copy(Program.ExecutionPath + @"temp_update\" + "t-rex.exe", Program.ExecutionPath + "t-rex.exe", true);
+
+            Start();
+
+            File.Delete(Program.ExecutionPath + updateFileName);
+            Directory.Delete(Program.ExecutionPath + "temp_update", recursive: true);
         }
 
         private void WriteLogToFile(string LineToWrite)
@@ -185,7 +215,7 @@ namespace TrexMinerGUI
             if (String.IsNullOrEmpty(LineToWrite))
                 return;
 
-            if (LineToWrite.ToLower().Contains("error"))
+            if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception"))
             {
                 File.AppendAllText(Program.ExecutionPath + ErrorLogFileName, LineToWrite + Environment.NewLine);
             }
@@ -220,7 +250,7 @@ namespace TrexMinerGUI
                 if (!IsAlreadyRunning)
                 {
                     ProcessStartInfo Info = new ProcessStartInfo();
-                    Info.Arguments = @"/C ping 127.0.0.1 -n 5 && taskkill /im msiafterburner.exe";
+                    Info.Arguments = @"/C ping 127.0.0.1 -n 10 && taskkill /im msiafterburner.exe";
                     Info.WindowStyle = ProcessWindowStyle.Hidden;
                     Info.CreateNoWindow = true;
                     Info.FileName = "cmd.exe";
@@ -250,7 +280,7 @@ namespace TrexMinerGUI
                 if (!IsAlreadyRunning)
                 {
                     ProcessStartInfo Info = new ProcessStartInfo();
-                    Info.Arguments = @"/C ping 127.0.0.1 -n 5 && taskkill /im msiafterburner.exe";
+                    Info.Arguments = @"/C ping 127.0.0.1 -n 10 && taskkill /im msiafterburner.exe";
                     Info.WindowStyle = ProcessWindowStyle.Hidden;
                     Info.CreateNoWindow = true;
                     Info.FileName = "cmd.exe";

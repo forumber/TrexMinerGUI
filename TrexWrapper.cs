@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace TrexMinerGUI
@@ -249,12 +250,15 @@ namespace TrexMinerGUI
 
                 if (!IsAlreadyRunning)
                 {
-                    ProcessStartInfo Info = new ProcessStartInfo();
-                    Info.Arguments = @"/C ping 127.0.0.1 -n 10 && taskkill /im msiafterburner.exe";
-                    Info.WindowStyle = ProcessWindowStyle.Hidden;
-                    Info.CreateNoWindow = true;
-                    Info.FileName = "cmd.exe";
-                    Process.Start(Info);
+                    Task.Run(() => {
+                        Task.Delay(6000).Wait();
+                        TheAfterburnerProcess.Kill();
+                        try { Process.GetProcessesByName("RTSS").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("EncoderServer").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("EncoderServer64").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("RTSSHooksLoader").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("RTSSHooksLoader64").First().Kill(); } catch { }
+                    });
                 }
             }
 
@@ -279,12 +283,15 @@ namespace TrexMinerGUI
 
                 if (!IsAlreadyRunning)
                 {
-                    ProcessStartInfo Info = new ProcessStartInfo();
-                    Info.Arguments = @"/C ping 127.0.0.1 -n 10 && taskkill /im msiafterburner.exe";
-                    Info.WindowStyle = ProcessWindowStyle.Hidden;
-                    Info.CreateNoWindow = true;
-                    Info.FileName = "cmd.exe";
-                    Process.Start(Info);
+                    Task.Run(() => {
+                        Task.Delay(6000).Wait();
+                        TheAfterburnerProcess.Kill();
+                        try { Process.GetProcessesByName("RTSS").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("EncoderServer").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("EncoderServer64").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("RTSSHooksLoader").First().Kill(); } catch { }
+                        try { Process.GetProcessesByName("RTSSHooksLoader64").First().Kill(); } catch { }
+                    });
                 }
             }
 

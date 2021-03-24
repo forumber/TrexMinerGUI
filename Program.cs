@@ -116,6 +116,7 @@ namespace TrexMinerGUI
         {
             TheStopWatchWrapper.SaveToFile();
             TheTrexWrapper.Stop();
+            Thread.Sleep(6500);
         }
     }
 }

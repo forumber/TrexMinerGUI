@@ -148,41 +148,44 @@ namespace TrexMinerGUI
                         Task.Run(() => UpdateTrex(e.Data.Substring(12)));
                         Stop();
                     }
-
-                    return;
                 }
-
-                string DateTimeHeader = e.Data.Substring(0, 17);
-                string Info = e.Data.Substring(18);
-
-                //Debug.WriteLine("DateTimeHeader:" + DateTimeHeader);
-                //Debug.WriteLine("Info:" + Info);
-
-                if (Info.Contains("epoch") && !Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
+                else if (e.Data.StartsWith("-"))
                 {
-                    Program.TheStopWatchWrapper.TheStopWatch.Start();
+                    TheTrexStatisctics.LastUpdated = e.Data.Split(" ")[2];
                 }
-                else if (Info.ToLower().Contains("error") || Info.ToLower().Contains("exception"))
-                {
-                    //new System.Threading.Thread(() => System.Windows.Forms.MessageBox.Show(@"GPU Hatası! Log'u kontrol edin!", "Error!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error)).Start();
-
-                    if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
-                        Program.TheStopWatchWrapper.TheStopWatch.Stop();
-                }
-                else if (Info.StartsWith(@"GPU #0:"))
+                else if (e.Data.StartsWith(@"GPU #0:"))
                 {
                     try
                     {
-                        var Statistics = Info.Split(" - ")[1].Split(",");
+                        var Statistics = e.Data.Split(" - ")[1].Split(",");
                         TheTrexStatisctics.Speed = Statistics[0];
                         TheTrexStatisctics.Temp = Statistics[1].Substring(4);
                         TheTrexStatisctics.Power = Statistics[2].Substring(3);
                         TheTrexStatisctics.FanSpeed = Statistics[3].Substring(3);
-                        TheTrexStatisctics.LastUpdated = DateTimeHeader.Split(" ")[1];
                     }
                     catch
                     {
 
+                    }
+                }
+                else
+                {
+                    string DateTimeHeader = e.Data.Substring(0, 17);
+                    string Info = e.Data.Substring(18);
+
+                    //Debug.WriteLine("DateTimeHeader:" + DateTimeHeader);
+                    //Debug.WriteLine("Info:" + Info);
+
+                    if (Info.Contains("epoch") && !Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
+                    {
+                        Program.TheStopWatchWrapper.TheStopWatch.Start();
+                    }
+                    else if (Info.ToLower().Contains("error") || Info.ToLower().Contains("exception"))
+                    {
+                        //new System.Threading.Thread(() => System.Windows.Forms.MessageBox.Show(@"GPU Hatası! Log'u kontrol edin!", "Error!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error)).Start();
+
+                        if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
+                            Program.TheStopWatchWrapper.TheStopWatch.Stop();
                     }
                 }
             } 

@@ -191,7 +191,8 @@ namespace TrexMinerGUI
             } 
             catch (Exception TheException)
             {
-                File.AppendAllText(Program.ExecutionPath + Program.ExceptionLogFileName, TheException.ToString() + Environment.NewLine);
+                if (!(TheException is ArgumentOutOfRangeException))
+                    File.AppendAllText(Program.ExecutionPath + Program.ExceptionLogFileName, TheException.ToString() + Environment.NewLine);
             }
         }
 

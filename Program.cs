@@ -1,6 +1,8 @@
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -11,12 +13,20 @@ namespace TrexMinerGUI
         public static MainAppContext TheMainAppContext;
         public static StopWatchWrapper TheStopWatchWrapper;
         public static TrexWrapper TheTrexWrapper;
+        public static SelfUpdate TheSelfUpdate;
         public static string ExecutionPath;
         public static string ExceptionLogFileName;
 
         [STAThread]
         public static void Main(string[] args)
         {
+            ExecutionPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\";
+            ExceptionLogFileName = "trex_gui_exception_log.txt";
+
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionMessageBox);
+            Application.ThreadException += new ThreadExceptionEventHandler(UIThreadUnhandledExceptionMessageBox);
+
             if (args.Length >= 1)
             {
                 if (args[0] == "startup")
@@ -42,22 +52,21 @@ namespace TrexMinerGUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionMessageBox);
-            Application.ThreadException += new ThreadExceptionEventHandler(UIThreadUnhandledExceptionMessageBox);
-
-            ExecutionPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\";
-            ExceptionLogFileName = "trex_gui_exception_log.txt";
-
             TheMainAppContext = new MainAppContext();
             TheStopWatchWrapper = new StopWatchWrapper();
+            TheSelfUpdate = new SelfUpdate();
             TheTrexWrapper = new TrexWrapper();
 
             if (TheTrexWrapper.TheTrexConfig.StartMiningOnAppStart)
                 TheTrexWrapper.Start();
 
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnApplicationExit);
+
+            try
+            {
+                TheSelfUpdate.CleanUp();
+            } catch { }
+            
 
             Application.Run(TheMainAppContext);
         }
@@ -116,7 +125,8 @@ namespace TrexMinerGUI
         {
             TheStopWatchWrapper.SaveToFile();
             TheTrexWrapper.Stop();
-            Thread.Sleep(6500);
+            TheMainAppContext.trayIcon.Visible = false;
+            Thread.Sleep(10000);
         }
     }
 }

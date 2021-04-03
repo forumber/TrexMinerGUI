@@ -24,12 +24,7 @@ namespace TrexMinerGUI
             TheContextMenu.Items.Add("Ayarlar", null, OpenSettings_Event);
             TheContextMenu.Items.Add("Çalıştır", null, (sender, eventArgs) => Program.TheTrexWrapper.Start());
             TheContextMenu.Items.Add("Durdur", null, (sender, eventArgs) => Program.TheTrexWrapper.Stop());
-            TheContextMenu.Items.Add("Kapat", System.Drawing.SystemIcons.Error.ToBitmap(), (sender, eventArgs) => {
-                // Hide tray icon, otherwise it will remain shown until user mouses over it
-                trayIcon.Visible = false;
-
-                Application.Exit();
-            });
+            TheContextMenu.Items.Add("Kapat", System.Drawing.SystemIcons.Error.ToBitmap(), (sender, eventArgs) => Application.Exit());
 
             TheContextMenu.Items[0].Enabled = false;
             TheContextMenu.Items[1].Enabled = false;

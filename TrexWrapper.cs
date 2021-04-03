@@ -145,7 +145,7 @@ namespace TrexMinerGUI
                 {
                     if (e.Data.Contains("download"))
                     {
-                        Task.Run(() => UpdateTrex(e.Data.Substring(12)));
+                        Task.Run(() => Program.TheSelfUpdate.UpdateTrex(e.Data.Substring(12)));
                         Stop();
                     }
                 }
@@ -194,25 +194,6 @@ namespace TrexMinerGUI
                 if (!(TheException is ArgumentOutOfRangeException))
                     File.AppendAllText(Program.ExecutionPath + Program.ExceptionLogFileName, TheException.ToString() + Environment.NewLine);
             }
-        }
-
-        private void UpdateTrex(string URL)
-        {
-            string updateFileName = "temp_update.zip";
-
-            using (var webClient = new System.Net.WebClient())
-            {
-                webClient.DownloadFile(URL, Program.ExecutionPath + updateFileName);
-            }
-
-            System.IO.Compression.ZipFile.ExtractToDirectory(Program.ExecutionPath + updateFileName, Program.ExecutionPath + @"temp_update\", overwriteFiles: true);
-
-            File.Copy(Program.ExecutionPath + @"temp_update\" + "t-rex.exe", Program.ExecutionPath + "t-rex.exe", true);
-
-            Start();
-
-            File.Delete(Program.ExecutionPath + updateFileName);
-            Directory.Delete(Program.ExecutionPath + "temp_update", recursive: true);
         }
 
         private void WriteLogToFile(string LineToWrite)

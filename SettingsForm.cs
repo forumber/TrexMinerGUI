@@ -11,6 +11,7 @@ namespace TrexMinerGUI
             InitializeComponent();
 
             this.Icon = Resources.AppIcon;
+            this.Text += " - v" + Program.TheSelfUpdate.TheAppVersion.ToString();
 
             this.StartOnStartupCheckBox.Checked = TaskSchedulerOperations.IsItInTS();
             this.StartMiningOnAppStartCheckBox.Checked = Program.TheTrexWrapper.TheTrexConfig.StartMiningOnAppStart;

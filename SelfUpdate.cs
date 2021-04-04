@@ -19,7 +19,7 @@ namespace TrexMinerGUI
 
         private readonly System.Threading.Timer TheTimer;
         private readonly string JsonURL;
-        private readonly Version TheAppVersion;
+        public readonly Version TheAppVersion;
         private readonly string UpdateFileName;
         private readonly string UpdateFolderName;
         private JsonClass JsonContents;

@@ -14,6 +14,7 @@ namespace TrexMinerGUI
         public static StopWatchWrapper TheStopWatchWrapper;
         public static TrexWrapper TheTrexWrapper;
         public static SelfUpdate TheSelfUpdate;
+        public static Config TheConfig;
         public static string ExecutionPath;
         public static string ExceptionLogFileName;
 
@@ -52,12 +53,13 @@ namespace TrexMinerGUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            TheConfig = new Config();
+            TheSelfUpdate = new SelfUpdate();
             TheMainAppContext = new MainAppContext();
             TheStopWatchWrapper = new StopWatchWrapper();
-            TheSelfUpdate = new SelfUpdate();
             TheTrexWrapper = new TrexWrapper();
 
-            if (TheTrexWrapper.TheTrexConfig.StartMiningOnAppStart)
+            if (TheConfig.StartMiningOnAppStart)
                 TheTrexWrapper.Start();
 
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
@@ -124,7 +126,8 @@ namespace TrexMinerGUI
         private static void OnApplicationExit(object sender, EventArgs e)
         {
             TheStopWatchWrapper.SaveToFile();
-            TheTrexWrapper.Stop();
+            if (TheTrexWrapper.IsRunning)
+                TheTrexWrapper.Stop();
             TheMainAppContext.trayIcon.Visible = false;
             Thread.Sleep(10000);
         }

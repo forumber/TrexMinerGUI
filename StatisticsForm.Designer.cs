@@ -31,6 +31,8 @@ namespace TrexMinerGUI
             this.ErrorCountLabel = new System.Windows.Forms.Label();
             this.LastUpdatedLabel = new System.Windows.Forms.Label();
             this.LastUpdatedText = new System.Windows.Forms.Label();
+            this.EfficiencyLabel = new System.Windows.Forms.Label();
+            this.EfficiencyTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // MinerStatusLabel
@@ -38,7 +40,7 @@ namespace TrexMinerGUI
             this.MinerStatusLabel.AutoSize = true;
             this.MinerStatusLabel.Location = new System.Drawing.Point(12, 21);
             this.MinerStatusLabel.Name = "MinerStatusLabel";
-            this.MinerStatusLabel.Size = new System.Drawing.Size(65, 15);
+            this.MinerStatusLabel.Size = new System.Drawing.Size(41, 15);
             this.MinerStatusLabel.TabIndex = 0;
             this.MinerStatusLabel.Text = "Miner:";
             // 
@@ -86,7 +88,7 @@ namespace TrexMinerGUI
             // FanSpeedTextBox
             // 
             this.FanSpeedTextBox.Enabled = false;
-            this.FanSpeedTextBox.Location = new System.Drawing.Point(83, 136);
+            this.FanSpeedTextBox.Location = new System.Drawing.Point(83, 165);
             this.FanSpeedTextBox.Name = "FanSpeedTextBox";
             this.FanSpeedTextBox.Size = new System.Drawing.Size(153, 23);
             this.FanSpeedTextBox.TabIndex = 6;
@@ -94,7 +96,7 @@ namespace TrexMinerGUI
             // TempTextBox
             // 
             this.TempTextBox.Enabled = false;
-            this.TempTextBox.Location = new System.Drawing.Point(83, 166);
+            this.TempTextBox.Location = new System.Drawing.Point(83, 194);
             this.TempTextBox.Name = "TempTextBox";
             this.TempTextBox.Size = new System.Drawing.Size(153, 23);
             this.TempTextBox.TabIndex = 7;
@@ -120,7 +122,7 @@ namespace TrexMinerGUI
             // FanSpeedLabel
             // 
             this.FanSpeedLabel.AutoSize = true;
-            this.FanSpeedLabel.Location = new System.Drawing.Point(14, 139);
+            this.FanSpeedLabel.Location = new System.Drawing.Point(14, 168);
             this.FanSpeedLabel.Name = "FanSpeedLabel";
             this.FanSpeedLabel.Size = new System.Drawing.Size(29, 15);
             this.FanSpeedLabel.TabIndex = 10;
@@ -129,7 +131,7 @@ namespace TrexMinerGUI
             // TempLabel
             // 
             this.TempLabel.AutoSize = true;
-            this.TempLabel.Location = new System.Drawing.Point(14, 169);
+            this.TempLabel.Location = new System.Drawing.Point(14, 197);
             this.TempLabel.Name = "TempLabel";
             this.TempLabel.Size = new System.Drawing.Size(49, 15);
             this.TempLabel.TabIndex = 11;
@@ -138,7 +140,7 @@ namespace TrexMinerGUI
             // WarnCountTextBox
             // 
             this.WarnCountTextBox.Enabled = false;
-            this.WarnCountTextBox.Location = new System.Drawing.Point(83, 196);
+            this.WarnCountTextBox.Location = new System.Drawing.Point(83, 223);
             this.WarnCountTextBox.Name = "WarnCountTextBox";
             this.WarnCountTextBox.Size = new System.Drawing.Size(153, 23);
             this.WarnCountTextBox.TabIndex = 12;
@@ -146,7 +148,7 @@ namespace TrexMinerGUI
             // ErrorCountTextBox
             // 
             this.ErrorCountTextBox.Enabled = false;
-            this.ErrorCountTextBox.Location = new System.Drawing.Point(83, 226);
+            this.ErrorCountTextBox.Location = new System.Drawing.Point(83, 252);
             this.ErrorCountTextBox.Name = "ErrorCountTextBox";
             this.ErrorCountTextBox.Size = new System.Drawing.Size(153, 23);
             this.ErrorCountTextBox.TabIndex = 13;
@@ -154,7 +156,7 @@ namespace TrexMinerGUI
             // WarnCountLabel
             // 
             this.WarnCountLabel.AutoSize = true;
-            this.WarnCountLabel.Location = new System.Drawing.Point(14, 199);
+            this.WarnCountLabel.Location = new System.Drawing.Point(14, 226);
             this.WarnCountLabel.Name = "WarnCountLabel";
             this.WarnCountLabel.Size = new System.Drawing.Size(50, 15);
             this.WarnCountLabel.TabIndex = 14;
@@ -163,7 +165,7 @@ namespace TrexMinerGUI
             // ErrorCountLabel
             // 
             this.ErrorCountLabel.AutoSize = true;
-            this.ErrorCountLabel.Location = new System.Drawing.Point(16, 229);
+            this.ErrorCountLabel.Location = new System.Drawing.Point(16, 255);
             this.ErrorCountLabel.Name = "ErrorCountLabel";
             this.ErrorCountLabel.Size = new System.Drawing.Size(48, 15);
             this.ErrorCountLabel.TabIndex = 15;
@@ -172,7 +174,7 @@ namespace TrexMinerGUI
             // LastUpdatedLabel
             // 
             this.LastUpdatedLabel.AutoSize = true;
-            this.LastUpdatedLabel.Location = new System.Drawing.Point(23, 266);
+            this.LastUpdatedLabel.Location = new System.Drawing.Point(16, 293);
             this.LastUpdatedLabel.Name = "LastUpdatedLabel";
             this.LastUpdatedLabel.Size = new System.Drawing.Size(95, 15);
             this.LastUpdatedLabel.TabIndex = 16;
@@ -181,16 +183,35 @@ namespace TrexMinerGUI
             // LastUpdatedText
             // 
             this.LastUpdatedText.AutoSize = true;
-            this.LastUpdatedText.Location = new System.Drawing.Point(124, 267);
+            this.LastUpdatedText.Location = new System.Drawing.Point(117, 293);
             this.LastUpdatedText.Name = "LastUpdatedText";
-            this.LastUpdatedText.Size = new System.Drawing.Size(0, 15);
+            this.LastUpdatedText.Size = new System.Drawing.Size(95, 15);
             this.LastUpdatedText.TabIndex = 17;
+            // 
+            // EfficiencyLabel
+            // 
+            this.EfficiencyLabel.AutoSize = true;
+            this.EfficiencyLabel.Location = new System.Drawing.Point(12, 139);
+            this.EfficiencyLabel.Name = "EfficiencyLabel";
+            this.EfficiencyLabel.Size = new System.Drawing.Size(58, 15);
+            this.EfficiencyLabel.TabIndex = 18;
+            this.EfficiencyLabel.Text = "Verimlilik:";
+            // 
+            // EfficiencyTextBox
+            // 
+            this.EfficiencyTextBox.Enabled = false;
+            this.EfficiencyTextBox.Location = new System.Drawing.Point(83, 136);
+            this.EfficiencyTextBox.Name = "EfficiencyTextBox";
+            this.EfficiencyTextBox.Size = new System.Drawing.Size(153, 23);
+            this.EfficiencyTextBox.TabIndex = 19;
             // 
             // StatisticsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(248, 291);
+            this.ClientSize = new System.Drawing.Size(248, 322);
+            this.Controls.Add(this.EfficiencyTextBox);
+            this.Controls.Add(this.EfficiencyLabel);
             this.Controls.Add(this.LastUpdatedText);
             this.Controls.Add(this.LastUpdatedLabel);
             this.Controls.Add(this.ErrorCountLabel);
@@ -217,6 +238,7 @@ namespace TrexMinerGUI
             this.Shown += new System.EventHandler(this.UpdateStatistics);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -239,5 +261,7 @@ namespace TrexMinerGUI
         private System.Windows.Forms.Label ErrorCountLabel;
         private System.Windows.Forms.Label LastUpdatedLabel;
         private System.Windows.Forms.Label LastUpdatedText;
+        private System.Windows.Forms.Label EfficiencyLabel;
+        private System.Windows.Forms.TextBox EfficiencyTextBox;
     }
 }

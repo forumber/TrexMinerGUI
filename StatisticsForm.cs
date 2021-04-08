@@ -35,6 +35,7 @@ namespace TrexMinerGUI
             MinerStatusTextBox.Text = Program.TheStopWatchWrapper.TheStopWatch.IsRunning ? "Çalışıyor" : "Çalışmıyor";
             SpeedTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Speed;
             PowerTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Power;
+            EfficiencyTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Efficiency;
             FanSpeedTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.FanSpeed;
             TempTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Temp;
             WarnCountTextBox.Text = Program.TheTrexWrapper.GetWarnCount().ToString();

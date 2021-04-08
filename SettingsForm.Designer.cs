@@ -37,6 +37,8 @@ namespace TrexMinerGUI
             this.ApplyAfterburnerProfileOnMinerCloseCheckBox = new System.Windows.Forms.CheckBox();
             this.ProfileToApplyOnMinerStartComboBox = new System.Windows.Forms.ComboBox();
             this.ProfileToApplyOnMinerCloseComboBox = new System.Windows.Forms.ComboBox();
+            this.MinerArgsTextBox = new System.Windows.Forms.TextBox();
+            this.MinerArgsLabel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // StartOnStartupCheckBox
@@ -52,7 +54,7 @@ namespace TrexMinerGUI
             // StartMiningOnAppStartCheckBox
             // 
             this.StartMiningOnAppStartCheckBox.AutoSize = true;
-            this.StartMiningOnAppStartCheckBox.Location = new System.Drawing.Point(13, 38);
+            this.StartMiningOnAppStartCheckBox.Location = new System.Drawing.Point(12, 37);
             this.StartMiningOnAppStartCheckBox.Name = "StartMiningOnAppStartCheckBox";
             this.StartMiningOnAppStartCheckBox.Size = new System.Drawing.Size(225, 19);
             this.StartMiningOnAppStartCheckBox.TabIndex = 1;
@@ -62,7 +64,7 @@ namespace TrexMinerGUI
             // ApplyAfterburnerProfileOnMinerStartCheckBox
             // 
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.AutoSize = true;
-            this.ApplyAfterburnerProfileOnMinerStartCheckBox.Location = new System.Drawing.Point(13, 64);
+            this.ApplyAfterburnerProfileOnMinerStartCheckBox.Location = new System.Drawing.Point(12, 64);
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.Name = "ApplyAfterburnerProfileOnMinerStartCheckBox";
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.Size = new System.Drawing.Size(258, 19);
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.TabIndex = 2;
@@ -109,11 +111,30 @@ namespace TrexMinerGUI
             this.ProfileToApplyOnMinerCloseComboBox.Size = new System.Drawing.Size(82, 23);
             this.ProfileToApplyOnMinerCloseComboBox.TabIndex = 5;
             // 
+            // MinerArgsTextBox
+            // 
+            this.MinerArgsTextBox.Location = new System.Drawing.Point(76, 117);
+            this.MinerArgsTextBox.Name = "MinerArgsTextBox";
+            this.MinerArgsTextBox.Size = new System.Drawing.Size(308, 23);
+            this.MinerArgsTextBox.TabIndex = 7;
+            // 
+            // MinerArgsLabel
+            // 
+            this.MinerArgsLabel.AutoSize = true;
+            this.MinerArgsLabel.Location = new System.Drawing.Point(7, 120);
+            this.MinerArgsLabel.Name = "MinerArgsLabel";
+            this.MinerArgsLabel.Size = new System.Drawing.Size(63, 15);
+            this.MinerArgsLabel.TabIndex = 8;
+            this.MinerArgsLabel.TabStop = true;
+            this.MinerArgsLabel.Text = "Miner Arg:";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(396, 124);
+            this.ClientSize = new System.Drawing.Size(396, 151);
+            this.Controls.Add(this.MinerArgsLabel);
+            this.Controls.Add(this.MinerArgsTextBox);
             this.Controls.Add(this.ProfileToApplyOnMinerCloseComboBox);
             this.Controls.Add(this.ProfileToApplyOnMinerStartComboBox);
             this.Controls.Add(this.ApplyAfterburnerProfileOnMinerCloseCheckBox);
@@ -138,5 +159,7 @@ namespace TrexMinerGUI
         private System.Windows.Forms.CheckBox ApplyAfterburnerProfileOnMinerCloseCheckBox;
         private System.Windows.Forms.ComboBox ProfileToApplyOnMinerStartComboBox;
         private System.Windows.Forms.ComboBox ProfileToApplyOnMinerCloseComboBox;
+        private System.Windows.Forms.TextBox MinerArgsTextBox;
+        private System.Windows.Forms.LinkLabel MinerArgsLabel;
     }
 }

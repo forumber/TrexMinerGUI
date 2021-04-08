@@ -22,7 +22,8 @@ namespace TrexMinerGUI
         public readonly Version TheAppVersion;
         private readonly string UpdateFileName;
         private readonly string UpdateFolderName;
-        private JsonClass JsonContents;
+        private JsonClass JsonContents { get; set; }
+        public bool IsTrexUpdating { get; set; }
 
         public SelfUpdate()
         {
@@ -30,7 +31,8 @@ namespace TrexMinerGUI
             UpdateFolderName = "temp_update";
             TheAppVersion = typeof(Program).Assembly.GetName().Version;
             JsonURL = "https://raw.githubusercontent.com/forumber/TrexMinerGUI_Updater-API/main/update.json";
-            TheTimer = new System.Threading.Timer((e) => CheckForUpdate(), null, dueTime: TimeSpan.Zero, period: TimeSpan.FromMinutes(1));
+            TheTimer = new System.Threading.Timer((e) => CheckForUpdate(), null, dueTime: TimeSpan.FromSeconds(2), period: TimeSpan.FromMinutes(1));
+            IsTrexUpdating = false;
         }
 
         private void CheckForUpdate()
@@ -55,6 +57,8 @@ namespace TrexMinerGUI
 
         private void Update()
         {
+            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "TrexMinerGUI güncelleniyor...", " ", System.Windows.Forms.ToolTipIcon.Info);
+
             DownloadAndExtractZip(JsonContents.latestVersionURL);
 
             ProcessStartInfo Info = new ProcessStartInfo();
@@ -82,9 +86,15 @@ namespace TrexMinerGUI
 
         public void UpdateTrex(string URL)
         {
+            IsTrexUpdating = true;
+
+            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Trex güncelleniyor...", " ", System.Windows.Forms.ToolTipIcon.Info);
+
             DownloadAndExtractZip(URL);
 
             File.Copy(Program.ExecutionPath + UpdateFolderName + @"\" + "t-rex.exe", Program.ExecutionPath + "t-rex.exe", true);
+
+            IsTrexUpdating = false;
 
             Program.TheTrexWrapper.Start();
 

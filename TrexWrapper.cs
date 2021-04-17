@@ -154,7 +154,7 @@ namespace TrexMinerGUI
 
             if (!File.Exists(Program.ExecutionPath + "t-rex.exe"))
             {
-                Task.Run(() => Program.TheSelfUpdate.UpdateTrex(@"https://github.com/trexminer/T-Rex/releases/download/0.19.14/t-rex-0.19.14-win-cuda11.1.zip"));
+                Task.Run(() => Program.TheSelfUpdate.UpdateTrex(@"https://github.com/trexminer/T-Rex/releases/download/0.20.1/t-rex-0.20.1-win.zip"));
                 return;
             }
 

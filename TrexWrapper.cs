@@ -135,7 +135,7 @@ namespace TrexMinerGUI
             {
                 File.AppendAllText(Program.ExecutionPath + ErrorLogFileName, LineToWrite + Environment.NewLine);
             }
-            else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity set to"))))
+            else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
             {
                 File.AppendAllText(Program.ExecutionPath + WarnLogFileName, LineToWrite + Environment.NewLine);
             }

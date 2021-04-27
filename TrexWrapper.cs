@@ -80,7 +80,7 @@ namespace TrexMinerGUI
                 }
                 else if (e.Data.StartsWith("-"))
                 {
-                    TheTrexStatisctics.LastUpdated = e.Data.Split(" ")[2];
+                    TheTrexStatisctics.LastUpdated = e.Data.Split(" ")[1];
                 }
                 else if (e.Data.StartsWith(@"GPU #0:"))
                 {

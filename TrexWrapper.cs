@@ -152,6 +152,11 @@ namespace TrexMinerGUI
                 return;
             }
 
+            if (Process.GetProcessesByName("t-rex").Length > 0)
+            {
+                Stop();
+            }
+
             if (!File.Exists(Program.ExecutionPath + "t-rex.exe"))
             {
                 Task.Run(() => Program.TheSelfUpdate.UpdateTrex(@"https://github.com/trexminer/T-Rex/releases/download/0.20.1/t-rex-0.20.1-win.zip"));

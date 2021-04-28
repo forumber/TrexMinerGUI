@@ -23,13 +23,14 @@ namespace TrexMinerGUI
             LoadFromFile();
 
 
-            TheTimer = new System.Threading.Timer((e) => SaveToFile(), null, dueTime: TimeSpan.Zero, period: TimeSpan.FromMinutes(1));
+            TheTimer = new System.Threading.Timer((e) => SaveToFile(), null, dueTime: TimeSpan.FromSeconds(1), period: TimeSpan.FromMinutes(1));
         }
 
         public void SaveToFile()
         {
-            File.WriteAllText(Program.ExecutionPath + FileName, GetTotalElapsedTime().ToString("G"));
-            File.WriteAllText(Program.ExecutionPath + FileName + ".md5", ExternalMethods.CalculateMD5(Program.ExecutionPath + FileName));
+            ExternalMethods.WriteAllTextWithBackup(Program.ExecutionPath + FileName, GetTotalElapsedTime().ToString("G"));
+            ExternalMethods.WriteAllTextWithBackup(Program.ExecutionPath + FileName + ".md5", ExternalMethods.CalculateMD5(Program.ExecutionPath + FileName));
+            
         }
 
         private void LoadFromFile()

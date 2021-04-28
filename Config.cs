@@ -75,7 +75,7 @@ namespace TrexMinerGUI
                 "ProfileToApplyOnMinerStart=" + ProfileToApplyOnMinerStart + Environment.NewLine +
                 "ProfileToApplyOnMinerClose=" + ProfileToApplyOnMinerClose + Environment.NewLine;
 
-            File.WriteAllText(Program.ExecutionPath + "trex_gui.conf", TheFileContent);
+            ExternalMethods.WriteAllTextWithBackup(Program.ExecutionPath + "trex_gui.conf", TheFileContent);
         }
     }
 }

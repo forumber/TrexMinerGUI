@@ -47,32 +47,25 @@ namespace TrexMinerGUI
         // Credits: https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
         public static void WriteAllTextWithBackup(string path, string contents)
         {
-            // get the bytes
             var data = System.Text.Encoding.UTF8.GetBytes(contents);
 
             if (!File.Exists(path))
             {
-                // write the data to a temp file
                 using (var tempFile = File.Create(path, 4096, FileOptions.WriteThrough))
                     tempFile.Write(data, 0, data.Length);
             }
             else
             {
-                // generate a temp filename
                 var tempPath = Path.GetTempFileName();
 
-                // create the backup name
                 var backup = path + ".backup";
 
-                // delete any existing backups
                 if (File.Exists(backup))
                     File.Delete(backup);
 
-                // write the data to a temp file
                 using (var tempFile = File.Create(tempPath, 4096, FileOptions.WriteThrough))
                     tempFile.Write(data, 0, data.Length);
 
-                // replace the contents
                 File.Replace(tempPath, path, backup);
             }
         }

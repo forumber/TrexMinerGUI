@@ -17,6 +17,7 @@ namespace TrexMinerGUI
         public static Config TheConfig;
         public static string ExecutionPath;
         public static string ExceptionLogFileName;
+        public static Mutex TheMutex;
 
         [STAThread]
         public static void Main(string[] args)
@@ -27,6 +28,18 @@ namespace TrexMinerGUI
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionMessageBox);
             Application.ThreadException += new ThreadExceptionEventHandler(UIThreadUnhandledExceptionMessageBox);
+
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            TheMutex = new Mutex(true, "TrexMinerGUI");
+
+            if (!TheMutex.WaitOne(TimeSpan.Zero, true))
+            {
+                MessageBox.Show(owner: null, text: "An instance of application is already running!", caption: "Error", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
+                System.Environment.Exit(1);
+            }
 
             if (args.Length >= 1)
             {
@@ -48,10 +61,6 @@ namespace TrexMinerGUI
                         ExternalMethods.CalculateMD5(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\" + System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + ".bin"));
                 }
             }
-
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
 
             TheConfig = new Config();
             TheSelfUpdate = new SelfUpdate();
@@ -130,6 +139,7 @@ namespace TrexMinerGUI
                 TheTrexWrapper.Stop();
             TheMainAppContext.trayIcon.Visible = false;
             Thread.Sleep(10000);
+            TheMutex.ReleaseMutex();
         }
     }
 }

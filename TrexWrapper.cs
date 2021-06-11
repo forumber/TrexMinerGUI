@@ -30,13 +30,10 @@ namespace TrexMinerGUI
 
         private readonly Process TrexProcess;
 
-        public readonly string LogFileName;
-        public readonly string ErrorLogFileName;
-        public readonly string WarnLogFileName;
-
         public bool IsRunning { get; set; }
         private bool IsTerminatedByGUI { get; set; }
         public TrexStatisctics TheTrexStatisctics { get; }
+        public string Session { get; set; }
 
         public TrexWrapper()
         {
@@ -52,9 +49,6 @@ namespace TrexMinerGUI
             TrexProcess.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
             TrexProcess.Exited += new EventHandler(ProcExitedHandler); 
 
-            LogFileName = "trex_log.txt";
-            ErrorLogFileName = "trex_error_log.txt";
-            WarnLogFileName = "trex_warn_log.txt";
             IsRunning = false;
             IsTerminatedByGUI = false;
             TheTrexStatisctics = new TrexStatisctics();
@@ -133,15 +127,15 @@ namespace TrexMinerGUI
 
             if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception"))
             {
-                File.AppendAllText(Program.ExecutionPath + ErrorLogFileName, LineToWrite + Environment.NewLine);
+                File.AppendAllText(Program.ExecutionPath + @"logs\log_" + Session + "_error.txt", LineToWrite + Environment.NewLine);
             }
             else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
             {
-                File.AppendAllText(Program.ExecutionPath + WarnLogFileName, LineToWrite + Environment.NewLine);
+                File.AppendAllText(Program.ExecutionPath + @"logs\log_" + Session + "_warn.txt", LineToWrite + Environment.NewLine);
             }
             else
             {
-                File.AppendAllText(Program.ExecutionPath + LogFileName, LineToWrite + Environment.NewLine);
+                File.AppendAllText(Program.ExecutionPath + @"logs\log_" + Session + ".txt", LineToWrite + Environment.NewLine);
             }
         }
 
@@ -161,6 +155,13 @@ namespace TrexMinerGUI
             {
                 Task.Run(() => Program.TheSelfUpdate.UpdateTrex(@"https://github.com/trexminer/T-Rex/releases/download/0.20.3/t-rex-0.20.3-win.zip"));
                 return;
+            }
+
+            Session = DateTime.Now.ToString("yyyyMMdd'-'HHmmss");
+
+            if (!Directory.Exists(Program.ExecutionPath + @"logs\"))
+            {
+                Directory.CreateDirectory(Program.ExecutionPath + @"logs\");
             }
 
             TrexProcess.StartInfo.Arguments = Program.TheConfig.MinerArgs;
@@ -275,7 +276,7 @@ namespace TrexMinerGUI
         {
             try
             {
-                return File.ReadAllLines(Program.ExecutionPath + WarnLogFileName).Length;
+                return File.ReadAllLines(Program.ExecutionPath + @"logs\log_" + Session + "_warn.txt").Length;
             } catch
             {
                 return 0;
@@ -286,7 +287,7 @@ namespace TrexMinerGUI
         {
             try
             {
-                return File.ReadAllLines(Program.ExecutionPath + ErrorLogFileName).Length;
+                return File.ReadAllLines(Program.ExecutionPath + @"logs\log_" + Session + "_error.txt").Length;
             } catch
             {
                 return 0;

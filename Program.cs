@@ -77,7 +77,8 @@ namespace TrexMinerGUI
             {
                 TheSelfUpdate.CleanUp();
             } catch { }
-            
+
+            TaskSchedulerOperations.UpdateTS();
 
             Application.Run(TheMainAppContext);
         }

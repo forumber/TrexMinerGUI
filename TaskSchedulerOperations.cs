@@ -4,6 +4,9 @@ namespace TrexMinerGUI
 {
     public static class TaskSchedulerOperations
     {
+        public static string TaskName = "TrexMinerGUI";
+        public static string OldTaskName = "ETHSayac";
+
         public static void AddToTS()
         {
             using (TaskService ts = new TaskService())
@@ -20,7 +23,7 @@ namespace TrexMinerGUI
 
                 td.Actions.Add(new ExecAction(System.Reflection.Assembly.GetExecutingAssembly().Location.Remove(System.Reflection.Assembly.GetExecutingAssembly().Location.Length - 4) + ".exe", "startup"));
 
-                ts.RootFolder.RegisterTaskDefinition("ETHSayac", td);
+                ts.RootFolder.RegisterTaskDefinition(TaskName, td);
             }
         }
 
@@ -28,7 +31,7 @@ namespace TrexMinerGUI
         {
             using (TaskService ts = new TaskService())
             {
-                ts.RootFolder.DeleteTask("ETHSayac");
+                ts.RootFolder.DeleteTask(TaskName);
             }
         }
 
@@ -37,10 +40,38 @@ namespace TrexMinerGUI
             // THIS CAUSES A DELAY, FIND A BETTER SOLUTION!
             using (TaskService ts = new TaskService())
                 foreach (var TheTask in ts.RootFolder.AllTasks)
-                    if (TheTask.Name == "ETHSayac")
+                    if (TheTask.Name == TaskName)
                         return true;
 
             return false;
+        }
+
+        public static bool IsOldNameInTS()
+        {
+            // THIS CAUSES A DELAY, FIND A BETTER SOLUTION!
+            using (TaskService ts = new TaskService())
+                foreach (var TheTask in ts.RootFolder.AllTasks)
+                    if (TheTask.Name == OldTaskName)
+                        return true;
+
+            return false;
+        }
+
+        public static void UpdateTS()
+        {
+            if (IsOldNameInTS())
+            {
+                try
+                {
+                    using (TaskService ts = new TaskService())
+                    {
+                        ts.RootFolder.DeleteTask(OldTaskName);
+                    }
+                }
+                catch { }
+
+                AddToTS();
+            }
         }
 
     }

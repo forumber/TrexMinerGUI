@@ -17,7 +17,6 @@ namespace TrexMinerGUI
             TheContextMenu.Items.Add("Miner: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 0
             TheContextMenu.Items.Add("Süre: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 1
             TheContextMenu.Items.Add("Hız: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 2
-            TheContextMenu.Items.Add(@"Log'u göster", null, ShowLog_Event); // 3
             TheContextMenu.Items.Add("Ayarlar", null, OpenSettings_Event); // 4
             TheContextMenu.Items.Add("Çalıştır", null, (sender, eventArgs) => Program.TheTrexWrapper.Start()); // 5
             TheContextMenu.Items.Add("Durdur", null, (sender, eventArgs) => Program.TheTrexWrapper.Stop()); // 6
@@ -47,48 +46,6 @@ namespace TrexMinerGUI
                 {
                     TheSettingsForm.ShowDialog();
                 }
-            }
-        }
-
-        private void ShowLog_Event(object sender, EventArgs e)
-        {
-            try
-            {
-                Process.Start(new ProcessStartInfo()
-                {
-                    FileName = Program.ExecutionPath + Program.TheTrexWrapper.LogFileName,
-                    UseShellExecute = true
-                });
-            } 
-            catch
-            {
-
-            }
-
-            try
-            {
-                Process.Start(new ProcessStartInfo()
-                {
-                    FileName = Program.ExecutionPath + Program.TheTrexWrapper.ErrorLogFileName,
-                    UseShellExecute = true
-                });
-            }
-            catch
-            {
-
-            }
-
-            try
-            {
-                Process.Start(new ProcessStartInfo()
-                {
-                    FileName = Program.ExecutionPath + Program.TheTrexWrapper.WarnLogFileName,
-                    UseShellExecute = true
-                });
-            }
-            catch
-            {
-
             }
         }
 
@@ -146,12 +103,12 @@ namespace TrexMinerGUI
 
             if (Process.GetProcessesByName("t-rex").Length == 0)
             {
-                TheContextMenu.Items[5].Visible = true;
-                TheContextMenu.Items[6].Visible = false;
+                TheContextMenu.Items[4].Visible = true;
+                TheContextMenu.Items[5].Visible = false;
             } else
             {
-                TheContextMenu.Items[5].Visible = false;
-                TheContextMenu.Items[6].Visible = true;
+                TheContextMenu.Items[4].Visible = false;
+                TheContextMenu.Items[5].Visible = true;
             }
         }
     }

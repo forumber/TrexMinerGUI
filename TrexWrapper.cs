@@ -100,11 +100,11 @@ namespace TrexMinerGUI
                     //Debug.WriteLine("DateTimeHeader:" + DateTimeHeader);
                     //Debug.WriteLine("Info:" + Info);
 
-                    if (Info.Contains("epoch") && !Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
+                    if ((Info.Contains("epoch") || (Info.Contains("OK")) && !Program.TheStopWatchWrapper.TheStopWatch.IsRunning))
                     {
                         Program.TheStopWatchWrapper.TheStopWatch.Start();
                     }
-                    else if (Info.ToLower().Contains("error") || Info.ToLower().Contains("exception"))
+                    else if (Info.ToLower().Contains("error") || Info.ToLower().Contains("exception") || Info.ToLower().Contains("fail"))
                     {
                         //new System.Threading.Thread(() => System.Windows.Forms.MessageBox.Show(@"GPU Hatası! Log'u kontrol edin!", "Error!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error)).Start();
 
@@ -125,7 +125,7 @@ namespace TrexMinerGUI
             if (String.IsNullOrEmpty(LineToWrite))
                 return;
 
-            if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception"))
+            if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception") || LineToWrite.ToLower().Contains("fail"))
             {
                 File.AppendAllText(Program.ExecutionPath + @"logs\log_" + Session + "_error.txt", LineToWrite + Environment.NewLine);
             }

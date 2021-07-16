@@ -328,6 +328,11 @@ namespace TrexMinerGUI
                 }
                 IsStopping = false;
             }
+
+            while (IsStopping || Process.GetProcessesByName("t-rex").Length > 0)
+            {
+                Task.Delay(100).Wait();
+            }
         }
 
         public int GetWarnCount()

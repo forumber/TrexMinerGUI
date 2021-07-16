@@ -123,6 +123,21 @@ namespace TrexMinerGUI
             }
         }
 
+        public string GetErrorLogPathForCurrentSession()
+        {
+            return Program.ExecutionPath + @"logs\log_" + Session + "_error.txt";
+        }
+
+        public string GetWarningLogPathForCurrentSession()
+        {
+            return Program.ExecutionPath + @"logs\log_" + Session + "_warn.txt";
+        }
+
+        public string GetLogPathForCurrentSession()
+        {
+            return Program.ExecutionPath + @"logs\log_" + Session + ".txt";
+        }
+
         private void WriteLogToFile(string LineToWrite)
         {
             if (String.IsNullOrEmpty(LineToWrite))
@@ -130,15 +145,15 @@ namespace TrexMinerGUI
 
             if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception") || LineToWrite.ToLower().Contains("fail"))
             {
-                File.AppendAllText(Program.ExecutionPath + @"logs\log_" + Session + "_error.txt", LineToWrite + Environment.NewLine);
+                File.AppendAllText(GetErrorLogPathForCurrentSession(), LineToWrite + Environment.NewLine);
             }
             else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
             {
-                File.AppendAllText(Program.ExecutionPath + @"logs\log_" + Session + "_warn.txt", LineToWrite + Environment.NewLine);
+                File.AppendAllText(GetWarningLogPathForCurrentSession(), LineToWrite + Environment.NewLine);
             }
             else
             {
-                File.AppendAllText(Program.ExecutionPath + @"logs\log_" + Session + ".txt", LineToWrite + Environment.NewLine);
+                File.AppendAllText(GetLogPathForCurrentSession(), LineToWrite + Environment.NewLine);
             }
         }
 
@@ -316,7 +331,7 @@ namespace TrexMinerGUI
         {
             try
             {
-                return File.ReadAllLines(Program.ExecutionPath + @"logs\log_" + Session + "_warn.txt").Length;
+                return File.ReadAllLines(GetWarningLogPathForCurrentSession()).Length;
             } catch
             {
                 return 0;
@@ -327,7 +342,7 @@ namespace TrexMinerGUI
         {
             try
             {
-                return File.ReadAllLines(Program.ExecutionPath + @"logs\log_" + Session + "_error.txt").Length;
+                return File.ReadAllLines(GetErrorLogPathForCurrentSession()).Length;
             } catch
             {
                 return 0;

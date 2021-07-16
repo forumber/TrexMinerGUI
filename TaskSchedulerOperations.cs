@@ -12,7 +12,7 @@ namespace TrexMinerGUI
             using (TaskService ts = new TaskService())
             {
                 TaskDefinition td = ts.NewTask();
-                td.RegistrationInfo.Description = @"TrexMiner'ı açar";
+                td.RegistrationInfo.Description = @"Opens TrexMinerGUI";
                 //td.Principal.LogonType = TaskLogonType.InteractiveToken;
                 td.Principal.RunLevel = TaskRunLevel.Highest;
                 td.Settings.StopIfGoingOnBatteries = false;

@@ -89,9 +89,9 @@ namespace TrexMinerGUI
             this.DurationLabel.AutoSize = true;
             this.DurationLabel.Location = new System.Drawing.Point(6, 48);
             this.DurationLabel.Name = "DurationLabel";
-            this.DurationLabel.Size = new System.Drawing.Size(36, 15);
+            this.DurationLabel.Size = new System.Drawing.Size(56, 15);
             this.DurationLabel.TabIndex = 2;
-            this.DurationLabel.Text = "Süre: ";
+            this.DurationLabel.Text = "Duration:";
             // 
             // DurationTextBox
             // 
@@ -138,18 +138,18 @@ namespace TrexMinerGUI
             this.SpeedLabel.AutoSize = true;
             this.SpeedLabel.Location = new System.Drawing.Point(6, 77);
             this.SpeedLabel.Name = "SpeedLabel";
-            this.SpeedLabel.Size = new System.Drawing.Size(27, 15);
+            this.SpeedLabel.Size = new System.Drawing.Size(42, 15);
             this.SpeedLabel.TabIndex = 8;
-            this.SpeedLabel.Text = "Hız:";
+            this.SpeedLabel.Text = "Speed:";
             // 
             // PowerLabel
             // 
             this.PowerLabel.AutoSize = true;
             this.PowerLabel.Location = new System.Drawing.Point(6, 107);
             this.PowerLabel.Name = "PowerLabel";
-            this.PowerLabel.Size = new System.Drawing.Size(31, 15);
+            this.PowerLabel.Size = new System.Drawing.Size(43, 15);
             this.PowerLabel.TabIndex = 9;
-            this.PowerLabel.Text = "Güç:";
+            this.PowerLabel.Text = "Power:";
             // 
             // FanSpeedLabel
             // 
@@ -165,9 +165,9 @@ namespace TrexMinerGUI
             this.TempLabel.AutoSize = true;
             this.TempLabel.Location = new System.Drawing.Point(8, 195);
             this.TempLabel.Name = "TempLabel";
-            this.TempLabel.Size = new System.Drawing.Size(49, 15);
+            this.TempLabel.Size = new System.Drawing.Size(39, 15);
             this.TempLabel.TabIndex = 11;
-            this.TempLabel.Text = "Sıcaklık:";
+            this.TempLabel.Text = "Temp:";
             // 
             // WarnCountTextBox
             // 
@@ -190,32 +190,32 @@ namespace TrexMinerGUI
             this.WarnCountLabel.AutoSize = true;
             this.WarnCountLabel.Location = new System.Drawing.Point(8, 224);
             this.WarnCountLabel.Name = "WarnCountLabel";
-            this.WarnCountLabel.Size = new System.Drawing.Size(50, 15);
+            this.WarnCountLabel.Size = new System.Drawing.Size(60, 15);
             this.WarnCountLabel.TabIndex = 14;
-            this.WarnCountLabel.Text = "Uyarılar:";
+            this.WarnCountLabel.Text = "Warnings:";
             // 
             // ErrorCountLabel
             // 
             this.ErrorCountLabel.AutoSize = true;
             this.ErrorCountLabel.Location = new System.Drawing.Point(10, 253);
             this.ErrorCountLabel.Name = "ErrorCountLabel";
-            this.ErrorCountLabel.Size = new System.Drawing.Size(48, 15);
+            this.ErrorCountLabel.Size = new System.Drawing.Size(40, 15);
             this.ErrorCountLabel.TabIndex = 15;
-            this.ErrorCountLabel.Text = "Hatalar:";
+            this.ErrorCountLabel.Text = "Errors:";
             // 
             // LastUpdatedLabel
             // 
             this.LastUpdatedLabel.AutoSize = true;
             this.LastUpdatedLabel.Location = new System.Drawing.Point(10, 291);
             this.LastUpdatedLabel.Name = "LastUpdatedLabel";
-            this.LastUpdatedLabel.Size = new System.Drawing.Size(95, 15);
+            this.LastUpdatedLabel.Size = new System.Drawing.Size(72, 15);
             this.LastUpdatedLabel.TabIndex = 16;
-            this.LastUpdatedLabel.Text = "Son güncelleme:";
+            this.LastUpdatedLabel.Text = "Updated on:";
             // 
             // LastUpdatedText
             // 
             this.LastUpdatedText.AutoSize = true;
-            this.LastUpdatedText.Location = new System.Drawing.Point(111, 291);
+            this.LastUpdatedText.Location = new System.Drawing.Point(88, 291);
             this.LastUpdatedText.Name = "LastUpdatedText";
             this.LastUpdatedText.Size = new System.Drawing.Size(0, 15);
             this.LastUpdatedText.TabIndex = 17;
@@ -225,9 +225,9 @@ namespace TrexMinerGUI
             this.EfficiencyLabel.AutoSize = true;
             this.EfficiencyLabel.Location = new System.Drawing.Point(6, 137);
             this.EfficiencyLabel.Name = "EfficiencyLabel";
-            this.EfficiencyLabel.Size = new System.Drawing.Size(58, 15);
+            this.EfficiencyLabel.Size = new System.Drawing.Size(61, 15);
             this.EfficiencyLabel.TabIndex = 18;
-            this.EfficiencyLabel.Text = "Verimlilik:";
+            this.EfficiencyLabel.Text = "Efficiency:";
             // 
             // EfficiencyTextBox
             // 
@@ -264,7 +264,7 @@ namespace TrexMinerGUI
             this.StatisticsBox.Size = new System.Drawing.Size(246, 316);
             this.StatisticsBox.TabIndex = 20;
             this.StatisticsBox.TabStop = false;
-            this.StatisticsBox.Text = "İstatistikler";
+            this.StatisticsBox.Text = "Statistics";
             // 
             // StartStopButton
             // 
@@ -304,7 +304,7 @@ namespace TrexMinerGUI
             this.SettingsBox.Size = new System.Drawing.Size(392, 157);
             this.SettingsBox.TabIndex = 22;
             this.SettingsBox.TabStop = false;
-            this.SettingsBox.Text = "Ayarlar";
+            this.SettingsBox.Text = "Settings";
             // 
             // SaveMinerArgButton
             // 
@@ -373,9 +373,9 @@ namespace TrexMinerGUI
             this.ApplyAfterburnerProfileOnMinerCloseCheckBox.AutoSize = true;
             this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Location = new System.Drawing.Point(6, 96);
             this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Name = "ApplyAfterburnerProfileOnMinerCloseCheckBox";
-            this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Size = new System.Drawing.Size(272, 19);
+            this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Size = new System.Drawing.Size(258, 19);
             this.ApplyAfterburnerProfileOnMinerCloseCheckBox.TabIndex = 12;
-            this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Text = "Miner kapandığında Afterburner profili uygula:";
+            this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Text = "Apply Afterburner profile when miner stops:";
             this.ApplyAfterburnerProfileOnMinerCloseCheckBox.UseVisualStyleBackColor = true;
             this.ApplyAfterburnerProfileOnMinerCloseCheckBox.CheckedChanged += new System.EventHandler(this.ApplyAfterburnerProfileOnMinerCloseCheckBox_CheckedChanged);
             // 
@@ -386,7 +386,7 @@ namespace TrexMinerGUI
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.Name = "ApplyAfterburnerProfileOnMinerStartCheckBox";
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.Size = new System.Drawing.Size(258, 19);
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.TabIndex = 11;
-            this.ApplyAfterburnerProfileOnMinerStartCheckBox.Text = "Miner açıldığında Afterburner profili uygula:";
+            this.ApplyAfterburnerProfileOnMinerStartCheckBox.Text = "Apply Afterburner profile when miner starts:";
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.UseVisualStyleBackColor = true;
             this.ApplyAfterburnerProfileOnMinerStartCheckBox.CheckedChanged += new System.EventHandler(this.ApplyAfterburnerProfileOnMinerStartCheckBox_CheckedChanged);
             // 
@@ -395,9 +395,9 @@ namespace TrexMinerGUI
             this.StartMiningOnAppStartCheckBox.AutoSize = true;
             this.StartMiningOnAppStartCheckBox.Location = new System.Drawing.Point(6, 43);
             this.StartMiningOnAppStartCheckBox.Name = "StartMiningOnAppStartCheckBox";
-            this.StartMiningOnAppStartCheckBox.Size = new System.Drawing.Size(225, 19);
+            this.StartMiningOnAppStartCheckBox.Size = new System.Drawing.Size(186, 19);
             this.StartMiningOnAppStartCheckBox.TabIndex = 10;
-            this.StartMiningOnAppStartCheckBox.Text = "Program başlangıcında miner\'ı çalıştır";
+            this.StartMiningOnAppStartCheckBox.Text = "Start miner at program startup";
             this.StartMiningOnAppStartCheckBox.UseVisualStyleBackColor = true;
             this.StartMiningOnAppStartCheckBox.CheckedChanged += new System.EventHandler(this.StartMiningOnAppStart_CheckedChanged);
             // 
@@ -406,9 +406,9 @@ namespace TrexMinerGUI
             this.StartOnStartupCheckBox.AutoSize = true;
             this.StartOnStartupCheckBox.Location = new System.Drawing.Point(6, 18);
             this.StartOnStartupCheckBox.Name = "StartOnStartupCheckBox";
-            this.StartOnStartupCheckBox.Size = new System.Drawing.Size(218, 19);
+            this.StartOnStartupCheckBox.Size = new System.Drawing.Size(229, 19);
             this.StartOnStartupCheckBox.TabIndex = 9;
-            this.StartOnStartupCheckBox.Text = "Windows başlangıcında programı aç";
+            this.StartOnStartupCheckBox.Text = "Open the program at Windows startup";
             this.StartOnStartupCheckBox.UseVisualStyleBackColor = true;
             this.StartOnStartupCheckBox.CheckedChanged += new System.EventHandler(this.StartOnStartupCheckBox_CheckedChanged);
             // 
@@ -421,7 +421,7 @@ namespace TrexMinerGUI
             this.VersionLabel.TabIndex = 23;
             this.VersionLabel.Text = "Version";
             // 
-            // StatisticsForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -432,7 +432,7 @@ namespace TrexMinerGUI
             this.Controls.Add(this.StatisticsBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "StatisticsForm";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrexMinerGUI";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);

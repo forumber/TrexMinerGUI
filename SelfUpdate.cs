@@ -57,7 +57,7 @@ namespace TrexMinerGUI
 
         private void Update()
         {
-            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "TrexMinerGUI güncelleniyor...", " ", System.Windows.Forms.ToolTipIcon.Info);
+            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating TrexMinerGUI...", " ", System.Windows.Forms.ToolTipIcon.Info);
 
             DownloadAndExtractZip(JsonContents.latestVersionURL);
 
@@ -88,7 +88,7 @@ namespace TrexMinerGUI
         {
             IsTrexUpdating = true;
 
-            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Trex güncelleniyor...", " ", System.Windows.Forms.ToolTipIcon.Info);
+            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating Trex...", " ", System.Windows.Forms.ToolTipIcon.Info);
 
             DownloadAndExtractZip(URL);
 

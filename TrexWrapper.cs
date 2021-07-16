@@ -110,8 +110,6 @@ namespace TrexMinerGUI
                     }
                     else if (Info.ToLower().Contains("error") || Info.ToLower().Contains("exception") || Info.ToLower().Contains("fail"))
                     {
-                        //new System.Threading.Thread(() => System.Windows.Forms.MessageBox.Show(@"GPU Hatası! Log'u kontrol edin!", "Error!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error)).Start();
-
                         if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
                             Program.TheStopWatchWrapper.TheStopWatch.Stop();
                     }
@@ -338,13 +336,13 @@ namespace TrexMinerGUI
         public string GetStatus()
         {
             if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
-                return "Çalışıyor";
+                return "Running";
             else if (Program.TheSelfUpdate.IsTrexUpdating)
-                return "Güncelleniyor...";
+                return "Updating...";
             else if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && (IsRunning || IsStarting))
-                return "Başlatılıyor...";
+                return "Starting...";
             else //if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && !Program.TheTrexWrapper.IsRunning)
-                return "Kapalı";
+                return "Not running";
         }
     }
 }

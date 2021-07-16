@@ -322,7 +322,7 @@ namespace TrexMinerGUI
             "3",
             "4",
             "5"});
-            this.ProfileToApplyOnMinerStartComboBox.Location = new System.Drawing.Point(271, 68);
+            this.ProfileToApplyOnMinerStartComboBox.Location = new System.Drawing.Point(284, 68);
             this.ProfileToApplyOnMinerStartComboBox.Name = "ProfileToApplyOnMinerStartComboBox";
             this.ProfileToApplyOnMinerStartComboBox.Size = new System.Drawing.Size(82, 23);
             this.ProfileToApplyOnMinerStartComboBox.TabIndex = 13;

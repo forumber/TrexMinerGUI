@@ -76,28 +76,12 @@ namespace TrexMinerGUI
 
         private void TrayIcon_Click(object sender, EventArgs e)
         {
-            TheContextMenu.Items[0].Text = "Miner: ";
+            TheContextMenu.Items[0].Text = "Miner: " + Program.TheTrexWrapper.GetStatus();
 
             if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
-            {
-                TheContextMenu.Items[0].Text += "Çalışıyor";
                 UpdateStatistics(true);
-            }
-            else if (Program.TheSelfUpdate.IsTrexUpdating)
-            {
-                TheContextMenu.Items[0].Text += "Güncelleniyor...";
+            else
                 UpdateStatistics(false);
-            }
-            else if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && Program.TheTrexWrapper.IsRunning)
-            {
-                TheContextMenu.Items[0].Text += "Başlatılıyor...";
-                UpdateStatistics(false);
-            }
-            else if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && !Program.TheTrexWrapper.IsRunning)
-            {
-                TheContextMenu.Items[0].Text += "Kapalı";
-                UpdateStatistics(false);
-            }
 
             TheContextMenu.Items[1].Text = "Süre: " + Program.TheStopWatchWrapper.GetTotalElapsedTime().TotalHours.ToString("0.##") + " saat";
 

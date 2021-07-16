@@ -324,5 +324,17 @@ namespace TrexMinerGUI
                 return 0;
             }
         }
+
+        public string GetStatus()
+        {
+            if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
+                return "Çalışıyor";
+            else if (Program.TheSelfUpdate.IsTrexUpdating)
+                return "Güncelleniyor...";
+            else if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && (IsRunning || IsStarting))
+                return "Başlatılıyor...";
+            else //if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && !Program.TheTrexWrapper.IsRunning)
+                return "Kapalı";
+        }
     }
 }

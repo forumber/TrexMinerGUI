@@ -32,7 +32,7 @@ namespace TrexMinerGUI
         private void UpdateStatistics(object sender, EventArgs e)
         {
             DurationTextBox.Text = Program.TheStopWatchWrapper.GetTotalElapsedTime().ToString("G");
-            MinerStatusTextBox.Text = Program.TheStopWatchWrapper.TheStopWatch.IsRunning ? "Çalışıyor" : "Çalışmıyor";
+            MinerStatusTextBox.Text = Program.TheTrexWrapper.GetStatus();
             SpeedTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Speed;
             PowerTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Power;
             EfficiencyTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Efficiency;

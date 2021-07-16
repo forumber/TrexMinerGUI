@@ -6,27 +6,13 @@ namespace TrexMinerGUI
 {
     public partial class StatisticsForm : Form
     {
-        private readonly System.Windows.Forms.Timer TheTimer;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                TheTimer.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         public StatisticsForm()
         {
             InitializeComponent();
 
             this.Icon = Resources.AppIcon;
-
-            TheTimer = new System.Windows.Forms.Timer();
-            TheTimer.Tick += UpdateStatistics;
-            TheTimer.Interval = 1000;
-            TheTimer.Start();
         }
 
         private void UpdateStatistics(object sender, EventArgs e)

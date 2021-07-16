@@ -5,6 +5,19 @@ namespace TrexMinerGUI
 {
     partial class StatisticsForm
     {
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -13,6 +26,7 @@ namespace TrexMinerGUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MinerStatusLabel = new System.Windows.Forms.Label();
             this.MinerStatusTextBox = new System.Windows.Forms.TextBox();
             this.DurationLabel = new System.Windows.Forms.Label();
@@ -33,6 +47,7 @@ namespace TrexMinerGUI
             this.LastUpdatedText = new System.Windows.Forms.Label();
             this.EfficiencyLabel = new System.Windows.Forms.Label();
             this.EfficiencyTextBox = new System.Windows.Forms.TextBox();
+            this.TimerStatisticsUpdate = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // MinerStatusLabel
@@ -205,6 +220,12 @@ namespace TrexMinerGUI
             this.EfficiencyTextBox.Size = new System.Drawing.Size(153, 23);
             this.EfficiencyTextBox.TabIndex = 19;
             // 
+            // 
+            // TimerStatisticsUpdate
+            // 
+            this.TimerStatisticsUpdate.Enabled = true;
+            this.TimerStatisticsUpdate.Interval = 1000;
+            this.TimerStatisticsUpdate.Tick += new System.EventHandler(this.UpdateStatistics);
             // StatisticsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -263,5 +284,7 @@ namespace TrexMinerGUI
         private System.Windows.Forms.Label LastUpdatedText;
         private System.Windows.Forms.Label EfficiencyLabel;
         private System.Windows.Forms.TextBox EfficiencyTextBox;
+        private System.ComponentModel.IContainer components;
+        private System.Windows.Forms.Timer TimerStatisticsUpdate;
     }
 }

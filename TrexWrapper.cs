@@ -34,6 +34,8 @@ namespace TrexMinerGUI
         private bool IsTerminatedByGUI { get; set; }
         public TrexStatisctics TheTrexStatisctics { get; }
         public string Session { get; set; }
+        public bool IsStarting { get; set; }
+        public bool IsStopping { get; set; }
 
         public TrexWrapper()
         {
@@ -50,6 +52,8 @@ namespace TrexMinerGUI
             TrexProcess.Exited += new EventHandler(ProcExitedHandler); 
 
             IsRunning = false;
+            IsStarting = false;
+            IsStopping = false;
             IsTerminatedByGUI = false;
             TheTrexStatisctics = new TrexStatisctics();
         }
@@ -141,10 +145,12 @@ namespace TrexMinerGUI
 
         public void Start()
         {
-            if (Program.TheSelfUpdate.IsTrexUpdating)
+            if (Program.TheSelfUpdate.IsTrexUpdating || IsStarting)
             {
                 return;
             }
+
+            IsStarting = true;
 
             if (Process.GetProcessesByName("t-rex").Length > 0)
             {
@@ -192,8 +198,17 @@ namespace TrexMinerGUI
                         try { Process.GetProcessesByName("EncoderServer64").First().Kill(); } catch { }
                         try { Process.GetProcessesByName("RTSSHooksLoader").First().Kill(); } catch { }
                         try { Process.GetProcessesByName("RTSSHooksLoader64").First().Kill(); } catch { }
+                        IsStarting = false;
                     });
                 }
+                else
+                {
+                    IsStarting = false;
+                }
+            }
+            else
+            {
+                IsStarting = false;
             }
 
             //ExternalMethods.OpenConsole();
@@ -233,12 +248,22 @@ namespace TrexMinerGUI
                             try { Process.GetProcessesByName("EncoderServer64").First().Kill(); } catch { }
                             try { Process.GetProcessesByName("RTSSHooksLoader").First().Kill(); } catch { }
                             try { Process.GetProcessesByName("RTSSHooksLoader64").First().Kill(); } catch { }
+                            IsStopping = false;
                         });
                     }
+                    else
+                    {
+                        IsStopping = false;
+                    }
+                }
+                else
+                {
+                    IsStopping = false;
                 }
             }
             else
             {
+                IsStopping = false;
                 Start();
             }
                 
@@ -248,6 +273,11 @@ namespace TrexMinerGUI
 
         public void Stop()
         {
+            if (IsStopping)
+                return;
+
+            IsStopping = true;
+
             IsTerminatedByGUI = true;
 
             try
@@ -269,6 +299,7 @@ namespace TrexMinerGUI
                         Proc.WaitForExit();
                     }
                 }
+                IsStopping = false;
             }
         }
 

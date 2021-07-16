@@ -39,10 +39,6 @@ namespace TrexMinerGUI
             this.PowerLabel = new System.Windows.Forms.Label();
             this.FanSpeedLabel = new System.Windows.Forms.Label();
             this.TempLabel = new System.Windows.Forms.Label();
-            this.WarnCountTextBox = new System.Windows.Forms.TextBox();
-            this.ErrorCountTextBox = new System.Windows.Forms.TextBox();
-            this.WarnCountLabel = new System.Windows.Forms.Label();
-            this.ErrorCountLabel = new System.Windows.Forms.Label();
             this.LastUpdatedLabel = new System.Windows.Forms.Label();
             this.LastUpdatedText = new System.Windows.Forms.Label();
             this.EfficiencyLabel = new System.Windows.Forms.Label();
@@ -63,8 +59,16 @@ namespace TrexMinerGUI
             this.StartOnStartupCheckBox = new System.Windows.Forms.CheckBox();
             this.TheToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.VersionLabel = new System.Windows.Forms.Label();
+            this.SessionGroupBox = new System.Windows.Forms.GroupBox();
+            this.ErrorCountLabel = new System.Windows.Forms.Label();
+            this.WarnCountLabel = new System.Windows.Forms.Label();
+            this.ErrorCountTextBox = new System.Windows.Forms.TextBox();
+            this.WarnCountTextBox = new System.Windows.Forms.TextBox();
+            this.StartedAtLabel = new System.Windows.Forms.Label();
+            this.SessionStartedAtTextBox = new System.Windows.Forms.TextBox();
             this.StatisticsBox.SuspendLayout();
             this.SettingsBox.SuspendLayout();
+            this.SessionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // MinerStatusLabel
@@ -169,40 +173,6 @@ namespace TrexMinerGUI
             this.TempLabel.TabIndex = 11;
             this.TempLabel.Text = "Temp:";
             // 
-            // WarnCountTextBox
-            // 
-            this.WarnCountTextBox.Enabled = false;
-            this.WarnCountTextBox.Location = new System.Drawing.Point(77, 221);
-            this.WarnCountTextBox.Name = "WarnCountTextBox";
-            this.WarnCountTextBox.Size = new System.Drawing.Size(153, 23);
-            this.WarnCountTextBox.TabIndex = 12;
-            // 
-            // ErrorCountTextBox
-            // 
-            this.ErrorCountTextBox.Enabled = false;
-            this.ErrorCountTextBox.Location = new System.Drawing.Point(77, 250);
-            this.ErrorCountTextBox.Name = "ErrorCountTextBox";
-            this.ErrorCountTextBox.Size = new System.Drawing.Size(153, 23);
-            this.ErrorCountTextBox.TabIndex = 13;
-            // 
-            // WarnCountLabel
-            // 
-            this.WarnCountLabel.AutoSize = true;
-            this.WarnCountLabel.Location = new System.Drawing.Point(8, 224);
-            this.WarnCountLabel.Name = "WarnCountLabel";
-            this.WarnCountLabel.Size = new System.Drawing.Size(60, 15);
-            this.WarnCountLabel.TabIndex = 14;
-            this.WarnCountLabel.Text = "Warnings:";
-            // 
-            // ErrorCountLabel
-            // 
-            this.ErrorCountLabel.AutoSize = true;
-            this.ErrorCountLabel.Location = new System.Drawing.Point(10, 253);
-            this.ErrorCountLabel.Name = "ErrorCountLabel";
-            this.ErrorCountLabel.Size = new System.Drawing.Size(40, 15);
-            this.ErrorCountLabel.TabIndex = 15;
-            this.ErrorCountLabel.Text = "Errors:";
-            // 
             // LastUpdatedLabel
             // 
             this.LastUpdatedLabel.AutoSize = true;
@@ -248,13 +218,9 @@ namespace TrexMinerGUI
             this.StatisticsBox.Controls.Add(this.DurationTextBox);
             this.StatisticsBox.Controls.Add(this.LastUpdatedLabel);
             this.StatisticsBox.Controls.Add(this.SpeedTextBox);
-            this.StatisticsBox.Controls.Add(this.ErrorCountLabel);
             this.StatisticsBox.Controls.Add(this.PowerTextBox);
-            this.StatisticsBox.Controls.Add(this.WarnCountLabel);
             this.StatisticsBox.Controls.Add(this.FanSpeedTextBox);
-            this.StatisticsBox.Controls.Add(this.ErrorCountTextBox);
             this.StatisticsBox.Controls.Add(this.TempTextBox);
-            this.StatisticsBox.Controls.Add(this.WarnCountTextBox);
             this.StatisticsBox.Controls.Add(this.SpeedLabel);
             this.StatisticsBox.Controls.Add(this.TempLabel);
             this.StatisticsBox.Controls.Add(this.PowerLabel);
@@ -270,7 +236,7 @@ namespace TrexMinerGUI
             // 
             this.StartStopButton.BackgroundImage = global::TrexMinerGUI.Properties.Resources.Start_icon;
             this.StartStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.StartStopButton.Location = new System.Drawing.Point(265, 175);
+            this.StartStopButton.Location = new System.Drawing.Point(264, 295);
             this.StartStopButton.Name = "StartStopButton";
             this.StartStopButton.Size = new System.Drawing.Size(33, 30);
             this.StartStopButton.TabIndex = 21;
@@ -421,11 +387,78 @@ namespace TrexMinerGUI
             this.VersionLabel.TabIndex = 23;
             this.VersionLabel.Text = "Version";
             // 
+            // SessionGroupBox
+            // 
+            this.SessionGroupBox.Controls.Add(this.SessionStartedAtTextBox);
+            this.SessionGroupBox.Controls.Add(this.StartedAtLabel);
+            this.SessionGroupBox.Controls.Add(this.ErrorCountLabel);
+            this.SessionGroupBox.Controls.Add(this.WarnCountLabel);
+            this.SessionGroupBox.Controls.Add(this.ErrorCountTextBox);
+            this.SessionGroupBox.Controls.Add(this.WarnCountTextBox);
+            this.SessionGroupBox.Location = new System.Drawing.Point(265, 175);
+            this.SessionGroupBox.Name = "SessionGroupBox";
+            this.SessionGroupBox.Size = new System.Drawing.Size(391, 114);
+            this.SessionGroupBox.TabIndex = 24;
+            this.SessionGroupBox.TabStop = false;
+            this.SessionGroupBox.Text = "Session";
+            // 
+            // ErrorCountLabel
+            // 
+            this.ErrorCountLabel.AutoSize = true;
+            this.ErrorCountLabel.Location = new System.Drawing.Point(6, 81);
+            this.ErrorCountLabel.Name = "ErrorCountLabel";
+            this.ErrorCountLabel.Size = new System.Drawing.Size(40, 15);
+            this.ErrorCountLabel.TabIndex = 19;
+            this.ErrorCountLabel.Text = "Errors:";
+            // 
+            // WarnCountLabel
+            // 
+            this.WarnCountLabel.AutoSize = true;
+            this.WarnCountLabel.Location = new System.Drawing.Point(6, 52);
+            this.WarnCountLabel.Name = "WarnCountLabel";
+            this.WarnCountLabel.Size = new System.Drawing.Size(60, 15);
+            this.WarnCountLabel.TabIndex = 18;
+            this.WarnCountLabel.Text = "Warnings:";
+            // 
+            // ErrorCountTextBox
+            // 
+            this.ErrorCountTextBox.Enabled = false;
+            this.ErrorCountTextBox.Location = new System.Drawing.Point(75, 78);
+            this.ErrorCountTextBox.Name = "ErrorCountTextBox";
+            this.ErrorCountTextBox.Size = new System.Drawing.Size(100, 23);
+            this.ErrorCountTextBox.TabIndex = 17;
+            // 
+            // WarnCountTextBox
+            // 
+            this.WarnCountTextBox.Enabled = false;
+            this.WarnCountTextBox.Location = new System.Drawing.Point(75, 49);
+            this.WarnCountTextBox.Name = "WarnCountTextBox";
+            this.WarnCountTextBox.Size = new System.Drawing.Size(100, 23);
+            this.WarnCountTextBox.TabIndex = 16;
+            // 
+            // StartedAtLabel
+            // 
+            this.StartedAtLabel.AutoSize = true;
+            this.StartedAtLabel.Location = new System.Drawing.Point(7, 23);
+            this.StartedAtLabel.Name = "StartedAtLabel";
+            this.StartedAtLabel.Size = new System.Drawing.Size(60, 15);
+            this.StartedAtLabel.TabIndex = 20;
+            this.StartedAtLabel.Text = "Started at:";
+            // 
+            // SessionStartedAtTextBox
+            // 
+            this.SessionStartedAtTextBox.Enabled = false;
+            this.SessionStartedAtTextBox.Location = new System.Drawing.Point(75, 20);
+            this.SessionStartedAtTextBox.Name = "SessionStartedAtTextBox";
+            this.SessionStartedAtTextBox.Size = new System.Drawing.Size(100, 23);
+            this.SessionStartedAtTextBox.TabIndex = 21;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 341);
+            this.Controls.Add(this.SessionGroupBox);
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.SettingsBox);
             this.Controls.Add(this.StartStopButton);
@@ -441,6 +474,8 @@ namespace TrexMinerGUI
             this.StatisticsBox.PerformLayout();
             this.SettingsBox.ResumeLayout(false);
             this.SettingsBox.PerformLayout();
+            this.SessionGroupBox.ResumeLayout(false);
+            this.SessionGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -460,10 +495,6 @@ namespace TrexMinerGUI
         private System.Windows.Forms.Label PowerLabel;
         private System.Windows.Forms.Label FanSpeedLabel;
         private System.Windows.Forms.Label TempLabel;
-        private System.Windows.Forms.TextBox WarnCountTextBox;
-        private System.Windows.Forms.TextBox ErrorCountTextBox;
-        private System.Windows.Forms.Label WarnCountLabel;
-        private System.Windows.Forms.Label ErrorCountLabel;
         private System.Windows.Forms.Label LastUpdatedLabel;
         private System.Windows.Forms.Label LastUpdatedText;
         private System.Windows.Forms.Label EfficiencyLabel;
@@ -485,5 +516,12 @@ namespace TrexMinerGUI
         private System.Windows.Forms.Button SaveMinerArgButton;
         private System.Windows.Forms.ToolTip TheToolTip;
         private System.Windows.Forms.Label VersionLabel;
+        private System.Windows.Forms.GroupBox SessionGroupBox;
+        private System.Windows.Forms.Label ErrorCountLabel;
+        private System.Windows.Forms.Label WarnCountLabel;
+        private System.Windows.Forms.TextBox ErrorCountTextBox;
+        private System.Windows.Forms.TextBox WarnCountTextBox;
+        private System.Windows.Forms.TextBox SessionStartedAtTextBox;
+        private System.Windows.Forms.Label StartedAtLabel;
     }
 }

@@ -223,5 +223,37 @@ namespace TrexMinerGUI
             if (IsArgsChanged)
                 SaveMinerArg(sender, e);
         }
+
+        private void WarningCountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = Program.TheTrexWrapper.GetWarningLogPathForCurrentSession(),
+                    UseShellExecute = true
+                });
+            }
+            catch
+            {
+                MessageBox.Show("There are no warnings to show!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ErrorCountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = Program.TheTrexWrapper.GetErrorLogPathForCurrentSession(),
+                    UseShellExecute = true
+                });
+            }
+            catch
+            {
+                MessageBox.Show("There are no errors to show!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

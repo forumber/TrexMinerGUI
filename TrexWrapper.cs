@@ -157,6 +157,11 @@ namespace TrexMinerGUI
                 Stop();
             }
 
+            while (IsStopping)
+            {
+                Task.Delay(100).Wait();
+            }
+
             if (!File.Exists(Program.ExecutionPath + "t-rex.exe"))
             {
                 Task.Run(() => Program.TheSelfUpdate.UpdateTrex(@"https://trex-miner.com/download/t-rex-0.20.4-win.zip"));
@@ -277,6 +282,11 @@ namespace TrexMinerGUI
                 return;
 
             IsStopping = true;
+
+            while (IsStarting)
+            {
+                Task.Delay(100).Wait();
+            }
 
             IsTerminatedByGUI = true;
 

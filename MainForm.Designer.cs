@@ -45,8 +45,7 @@ namespace TrexMinerGUI
             this.EfficiencyTextBox = new System.Windows.Forms.TextBox();
             this.StatisticsBox = new System.Windows.Forms.GroupBox();
             this.StartStopButton = new System.Windows.Forms.Button();
-            this.TimerStatisticsUpdate = new System.Windows.Forms.Timer(this.components);
-            this.TimerStartStopButton = new System.Windows.Forms.Timer(this.components);
+            this.TimerUpdateForm = new System.Windows.Forms.Timer(this.components);
             this.SettingsBox = new System.Windows.Forms.GroupBox();
             this.SaveMinerArgButton = new System.Windows.Forms.Button();
             this.MinerArgsLabel = new System.Windows.Forms.LinkLabel();
@@ -244,16 +243,10 @@ namespace TrexMinerGUI
             this.StartStopButton.UseVisualStyleBackColor = true;
             this.StartStopButton.Click += new System.EventHandler(this.StartStopButton_Click);
             // 
-            // TimerStatisticsUpdate
+            // TimerUpdateForm
             // 
-            this.TimerStatisticsUpdate.Enabled = true;
-            this.TimerStatisticsUpdate.Interval = 1000;
-            this.TimerStatisticsUpdate.Tick += new System.EventHandler(this.UpdateStatistics);
-            // 
-            // TimerStartStopButton
-            // 
-            this.TimerStartStopButton.Enabled = true;
-            this.TimerStartStopButton.Tick += new System.EventHandler(this.TimerStartStopButton_Tick);
+            this.TimerUpdateForm.Enabled = true;
+            this.TimerUpdateForm.Tick += new System.EventHandler(this.UpdateForm);
             // 
             // SettingsBox
             // 
@@ -470,7 +463,6 @@ namespace TrexMinerGUI
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrexMinerGUI";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.Shown += new System.EventHandler(this.UpdateStatistics);
             this.StatisticsBox.ResumeLayout(false);
             this.StatisticsBox.PerformLayout();
             this.SettingsBox.ResumeLayout(false);
@@ -503,8 +495,7 @@ namespace TrexMinerGUI
         private System.ComponentModel.IContainer components;
         private System.Windows.Forms.GroupBox StatisticsBox;
         private System.Windows.Forms.Button StartStopButton;
-        private System.Windows.Forms.Timer TimerStatisticsUpdate;
-        private System.Windows.Forms.Timer TimerStartStopButton;
+        private System.Windows.Forms.Timer TimerUpdateForm;
         private System.Windows.Forms.GroupBox SettingsBox;
         private System.Windows.Forms.LinkLabel MinerArgsLabel;
         private System.Windows.Forms.TextBox MinerArgsTextBox;

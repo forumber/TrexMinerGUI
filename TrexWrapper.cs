@@ -24,7 +24,7 @@ namespace TrexMinerGUI
                 Power = "0";
                 Efficiency = "0";
                 Temp = "0";
-                LastUpdated = "";
+                LastUpdated = "-";
             }
         }
 
@@ -56,6 +56,7 @@ namespace TrexMinerGUI
             IsStopping = false;
             IsTerminatedByGUI = false;
             TheTrexStatisctics = new TrexStatisctics();
+            Session = "-";
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)

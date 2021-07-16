@@ -3,7 +3,7 @@ using TrexMinerGUI.Properties;
 
 namespace TrexMinerGUI
 {
-    partial class StatisticsForm
+    partial class MainForm
     {
         /// <summary>
         /// Clean up any resources being used.
@@ -435,7 +435,7 @@ namespace TrexMinerGUI
             this.Name = "StatisticsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrexMinerGUI";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StatisticsForm_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Shown += new System.EventHandler(this.UpdateStatistics);
             this.StatisticsBox.ResumeLayout(false);
             this.StatisticsBox.PerformLayout();

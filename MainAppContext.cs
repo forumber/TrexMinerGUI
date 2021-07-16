@@ -34,16 +34,16 @@ namespace TrexMinerGUI
             };
 
             trayIcon.Click += TrayIcon_Click;
-            trayIcon.DoubleClick += ShowStatisticsForm;
+            trayIcon.DoubleClick += ShowMainForm;
         }
 
-        private void ShowStatisticsForm(object sender, EventArgs e)
+        private void ShowMainForm(object sender, EventArgs e)
         {
-            if (Application.OpenForms.OfType<StatisticsForm>().Count() == 0)
+            if (Application.OpenForms.OfType<MainForm>().Count() == 0)
             {
-                using (var TheStatisticsForm = new StatisticsForm())
+                using (var TheMainForm = new MainForm())
                 {
-                    TheStatisticsForm.ShowDialog();
+                    TheMainForm.ShowDialog();
                 }
             }
         }

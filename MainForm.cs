@@ -6,7 +6,7 @@ using TrexMinerGUI.Properties;
 
 namespace TrexMinerGUI
 {
-    public partial class StatisticsForm : Form
+    public partial class MainForm : Form
     {
         enum ButtonBackgroundImage
         {
@@ -20,7 +20,7 @@ namespace TrexMinerGUI
 
         private bool IsInitialized { get; set; }
 
-        public StatisticsForm()
+        public MainForm()
         {
             IsInitialized = false;
 
@@ -213,7 +213,7 @@ namespace TrexMinerGUI
             IsArgsChanged = false;
         }
 
-        private void StatisticsForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (IsArgsChanged)
                 SaveMinerArg(sender, e);

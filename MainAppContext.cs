@@ -17,10 +17,9 @@ namespace TrexMinerGUI
             TheContextMenu.Items.Add("Miner: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 0
             TheContextMenu.Items.Add("Süre: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 1
             TheContextMenu.Items.Add("Hız: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 2
-            TheContextMenu.Items.Add("Ayarlar", null, OpenSettings_Event); // 3
-            TheContextMenu.Items.Add("Çalıştır", null, (sender, eventArgs) => Program.TheTrexWrapper.Start()); // 4
-            TheContextMenu.Items.Add("Durdur", null, (sender, eventArgs) => Program.TheTrexWrapper.Stop()); // 5
-            TheContextMenu.Items.Add("Kapat", System.Drawing.SystemIcons.Error.ToBitmap(), (sender, eventArgs) => Application.Exit()); // 6
+            TheContextMenu.Items.Add("Çalıştır", null, (sender, eventArgs) => Program.TheTrexWrapper.Start()); // 3
+            TheContextMenu.Items.Add("Durdur", null, (sender, eventArgs) => Program.TheTrexWrapper.Stop()); // 4
+            TheContextMenu.Items.Add("Kapat", System.Drawing.SystemIcons.Error.ToBitmap(), (sender, eventArgs) => Application.Exit()); // 5
 
             TheContextMenu.Items[0].Enabled = false;
             TheContextMenu.Items[1].Enabled = false;
@@ -35,25 +34,14 @@ namespace TrexMinerGUI
             };
 
             trayIcon.Click += TrayIcon_Click;
-            trayIcon.DoubleClick += TrayIcon_DoubleClick;
+            trayIcon.DoubleClick += ShowStatisticsForm;
         }
 
-        private void OpenSettings_Event(object sender, EventArgs e)
-        {
-            if (Application.OpenForms.OfType<SettingsForm>().Count() == 0)
-            {
-                using (SettingsForm TheSettingsForm = new SettingsForm())
-                {
-                    TheSettingsForm.ShowDialog();
-                }
-            }
-        }
-
-        private void TrayIcon_DoubleClick(object sender, EventArgs e)
+        private void ShowStatisticsForm(object sender, EventArgs e)
         {
             if (Application.OpenForms.OfType<StatisticsForm>().Count() == 0)
             {
-                using (StatisticsForm TheStatisticsForm = new StatisticsForm())
+                using (var TheStatisticsForm = new StatisticsForm())
                 {
                     TheStatisticsForm.ShowDialog();
                 }
@@ -87,12 +75,12 @@ namespace TrexMinerGUI
 
             if (Process.GetProcessesByName("t-rex").Length == 0)
             {
-                TheContextMenu.Items[4].Visible = true;
-                TheContextMenu.Items[5].Visible = false;
+                TheContextMenu.Items[3].Visible = true;
+                TheContextMenu.Items[4].Visible = false;
             } else
             {
-                TheContextMenu.Items[4].Visible = false;
-                TheContextMenu.Items[5].Visible = true;
+                TheContextMenu.Items[3].Visible = false;
+                TheContextMenu.Items[4].Visible = true;
             }
         }
     }

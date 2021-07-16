@@ -55,9 +55,9 @@ namespace TrexMinerGUI
                 ProfileToApplyOnMinerClose = "1";
 
                 Task.Run(() => {
-                    using (SettingsForm TheSettingsForm = new SettingsForm())
+                    using (var TheStatisticsForm = new StatisticsForm())
                     {
-                        TheSettingsForm.ShowDialog();
+                        TheStatisticsForm.ShowDialog();
                     }
                 });
             }

@@ -65,6 +65,8 @@ namespace TrexMinerGUI
             this.StartedAtLabel = new System.Windows.Forms.Label();
             this.ErrorCountTextBox = new System.Windows.Forms.TextBox();
             this.WarnCountTextBox = new System.Windows.Forms.TextBox();
+            this.SharesLabel = new System.Windows.Forms.Label();
+            this.SharesTextBox = new System.Windows.Forms.TextBox();
             this.StatisticsBox.SuspendLayout();
             this.SettingsBox.SuspendLayout();
             this.SessionGroupBox.SuspendLayout();
@@ -383,6 +385,8 @@ namespace TrexMinerGUI
             // 
             // SessionGroupBox
             // 
+            this.SessionGroupBox.Controls.Add(this.SharesTextBox);
+            this.SessionGroupBox.Controls.Add(this.SharesLabel);
             this.SessionGroupBox.Controls.Add(this.ErrorCountLinkLabel);
             this.SessionGroupBox.Controls.Add(this.WarnCountLinkLabel);
             this.SessionGroupBox.Controls.Add(this.SessionStartedAtTextBox);
@@ -450,6 +454,23 @@ namespace TrexMinerGUI
             this.WarnCountTextBox.Name = "WarnCountTextBox";
             this.WarnCountTextBox.Size = new System.Drawing.Size(116, 23);
             this.WarnCountTextBox.TabIndex = 16;
+            // 
+            // SharesLabel
+            // 
+            this.SharesLabel.AutoSize = true;
+            this.SharesLabel.Location = new System.Drawing.Point(207, 23);
+            this.SharesLabel.Name = "SharesLabel";
+            this.SharesLabel.Size = new System.Drawing.Size(44, 15);
+            this.SharesLabel.TabIndex = 24;
+            this.SharesLabel.Text = "Shares:";
+            // 
+            // SharesTextBox
+            // 
+            this.SharesTextBox.Enabled = false;
+            this.SharesTextBox.Location = new System.Drawing.Point(257, 20);
+            this.SharesTextBox.Name = "SharesTextBox";
+            this.SharesTextBox.Size = new System.Drawing.Size(116, 23);
+            this.SharesTextBox.TabIndex = 25;
             // 
             // MainForm
             // 
@@ -519,5 +540,7 @@ namespace TrexMinerGUI
         private System.Windows.Forms.Label StartedAtLabel;
         private System.Windows.Forms.LinkLabel ErrorCountLinkLabel;
         private System.Windows.Forms.LinkLabel WarnCountLinkLabel;
+        private System.Windows.Forms.TextBox SharesTextBox;
+        private System.Windows.Forms.Label SharesLabel;
     }
 }

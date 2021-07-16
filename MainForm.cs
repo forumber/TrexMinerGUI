@@ -117,6 +117,7 @@ namespace TrexMinerGUI
             SessionStartedAtTextBox.Text = Program.TheTrexWrapper.Session;
             WarnCountTextBox.Text = Program.TheTrexWrapper.GetWarnCount().ToString();
             ErrorCountTextBox.Text = Program.TheTrexWrapper.GetErrorCount().ToString();
+            SharesTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Shares;
             #endregion
         }
 

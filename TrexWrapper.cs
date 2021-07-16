@@ -15,6 +15,7 @@ namespace TrexMinerGUI
             public string Power { get; set; }
             public string Efficiency { get; set; }
             public string Temp { get; set; }
+            public string Shares { get; set; }
             public string LastUpdated { get; set; }
 
             public TrexStatisctics()
@@ -24,6 +25,7 @@ namespace TrexMinerGUI
                 Power = "0";
                 Efficiency = "0";
                 Temp = "0";
+                Shares = @"0/0";
                 LastUpdated = "-";
             }
         }
@@ -91,6 +93,7 @@ namespace TrexMinerGUI
                         TheTrexStatisctics.Power = Statistics[2].Substring(3);
                         TheTrexStatisctics.FanSpeed = Statistics[3].Substring(3);
                         TheTrexStatisctics.Efficiency = Statistics[4].Substring(3).Replace(']', ' ');
+                        TheTrexStatisctics.Shares = Statistics[5].Split(" ")[1];
                     }
                     catch
                     {

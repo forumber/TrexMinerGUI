@@ -150,8 +150,6 @@ namespace TrexMinerGUI
                 return;
             }
 
-            IsStarting = true;
-
             if (Process.GetProcessesByName("t-rex").Length > 0)
             {
                 Stop();
@@ -161,6 +159,8 @@ namespace TrexMinerGUI
             {
                 Task.Delay(100).Wait();
             }
+
+            IsStarting = true;
 
             if (!File.Exists(Program.ExecutionPath + "t-rex.exe"))
             {
@@ -281,12 +281,12 @@ namespace TrexMinerGUI
             if (IsStopping)
                 return;
 
-            IsStopping = true;
-
             while (IsStarting)
             {
                 Task.Delay(100).Wait();
             }
+
+            IsStopping = true;
 
             IsTerminatedByGUI = true;
 

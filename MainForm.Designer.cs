@@ -60,12 +60,12 @@ namespace TrexMinerGUI
             this.TheToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.VersionLabel = new System.Windows.Forms.Label();
             this.SessionGroupBox = new System.Windows.Forms.GroupBox();
+            this.SessionStartedAtTextBox = new System.Windows.Forms.TextBox();
+            this.StartedAtLabel = new System.Windows.Forms.Label();
             this.ErrorCountLabel = new System.Windows.Forms.Label();
             this.WarnCountLabel = new System.Windows.Forms.Label();
             this.ErrorCountTextBox = new System.Windows.Forms.TextBox();
             this.WarnCountTextBox = new System.Windows.Forms.TextBox();
-            this.StartedAtLabel = new System.Windows.Forms.Label();
-            this.SessionStartedAtTextBox = new System.Windows.Forms.TextBox();
             this.StatisticsBox.SuspendLayout();
             this.SettingsBox.SuspendLayout();
             this.SessionGroupBox.SuspendLayout();
@@ -176,7 +176,7 @@ namespace TrexMinerGUI
             // LastUpdatedLabel
             // 
             this.LastUpdatedLabel.AutoSize = true;
-            this.LastUpdatedLabel.Location = new System.Drawing.Point(10, 291);
+            this.LastUpdatedLabel.Location = new System.Drawing.Point(8, 232);
             this.LastUpdatedLabel.Name = "LastUpdatedLabel";
             this.LastUpdatedLabel.Size = new System.Drawing.Size(72, 15);
             this.LastUpdatedLabel.TabIndex = 16;
@@ -185,10 +185,11 @@ namespace TrexMinerGUI
             // LastUpdatedText
             // 
             this.LastUpdatedText.AutoSize = true;
-            this.LastUpdatedText.Location = new System.Drawing.Point(88, 291);
+            this.LastUpdatedText.Location = new System.Drawing.Point(77, 232);
             this.LastUpdatedText.Name = "LastUpdatedText";
-            this.LastUpdatedText.Size = new System.Drawing.Size(0, 15);
+            this.LastUpdatedText.Size = new System.Drawing.Size(94, 15);
             this.LastUpdatedText.TabIndex = 17;
+            this.LastUpdatedText.Text = "LastUpdatedText";
             // 
             // EfficiencyLabel
             // 
@@ -227,7 +228,7 @@ namespace TrexMinerGUI
             this.StatisticsBox.Controls.Add(this.FanSpeedLabel);
             this.StatisticsBox.Location = new System.Drawing.Point(12, 12);
             this.StatisticsBox.Name = "StatisticsBox";
-            this.StatisticsBox.Size = new System.Drawing.Size(246, 316);
+            this.StatisticsBox.Size = new System.Drawing.Size(246, 259);
             this.StatisticsBox.TabIndex = 20;
             this.StatisticsBox.TabStop = false;
             this.StatisticsBox.Text = "Statistics";
@@ -236,7 +237,7 @@ namespace TrexMinerGUI
             // 
             this.StartStopButton.BackgroundImage = global::TrexMinerGUI.Properties.Resources.Start_icon;
             this.StartStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.StartStopButton.Location = new System.Drawing.Point(264, 295);
+            this.StartStopButton.Location = new System.Drawing.Point(12, 277);
             this.StartStopButton.Name = "StartStopButton";
             this.StartStopButton.Size = new System.Drawing.Size(33, 30);
             this.StartStopButton.TabIndex = 21;
@@ -381,7 +382,7 @@ namespace TrexMinerGUI
             // VersionLabel
             // 
             this.VersionLabel.AutoSize = true;
-            this.VersionLabel.Location = new System.Drawing.Point(617, 314);
+            this.VersionLabel.Location = new System.Drawing.Point(611, 292);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(45, 15);
             this.VersionLabel.TabIndex = 23;
@@ -401,6 +402,23 @@ namespace TrexMinerGUI
             this.SessionGroupBox.TabIndex = 24;
             this.SessionGroupBox.TabStop = false;
             this.SessionGroupBox.Text = "Session";
+            // 
+            // SessionStartedAtTextBox
+            // 
+            this.SessionStartedAtTextBox.Enabled = false;
+            this.SessionStartedAtTextBox.Location = new System.Drawing.Point(75, 20);
+            this.SessionStartedAtTextBox.Name = "SessionStartedAtTextBox";
+            this.SessionStartedAtTextBox.Size = new System.Drawing.Size(116, 23);
+            this.SessionStartedAtTextBox.TabIndex = 21;
+            // 
+            // StartedAtLabel
+            // 
+            this.StartedAtLabel.AutoSize = true;
+            this.StartedAtLabel.Location = new System.Drawing.Point(7, 23);
+            this.StartedAtLabel.Name = "StartedAtLabel";
+            this.StartedAtLabel.Size = new System.Drawing.Size(60, 15);
+            this.StartedAtLabel.TabIndex = 20;
+            this.StartedAtLabel.Text = "Started at:";
             // 
             // ErrorCountLabel
             // 
@@ -425,7 +443,7 @@ namespace TrexMinerGUI
             this.ErrorCountTextBox.Enabled = false;
             this.ErrorCountTextBox.Location = new System.Drawing.Point(75, 78);
             this.ErrorCountTextBox.Name = "ErrorCountTextBox";
-            this.ErrorCountTextBox.Size = new System.Drawing.Size(100, 23);
+            this.ErrorCountTextBox.Size = new System.Drawing.Size(116, 23);
             this.ErrorCountTextBox.TabIndex = 17;
             // 
             // WarnCountTextBox
@@ -433,31 +451,14 @@ namespace TrexMinerGUI
             this.WarnCountTextBox.Enabled = false;
             this.WarnCountTextBox.Location = new System.Drawing.Point(75, 49);
             this.WarnCountTextBox.Name = "WarnCountTextBox";
-            this.WarnCountTextBox.Size = new System.Drawing.Size(100, 23);
+            this.WarnCountTextBox.Size = new System.Drawing.Size(116, 23);
             this.WarnCountTextBox.TabIndex = 16;
-            // 
-            // StartedAtLabel
-            // 
-            this.StartedAtLabel.AutoSize = true;
-            this.StartedAtLabel.Location = new System.Drawing.Point(7, 23);
-            this.StartedAtLabel.Name = "StartedAtLabel";
-            this.StartedAtLabel.Size = new System.Drawing.Size(60, 15);
-            this.StartedAtLabel.TabIndex = 20;
-            this.StartedAtLabel.Text = "Started at:";
-            // 
-            // SessionStartedAtTextBox
-            // 
-            this.SessionStartedAtTextBox.Enabled = false;
-            this.SessionStartedAtTextBox.Location = new System.Drawing.Point(75, 20);
-            this.SessionStartedAtTextBox.Name = "SessionStartedAtTextBox";
-            this.SessionStartedAtTextBox.Size = new System.Drawing.Size(100, 23);
-            this.SessionStartedAtTextBox.TabIndex = 21;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 341);
+            this.ClientSize = new System.Drawing.Size(667, 313);
             this.Controls.Add(this.SessionGroupBox);
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.SettingsBox);

@@ -73,14 +73,29 @@ namespace TrexMinerGUI
 
             TheContextMenu.Items[1].Text = "Duration: " + Program.TheStopWatchWrapper.GetTotalElapsedTime().TotalHours.ToString("0.##") + " hours";
 
-            if (Process.GetProcessesByName("t-rex").Length == 0)
-            {
-                TheContextMenu.Items[3].Visible = true;
-                TheContextMenu.Items[4].Visible = false;
-            } else
+            if (Program.TheTrexWrapper.IsStarting || Program.TheSelfUpdate.IsTrexUpdating)
             {
                 TheContextMenu.Items[3].Visible = false;
                 TheContextMenu.Items[4].Visible = true;
+                TheContextMenu.Items[4].Enabled = false;
+            }
+            else if (Program.TheTrexWrapper.IsRunning)
+            {
+                TheContextMenu.Items[3].Visible = false;
+                TheContextMenu.Items[4].Visible = true;
+                TheContextMenu.Items[4].Enabled = true;
+            }
+            else if (Program.TheTrexWrapper.IsStopping)
+            {
+                TheContextMenu.Items[3].Visible = true;
+                TheContextMenu.Items[3].Enabled = false;
+                TheContextMenu.Items[4].Visible = false;
+            }
+            else
+            {
+                TheContextMenu.Items[3].Visible = true;
+                TheContextMenu.Items[3].Enabled = true;
+                TheContextMenu.Items[4].Visible = false;
             }
         }
     }

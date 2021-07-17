@@ -32,18 +32,6 @@ namespace TrexMinerGUI
             FreeConsole();
         }
 
-        public static string CalculateMD5(string filename)
-        {
-            using (var md5 = MD5.Create())
-            {
-                using (var stream = File.OpenRead(filename))
-                {
-                    var hash = md5.ComputeHash(stream);
-                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-                }
-            }
-        }
-
         // Credits: https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
         public static void WriteAllTextWithBackup(string path, string contents)
         {

@@ -104,6 +104,11 @@ namespace TrexMinerGUI
 
         public void CleanUp()
         {
+            var MD5Files = new DirectoryInfo(Program.ExecutionPath).GetFiles(@"*md5*");
+
+            foreach (var MD5File in MD5Files)
+                MD5File.Delete();
+
             File.Delete(Program.ExecutionPath + UpdateFileName);
             Directory.Delete(Program.ExecutionPath + UpdateFolderName, recursive: true);
         }

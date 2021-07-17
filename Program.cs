@@ -56,11 +56,6 @@ namespace TrexMinerGUI
                     Process.Start(Info);
                     System.Environment.Exit(0);
                 }
-                else if (args[0] == "-generatemd5first")
-                {
-                    ExternalMethods.WriteAllTextWithBackup(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\" + System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + ".bin" + ".md5", 
-                        ExternalMethods.CalculateMD5(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\" + System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + ".bin"));
-                }
             }
 
             TheConfig = new Config();

@@ -29,22 +29,11 @@ namespace TrexMinerGUI
         public void SaveToFile()
         {
             ExternalMethods.WriteAllTextWithBackup(Program.ExecutionPath + FileName, GetTotalElapsedTime().ToString("G"));
-            ExternalMethods.WriteAllTextWithBackup(Program.ExecutionPath + FileName + ".md5", ExternalMethods.CalculateMD5(Program.ExecutionPath + FileName));
-            
         }
 
         private void LoadFromFile()
         {
-            if (File.Exists(Program.ExecutionPath + FileName) && File.Exists(Program.ExecutionPath + FileName + ".md5"))
-            {
-                if (ExternalMethods.CalculateMD5(Program.ExecutionPath + FileName) != File.ReadAllText(Program.ExecutionPath + FileName + ".md5"))
-                    throw new MD5Exception();
-            }
-            else if (File.Exists(Program.ExecutionPath + FileName) && !File.Exists(Program.ExecutionPath + FileName + ".md5"))
-            {
-                throw new MD5Exception();
-            }
-            else
+            if (!File.Exists(Program.ExecutionPath + FileName))
             {
                 ElapsedTimeSoFar = new TimeSpan();
                 return;

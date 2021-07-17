@@ -53,9 +53,9 @@ namespace TrexMinerGUI
         private void StartStopButton_Click(object sender, EventArgs e)
         {
             if (Program.TheTrexWrapper.IsRunning)
-                Program.TheTrexWrapper.Stop();
+                Task.Run(() => Program.TheTrexWrapper.Stop());
             else
-                Program.TheTrexWrapper.Start();
+                Task.Run(() => Program.TheTrexWrapper.Start());
         }
 
         private void UpdateForm(object sender, EventArgs e)

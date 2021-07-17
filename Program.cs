@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TrexMinerGUI
@@ -69,7 +70,7 @@ namespace TrexMinerGUI
             TheTrexWrapper = new TrexWrapper();
 
             if (TheConfig.StartMiningOnAppStart)
-                TheTrexWrapper.Start();
+                Task.Run(() => Program.TheTrexWrapper.Start());
 
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
 

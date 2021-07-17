@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace TrexMinerGUI
 {
@@ -17,8 +18,8 @@ namespace TrexMinerGUI
             TheContextMenu.Items.Add("Miner: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 0
             TheContextMenu.Items.Add("Duration: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 1
             TheContextMenu.Items.Add("Speed: ", System.Drawing.SystemIcons.Information.ToBitmap(), null); // 2
-            TheContextMenu.Items.Add("Start", null, (sender, eventArgs) => Program.TheTrexWrapper.Start()); // 3
-            TheContextMenu.Items.Add("Stop", null, (sender, eventArgs) => Program.TheTrexWrapper.Stop()); // 4
+            TheContextMenu.Items.Add("Start", null, (sender, eventArgs) => Task.Run(() => Program.TheTrexWrapper.Start())); // 3
+            TheContextMenu.Items.Add("Stop", null, (sender, eventArgs) => Task.Run(() => Program.TheTrexWrapper.Stop())); // 4
             TheContextMenu.Items.Add("Exit", System.Drawing.SystemIcons.Error.ToBitmap(), (sender, eventArgs) => Application.Exit()); // 5
 
             TheContextMenu.Items[0].Enabled = false;

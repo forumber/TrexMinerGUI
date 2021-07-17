@@ -46,6 +46,7 @@ namespace TrexMinerGUI
             return false;
         }
 
+        #region REMOVE_ON_NEXT_UPDATE
         public static bool IsOldNameInTS()
         {
             // THIS CAUSES A DELAY, FIND A BETTER SOLUTION!
@@ -73,6 +74,7 @@ namespace TrexMinerGUI
                 AddToTS();
             }
         }
+        #endregion
 
     }
 }

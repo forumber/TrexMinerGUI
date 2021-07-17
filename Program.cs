@@ -74,7 +74,9 @@ namespace TrexMinerGUI
                 TheSelfUpdate.CleanUp();
             } catch { }
 
+            #region REMOVE_ON_NEXT_UPDATE
             TaskSchedulerOperations.UpdateTS();
+            #endregion
 
             Application.Run(TheMainAppContext);
         }

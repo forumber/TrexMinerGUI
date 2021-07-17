@@ -5,7 +5,6 @@ namespace TrexMinerGUI
     public static class TaskSchedulerOperations
     {
         public static string TaskName = "TrexMinerGUI";
-        public static string OldTaskName = "ETHSayac";
 
         public static void AddToTS()
         {
@@ -45,36 +44,5 @@ namespace TrexMinerGUI
 
             return false;
         }
-
-        #region REMOVE_ON_NEXT_UPDATE
-        public static bool IsOldNameInTS()
-        {
-            // THIS CAUSES A DELAY, FIND A BETTER SOLUTION!
-            using (TaskService ts = new TaskService())
-                foreach (var TheTask in ts.RootFolder.AllTasks)
-                    if (TheTask.Name == OldTaskName)
-                        return true;
-
-            return false;
-        }
-
-        public static void UpdateTS()
-        {
-            if (IsOldNameInTS())
-            {
-                try
-                {
-                    using (TaskService ts = new TaskService())
-                    {
-                        ts.RootFolder.DeleteTask(OldTaskName);
-                    }
-                }
-                catch { }
-
-                AddToTS();
-            }
-        }
-        #endregion
-
     }
 }

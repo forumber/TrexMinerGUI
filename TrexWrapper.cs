@@ -30,6 +30,13 @@ namespace TrexMinerGUI
             }
         }
 
+        enum LogCategory
+        {
+            NORMAL,
+            WARN,
+            ERROR
+        }
+
         private readonly Process TrexProcess;
 
         public bool IsRunning { get; set; }
@@ -38,6 +45,7 @@ namespace TrexMinerGUI
         public string Session { get; set; }
         public bool IsStarting { get; set; }
         public bool IsStopping { get; set; }
+        private LogCategory LastLogCategory { get; set; }
 
         public TrexWrapper()
         {
@@ -59,6 +67,7 @@ namespace TrexMinerGUI
             IsTerminatedByGUI = false;
             TheTrexStatisctics = new TrexStatisctics();
             Session = "-";
+            LastLogCategory = LogCategory.NORMAL;
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)
@@ -146,18 +155,41 @@ namespace TrexMinerGUI
             if (String.IsNullOrEmpty(LineToWrite))
                 return;
 
-            if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception") || LineToWrite.ToLower().Contains("fail"))
+            if (LineToWrite.StartsWith(DateTime.Today.ToString("yyyyMMdd")))
             {
-                File.AppendAllText(GetErrorLogPathForCurrentSession(), LineToWrite + Environment.NewLine);
-            }
-            else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
+                string Tag = LineToWrite.Split(' ')[2];
+
+                if (Tag == "ERROR:")
+                    LastLogCategory = LogCategory.ERROR;
+                else if (Tag == "WARN:" && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
+                    LastLogCategory = LogCategory.WARN;
+                else
+                {
+                    if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception") || LineToWrite.ToLower().Contains("fail"))
+                        LastLogCategory = LogCategory.ERROR;
+                    else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
+                        LastLogCategory = LogCategory.WARN;
+                    else
+                        LastLogCategory = LogCategory.NORMAL;
+                }
+            } // else use the last log catagory
+
+            string LogPathToWrite = "";
+
+            switch(LastLogCategory)
             {
-                File.AppendAllText(GetWarningLogPathForCurrentSession(), LineToWrite + Environment.NewLine);
+                case LogCategory.ERROR:
+                    LogPathToWrite = GetErrorLogPathForCurrentSession();
+                    break;
+                case LogCategory.WARN:
+                    LogPathToWrite = GetWarningLogPathForCurrentSession();
+                    break;
+                case LogCategory.NORMAL:
+                    LogPathToWrite = GetLogPathForCurrentSession();
+                    break;
             }
-            else
-            {
-                File.AppendAllText(GetLogPathForCurrentSession(), LineToWrite + Environment.NewLine);
-            }
+
+            File.AppendAllText(LogPathToWrite, LineToWrite + Environment.NewLine);
         }
 
         public void Start()
@@ -339,7 +371,7 @@ namespace TrexMinerGUI
         {
             try
             {
-                return File.ReadAllLines(GetWarningLogPathForCurrentSession()).Length;
+                return File.ReadAllLines(GetWarningLogPathForCurrentSession()).Where((TheString) => TheString.StartsWith(DateTime.Today.ToString("yyyy"))).Count();
             } catch
             {
                 return 0;
@@ -350,7 +382,7 @@ namespace TrexMinerGUI
         {
             try
             {
-                return File.ReadAllLines(GetErrorLogPathForCurrentSession()).Length;
+                return File.ReadAllLines(GetErrorLogPathForCurrentSession()).Where((TheString) => TheString.StartsWith(DateTime.Today.ToString("yyyy"))).Count();
             } catch
             {
                 return 0;

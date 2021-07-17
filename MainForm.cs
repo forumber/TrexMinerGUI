@@ -200,7 +200,7 @@ namespace TrexMinerGUI
             if (!IsArgsChanged)
             {
                 IsArgsChanged = true;
-                TheToolTip.Show("Kaydetmeyi unutmayın!", SaveMinerArgButton, 3000);
+                TheToolTip.Show(@"Don't forget to save!", SaveMinerArgButton, 3000);
             }
         }
 
@@ -213,7 +213,7 @@ namespace TrexMinerGUI
             {
                 Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheTrexWrapper.Start());
 
-                Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Miner yeniden başlatıldı", "MinerArgs değiştirildi", System.Windows.Forms.ToolTipIcon.Info);
+                Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Miner has been restarted", "MinerArgs has been changed", System.Windows.Forms.ToolTipIcon.Info);
             }
 
             IsArgsChanged = false;

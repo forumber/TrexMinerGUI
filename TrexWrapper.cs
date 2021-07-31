@@ -172,6 +172,10 @@ namespace TrexMinerGUI
                     else
                         LastLogCategory = LogCategory.NORMAL;
                 }
+            }
+            else if (LineToWrite.StartsWith("--"))
+            {
+                LastLogCategory = LogCategory.NORMAL;
             } // else use the last log catagory
 
             string LogPathToWrite = "";

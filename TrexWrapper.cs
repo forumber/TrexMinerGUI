@@ -41,7 +41,7 @@ namespace TrexMinerGUI
 
         public bool IsRunning { get; set; }
         private bool IsTerminatedByGUI { get; set; }
-        public TrexStatisctics TheTrexStatisctics { get; }
+        public TrexStatisctics TheTrexStatisctics { get; set; }
         public string Session { get; set; }
         public bool IsStarting { get; set; }
         public bool IsStopping { get; set; }
@@ -220,6 +220,8 @@ namespace TrexMinerGUI
             }
 
             IsStarting = true;
+
+            TheTrexStatisctics = new TrexStatisctics();
 
             Session = DateTime.Now.ToString("yyyyMMdd'-'HHmmss");
 

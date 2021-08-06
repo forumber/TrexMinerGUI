@@ -213,13 +213,13 @@ namespace TrexMinerGUI
                 Task.Delay(100).Wait();
             }
 
-            IsStarting = true;
-
             if (!File.Exists(Program.ExecutionPath + "t-rex.exe"))
             {
                 Task.Run(() => Program.TheSelfUpdate.UpdateTrex(@"https://trex-miner.com/download/t-rex-0.21.4-win.zip"));
                 return;
             }
+
+            IsStarting = true;
 
             Session = DateTime.Now.ToString("yyyyMMdd'-'HHmmss");
 

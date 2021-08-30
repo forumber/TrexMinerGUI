@@ -71,15 +71,6 @@ namespace TrexMinerGUI
                 }
                  
             }
-            else if (Program.TheTrexWrapper.IsRunning)
-            {
-                this.StartStopButton.Enabled = true;
-                if (buttonBackgroundImage == ButtonBackgroundImage.START)
-                {
-                    this.StartStopButton.BackgroundImage = Resources.Stop_red_icon;
-                    buttonBackgroundImage = ButtonBackgroundImage.STOP;
-                }
-            }
             else if (Program.TheTrexWrapper.IsStopping)
             {
                 this.StartStopButton.Enabled = false;
@@ -87,6 +78,15 @@ namespace TrexMinerGUI
                 {
                     this.StartStopButton.BackgroundImage = Resources.Start_icon;
                     buttonBackgroundImage = ButtonBackgroundImage.START;
+                }
+            }
+            else if (Program.TheTrexWrapper.IsRunning)
+            {
+                this.StartStopButton.Enabled = true;
+                if (buttonBackgroundImage == ButtonBackgroundImage.START)
+                {
+                    this.StartStopButton.BackgroundImage = Resources.Stop_red_icon;
+                    buttonBackgroundImage = ButtonBackgroundImage.STOP;
                 }
             }
             else

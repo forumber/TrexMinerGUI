@@ -8,28 +8,43 @@ namespace TrexMinerGUI
     public static class ExternalMethods
     {
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool AllocConsole();
+        private static extern bool AttachConsole(uint dwProcessId);
+
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        private static extern bool FreeConsole();
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool FreeConsole();
+        private static extern bool GenerateConsoleCtrlEvent(CtrlTypes dwCtrlEvent, uint dwProcessGroupId);
 
-        [DllImport("kernel32", SetLastError = true)]
-        static extern bool AttachConsole(int dwProcessId);
+        [DllImport("Kernel32", SetLastError = true)]
+        private static extern bool SetConsoleCtrlHandler(HandlerRoutine handler, bool add);
 
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
-
-        public static void OpenConsole()
+        enum CtrlTypes
         {
-            AllocConsole();
+            CTRL_C_EVENT = 0,
+            CTRL_BREAK_EVENT,
+            CTRL_CLOSE_EVENT,
+            CTRL_LOGOFF_EVENT = 5,
+            CTRL_SHUTDOWN_EVENT
         }
 
-        public static void CloseConsole()
+        private delegate bool HandlerRoutine(CtrlTypes CtrlType);
+
+        public static void StopProgram(System.Diagnostics.Process proc)
         {
-            FreeConsole();
+            if (AttachConsole((uint)proc.Id))
+            {
+                SetConsoleCtrlHandler(null, true);
+                GenerateConsoleCtrlEvent(CtrlTypes.CTRL_C_EVENT, 0);
+
+                proc.WaitForExit();
+
+                FreeConsole();
+
+                SetConsoleCtrlHandler(null, false);
+            }
+            else
+                throw new InvalidOperationException();
         }
 
         // Credits: https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk

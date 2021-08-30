@@ -161,13 +161,13 @@ namespace TrexMinerGUI
 
                 if (Tag == "ERROR:")
                     LastLogCategory = LogCategory.ERROR;
-                else if (Tag == "WARN:" && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
+                else if (Tag == "WARN:" && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity") || LineToWrite.ToLower().Contains("from console"))))
                     LastLogCategory = LogCategory.WARN;
                 else
                 {
                     if (LineToWrite.ToLower().Contains("error") || LineToWrite.ToLower().Contains("exception") || LineToWrite.ToLower().Contains("fail"))
                         LastLogCategory = LogCategory.ERROR;
-                    else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity"))))
+                    else if (LineToWrite.ToLower().Contains("warn") && (!(LineToWrite.ToLower().Contains("devfee") || LineToWrite.ToLower().Contains("intensity") || LineToWrite.ToLower().Contains("from console"))))
                         LastLogCategory = LogCategory.WARN;
                     else
                         LastLogCategory = LogCategory.NORMAL;
@@ -347,8 +347,7 @@ namespace TrexMinerGUI
 
             try
             {
-                TrexProcess.Kill();
-                TrexProcess.WaitForExit();
+                ExternalMethods.StopProgram(TrexProcess);
             } 
             catch
             {
@@ -397,7 +396,9 @@ namespace TrexMinerGUI
 
         public string GetStatus()
         {
-            if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
+            if (IsStopping)
+                return "Stopping...";
+            else if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
                 return "Running";
             else if (Program.TheSelfUpdate.IsTrexUpdating)
                 return "Updating...";

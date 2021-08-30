@@ -34,7 +34,7 @@ namespace TrexMinerGUI
                 Visible = true
             };
 
-            trayIcon.Click += TrayIcon_Click;
+            TheContextMenu.Opening += UpdateContextMenu;
             trayIcon.DoubleClick += ShowMainForm;
         }
 
@@ -63,7 +63,7 @@ namespace TrexMinerGUI
             }
         }
 
-        private void TrayIcon_Click(object sender, EventArgs e)
+        private void UpdateContextMenu(object sender, EventArgs e)
         {
             TheContextMenu.Items[0].Text = "Miner: " + Program.TheTrexWrapper.GetStatus();
 
@@ -74,7 +74,13 @@ namespace TrexMinerGUI
 
             TheContextMenu.Items[1].Text = "Duration: " + Program.TheStopWatchWrapper.GetTotalElapsedTime().TotalHours.ToString("0.##") + " hours";
 
-            if (Program.TheTrexWrapper.IsStarting || Program.TheSelfUpdate.IsTrexUpdating)
+            if (Program.TheTrexWrapper.IsStopping)
+            {
+                TheContextMenu.Items[3].Visible = true;
+                TheContextMenu.Items[3].Enabled = false;
+                TheContextMenu.Items[4].Visible = false;
+            }
+            else if (Program.TheTrexWrapper.IsStarting || Program.TheSelfUpdate.IsTrexUpdating)
             {
                 TheContextMenu.Items[3].Visible = false;
                 TheContextMenu.Items[4].Visible = true;
@@ -85,12 +91,6 @@ namespace TrexMinerGUI
                 TheContextMenu.Items[3].Visible = false;
                 TheContextMenu.Items[4].Visible = true;
                 TheContextMenu.Items[4].Enabled = true;
-            }
-            else if (Program.TheTrexWrapper.IsStopping)
-            {
-                TheContextMenu.Items[3].Visible = true;
-                TheContextMenu.Items[3].Enabled = false;
-                TheContextMenu.Items[4].Visible = false;
             }
             else
             {

@@ -63,7 +63,7 @@ namespace TrexMinerGUI
             DownloadAndExtractZip(JsonContents.latestVersionURL);
 
             ProcessStartInfo Info = new ProcessStartInfo();
-            Info.Arguments = "/C ping 127.0.0.1 -n 15 && xcopy \"" + 
+            Info.Arguments = "/C ping 127.0.0.1 -n 30 && xcopy \"" + 
                 Program.ExecutionPath + UpdateFolderName + @"\" + 
                 "\" \"" + Program.ExecutionPath + 
                 "\" /E /H /Y && start \"\" \"" + 

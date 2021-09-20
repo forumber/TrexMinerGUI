@@ -334,7 +334,7 @@ namespace TrexMinerGUI
         public void Stop()
         {
             if (IsStopping)
-                return;
+                goto waitForStop;
 
             while (IsStarting)
             {
@@ -366,6 +366,7 @@ namespace TrexMinerGUI
                 IsStopping = false;
             }
 
+            waitForStop:
             while (IsStopping || Process.GetProcessesByName("t-rex").Length > 0)
             {
                 Task.Delay(100).Wait();

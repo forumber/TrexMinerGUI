@@ -129,11 +129,10 @@ namespace TrexMinerGUI
 
         private static void OnApplicationExit(object sender, EventArgs e)
         {
+            TheMainAppContext.trayIcon.Visible = false;
             TheStopWatchWrapper.SaveToFile();
             if (TheTrexWrapper.IsRunning)
                 TheTrexWrapper.Stop();
-            TheMainAppContext.trayIcon.Visible = false;
-            Thread.Sleep(10000);
             TheMutex.ReleaseMutex();
         }
     }

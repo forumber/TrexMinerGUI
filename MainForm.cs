@@ -69,7 +69,7 @@ namespace TrexMinerGUI
                     this.StartStopButton.BackgroundImage = Resources.Stop_red_icon;
                     buttonBackgroundImage = ButtonBackgroundImage.STOP;
                 }
-                 
+
             }
             else if (Program.TheTrexWrapper.IsStopping)
             {
@@ -96,7 +96,7 @@ namespace TrexMinerGUI
                 {
                     this.StartStopButton.BackgroundImage = Resources.Start_icon;
                     buttonBackgroundImage = ButtonBackgroundImage.START;
-                }   
+                }
             }
             #endregion
 

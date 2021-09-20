@@ -40,7 +40,7 @@ namespace TrexMinerGUI
             }
 
             string[] TheText = File.ReadAllText(Program.ExecutionPath + FileName).Split(":");
-            ElapsedTimeSoFar = new TimeSpan(days: int.Parse(TheText[0]), hours: int.Parse(TheText[1]), minutes: int.Parse(TheText[2]), seconds: int.Parse(TheText[3].Substring(0,2)));
+            ElapsedTimeSoFar = new TimeSpan(days: int.Parse(TheText[0]), hours: int.Parse(TheText[1]), minutes: int.Parse(TheText[2]), seconds: int.Parse(TheText[3].Substring(0, 2)));
         }
 
         public TimeSpan GetTotalElapsedTime()

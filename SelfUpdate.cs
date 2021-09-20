@@ -53,7 +53,8 @@ namespace TrexMinerGUI
                 {
                     Update();
                 }
-            } catch { }
+            }
+            catch { }
         }
 
         private void Update()
@@ -63,10 +64,10 @@ namespace TrexMinerGUI
             DownloadAndExtractZip(JsonContents.latestVersionURL);
 
             ProcessStartInfo Info = new ProcessStartInfo();
-            Info.Arguments = "/C ping 127.0.0.1 -n 30 && xcopy \"" + 
-                Program.ExecutionPath + UpdateFolderName + @"\" + 
-                "\" \"" + Program.ExecutionPath + 
-                "\" /E /H /Y && start \"\" \"" + 
+            Info.Arguments = "/C ping 127.0.0.1 -n 30 && xcopy \"" +
+                Program.ExecutionPath + UpdateFolderName + @"\" +
+                "\" \"" + Program.ExecutionPath +
+                "\" /E /H /Y && start \"\" \"" +
                 Program.ExecutionPath + "TrexMinerGUI.exe\"";
             Info.WindowStyle = ProcessWindowStyle.Hidden;
             Info.CreateNoWindow = true;
@@ -74,7 +75,7 @@ namespace TrexMinerGUI
             Process.Start(Info);
             Application.Exit();
         }
-        
+
         private void DownloadAndExtractZip(string URL)
         {
             using (var webClient = new WebClient())

@@ -59,7 +59,7 @@ namespace TrexMinerGUI
 
             TrexProcess.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
             TrexProcess.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
-            TrexProcess.Exited += new EventHandler(ProcExitedHandler); 
+            TrexProcess.Exited += new EventHandler(ProcExitedHandler);
 
             IsRunning = false;
             IsStarting = false;
@@ -127,7 +127,7 @@ namespace TrexMinerGUI
                             Program.TheStopWatchWrapper.TheStopWatch.Stop();
                     }
                 }
-            } 
+            }
             catch (Exception TheException)
             {
                 if (!(TheException is ArgumentOutOfRangeException))
@@ -180,7 +180,7 @@ namespace TrexMinerGUI
 
             string LogPathToWrite = "";
 
-            switch(LastLogCategory)
+            switch (LastLogCategory)
             {
                 case LogCategory.ERROR:
                     LogPathToWrite = GetErrorLogPathForCurrentSession();
@@ -250,7 +250,8 @@ namespace TrexMinerGUI
 
                 if (!IsAlreadyRunning)
                 {
-                    Task.Run(() => {
+                    Task.Run(() =>
+                    {
                         Task.Delay(6000).Wait();
                         TheAfterburnerProcess.Kill();
                         try { Process.GetProcessesByName("RTSS").First().Kill(); } catch { }
@@ -300,7 +301,8 @@ namespace TrexMinerGUI
 
                     if (!IsAlreadyRunning)
                     {
-                        Task.Run(() => {
+                        Task.Run(() =>
+                        {
                             Task.Delay(6000).Wait();
                             TheAfterburnerProcess.Kill();
                             try { Process.GetProcessesByName("RTSS").First().Kill(); } catch { }
@@ -326,7 +328,7 @@ namespace TrexMinerGUI
                 IsStopping = false;
                 Start();
             }
-                
+
 
             //ExternalMethods.CloseConsole();
         }
@@ -348,7 +350,7 @@ namespace TrexMinerGUI
             try
             {
                 ExternalMethods.StopProgram(TrexProcess);
-            } 
+            }
             catch
             {
                 IsTerminatedByGUI = false;
@@ -366,7 +368,7 @@ namespace TrexMinerGUI
                 IsStopping = false;
             }
 
-            waitForStop:
+        waitForStop:
             while (IsStopping || Process.GetProcessesByName("t-rex").Length > 0)
             {
                 Task.Delay(100).Wait();
@@ -378,7 +380,8 @@ namespace TrexMinerGUI
             try
             {
                 return File.ReadAllLines(GetWarningLogPathForCurrentSession()).Where((TheString) => TheString.StartsWith(DateTime.Today.ToString("yyyy"))).Count();
-            } catch
+            }
+            catch
             {
                 return 0;
             }
@@ -389,7 +392,8 @@ namespace TrexMinerGUI
             try
             {
                 return File.ReadAllLines(GetErrorLogPathForCurrentSession()).Where((TheString) => TheString.StartsWith(DateTime.Today.ToString("yyyy"))).Count();
-            } catch
+            }
+            catch
             {
                 return 0;
             }

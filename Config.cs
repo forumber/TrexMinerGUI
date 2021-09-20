@@ -46,7 +46,9 @@ namespace TrexMinerGUI
                     throw new ArgumentException();
                 }
 
-            } catch {
+            }
+            catch
+            {
                 MinerArgs = "";
                 StartMiningOnAppStart = false;
                 ApplyAfterburnerProfileOnMinerStart = false;
@@ -54,7 +56,8 @@ namespace TrexMinerGUI
                 ProfileToApplyOnMinerStart = "1";
                 ProfileToApplyOnMinerClose = "1";
 
-                Task.Run(() => {
+                Task.Run(() =>
+                {
                     using (var TheMainForm = new MainForm())
                     {
                         TheMainForm.ShowDialog();
@@ -62,7 +65,7 @@ namespace TrexMinerGUI
                 });
             }
 
-            
+
         }
 
         public void SaveConfigToFile()

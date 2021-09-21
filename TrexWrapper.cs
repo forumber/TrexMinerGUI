@@ -252,28 +252,9 @@ namespace TrexMinerGUI
                 TheAfterburnerProcess.Start();
 
                 if (!IsAlreadyRunning)
-                {
-                    Task.Run(() =>
-                    {
-                        Task.Delay(6000).Wait();
-                        TheAfterburnerProcess.Kill();
-                        try { Process.GetProcessesByName("RTSS").First().Kill(); } catch { }
-                        try { Process.GetProcessesByName("EncoderServer").First().Kill(); } catch { }
-                        try { Process.GetProcessesByName("EncoderServer64").First().Kill(); } catch { }
-                        try { Process.GetProcessesByName("RTSSHooksLoader").First().Kill(); } catch { }
-                        try { Process.GetProcessesByName("RTSSHooksLoader64").First().Kill(); } catch { }
-                        IsStarting = false;
-                    });
-                }
-                else
-                {
-                    IsStarting = false;
-                }
+                    KillAfterbuner();
             }
-            else
-            {
-                IsStarting = false;
-            }
+            IsStarting = false;
 
             //ExternalMethods.OpenConsole();
 
@@ -303,28 +284,9 @@ namespace TrexMinerGUI
                     TheAfterburnerProcess.Start();
 
                     if (!IsAlreadyRunning)
-                    {
-                        Task.Run(() =>
-                        {
-                            Task.Delay(6000).Wait();
-                            TheAfterburnerProcess.Kill();
-                            try { Process.GetProcessesByName("RTSS").First().Kill(); } catch { }
-                            try { Process.GetProcessesByName("EncoderServer").First().Kill(); } catch { }
-                            try { Process.GetProcessesByName("EncoderServer64").First().Kill(); } catch { }
-                            try { Process.GetProcessesByName("RTSSHooksLoader").First().Kill(); } catch { }
-                            try { Process.GetProcessesByName("RTSSHooksLoader64").First().Kill(); } catch { }
-                            IsStopping = false;
-                        });
-                    }
-                    else
-                    {
-                        IsStopping = false;
-                    }
+                        KillAfterbuner();
                 }
-                else
-                {
-                    IsStopping = false;
-                }
+                IsStopping = false;
             }
             else
             {
@@ -414,6 +376,16 @@ namespace TrexMinerGUI
                 return "Starting...";
             else //if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && !Program.TheTrexWrapper.IsRunning)
                 return "Not running";
+        }
+
+        private static void KillAfterbuner()
+        {
+            ProcessStartInfo Info = new ProcessStartInfo();
+            Info.Arguments = @"/C timeout /t 6 /nobreak && taskkill /im msiafterburner.exe";
+            Info.WindowStyle = ProcessWindowStyle.Hidden;
+            Info.CreateNoWindow = true;
+            Info.FileName = "cmd.exe";
+            Process.Start(Info);
         }
     }
 }

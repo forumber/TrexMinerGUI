@@ -84,8 +84,7 @@ namespace TrexMinerGUI
                 {
                     if (e.Data.Contains("download"))
                     {
-                        Task.Run(() => Program.TheSelfUpdate.UpdateTrex(e.Data.Substring(12)));
-                        Task.Run(() => Program.TheTrexWrapper.Stop());
+                        Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheSelfUpdate.UpdateTrex(e.Data.Substring(12)));
                     }
                 }
                 else if (e.Data.StartsWith("-"))

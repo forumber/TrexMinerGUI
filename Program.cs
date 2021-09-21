@@ -49,7 +49,7 @@ namespace TrexMinerGUI
                     // Lets make sure that the tray icon is visible after login by restarting the app with significant delay
                     ProcessStartInfo Info = new ProcessStartInfo();
                     string ThePath = System.Reflection.Assembly.GetExecutingAssembly().Location.Remove(System.Reflection.Assembly.GetExecutingAssembly().Location.Length - 4) + ".exe";
-                    Info.Arguments = "/C ping 127.0.0.1 -n 4 && start \"\" \"" + ThePath + "\"";
+                    Info.Arguments = "/C timeout /t 4 /nobreak && start \"\" \"" + ThePath + "\"";
                     Info.WindowStyle = ProcessWindowStyle.Hidden;
                     Info.CreateNoWindow = true;
                     Info.FileName = "cmd.exe";

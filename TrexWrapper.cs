@@ -82,9 +82,13 @@ namespace TrexMinerGUI
             {
                 if (e.Data.StartsWith("#"))
                 {
+                    if (e.Data.Contains("version"))
+                    {
+                        Program.TheSelfUpdate.TrexUpdatingTo = e.Data.Split(" ")[2];
+                    }
                     if (e.Data.Contains("download"))
                     {
-                        Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheSelfUpdate.UpdateTrex(e.Data.Substring(12)));
+                        Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheSelfUpdate.UpdateTrex(e.Data.Split(" ")[2]));
                     }
                 }
                 else if (e.Data.StartsWith("-"))

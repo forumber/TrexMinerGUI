@@ -25,6 +25,7 @@ namespace TrexMinerGUI
         private readonly string UpdateFolderName;
         private JsonClass JsonContents { get; set; }
         public bool IsTrexUpdating { get; set; }
+        public string TrexUpdatingTo { get; set; }
 
         public SelfUpdate()
         {
@@ -34,6 +35,7 @@ namespace TrexMinerGUI
             JsonURL = "https://raw.githubusercontent.com/forumber/TrexMinerGUI_Updater-API/main/update.json";
             TheTimer = new System.Threading.Timer((e) => CheckForUpdate(), null, dueTime: TimeSpan.FromSeconds(2), period: TimeSpan.FromMinutes(1));
             IsTrexUpdating = false;
+            TrexUpdatingTo = "";
         }
 
         private void CheckForUpdate()
@@ -90,7 +92,11 @@ namespace TrexMinerGUI
         {
             IsTrexUpdating = true;
 
-            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating Trex...", " ", System.Windows.Forms.ToolTipIcon.Info);
+
+            if (!String.IsNullOrEmpty(TrexUpdatingTo))
+                Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating Trex...", "to version " + TrexUpdatingTo, System.Windows.Forms.ToolTipIcon.Info);
+            else
+                Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating Trex...", " ", System.Windows.Forms.ToolTipIcon.Info);
 
             DownloadAndExtractZip(URL);
 
@@ -101,6 +107,10 @@ namespace TrexMinerGUI
             Task.Run(() => Program.TheTrexWrapper.Start());
 
             CleanUp();
+
+            TrexUpdatingTo = "";
+
+            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Trex update completed", "Miner has been restarted", System.Windows.Forms.ToolTipIcon.Info);
         }
 
         public void CleanUp()

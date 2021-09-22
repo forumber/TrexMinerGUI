@@ -14,6 +14,7 @@ namespace TrexMinerGUI
         public bool StartMiningOnAppStart { get; set; }
         public bool ApplyAfterburnerProfileOnMinerStart { get; set; }
         public bool ApplyAfterburnerProfileOnMinerClose { get; set; }
+        public bool? TryToCloseMSIAfterburnerIfItIsNotRunningAlready { get; set; }
         public string ProfileToApplyOnMinerStart { get; set; }
         public string ProfileToApplyOnMinerClose { get; set; }
 
@@ -34,10 +35,18 @@ namespace TrexMinerGUI
                         ApplyAfterburnerProfileOnMinerStart = Sections[1] == "True";
                     else if (Sections[0] == "ApplyAfterburnerProfileOnMinerClose")
                         ApplyAfterburnerProfileOnMinerClose = Sections[1] == "True";
+                    else if (Sections[0] == "TryToCloseMSIAfterburnerIfItIsNotRunningAlready")
+                        TryToCloseMSIAfterburnerIfItIsNotRunningAlready = Sections[1] == "True";
                     else if (Sections[0] == "ProfileToApplyOnMinerStart")
                         ProfileToApplyOnMinerStart = Sections[1];
                     else if (Sections[0] == "ProfileToApplyOnMinerClose")
                         ProfileToApplyOnMinerClose = Sections[1];
+                }
+
+                if (TryToCloseMSIAfterburnerIfItIsNotRunningAlready == null)
+                {
+                    TryToCloseMSIAfterburnerIfItIsNotRunningAlready = true;
+                    SaveConfigToFile();
                 }
 
                 if (String.IsNullOrEmpty(MinerArgs) ||
@@ -54,6 +63,7 @@ namespace TrexMinerGUI
                 StartMiningOnAppStart = false;
                 ApplyAfterburnerProfileOnMinerStart = false;
                 ApplyAfterburnerProfileOnMinerClose = false;
+                TryToCloseMSIAfterburnerIfItIsNotRunningAlready = true;
                 ProfileToApplyOnMinerStart = "1";
                 ProfileToApplyOnMinerClose = "1";
 
@@ -76,6 +86,7 @@ namespace TrexMinerGUI
                 "StartMiningOnAppStart=" + StartMiningOnAppStart + Environment.NewLine +
                 "ApplyAfterburnerProfileOnMinerStart=" + ApplyAfterburnerProfileOnMinerStart + Environment.NewLine +
                 "ApplyAfterburnerProfileOnMinerClose=" + ApplyAfterburnerProfileOnMinerClose + Environment.NewLine +
+                "TryToCloseMSIAfterburnerIfItIsNotRunningAlready=" + TryToCloseMSIAfterburnerIfItIsNotRunningAlready + Environment.NewLine +
                 "ProfileToApplyOnMinerStart=" + ProfileToApplyOnMinerStart + Environment.NewLine +
                 "ProfileToApplyOnMinerClose=" + ProfileToApplyOnMinerClose + Environment.NewLine;
 

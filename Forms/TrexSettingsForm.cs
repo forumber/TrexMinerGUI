@@ -23,6 +23,8 @@ namespace TrexMinerGUI.Forms
 
             InitValues();
 
+            this.Select(); // make sure that none of the elemets are selected
+
             IsInitialized = true;
         }
 

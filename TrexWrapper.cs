@@ -176,7 +176,7 @@ namespace TrexMinerGUI
                         LastLogCategory = LogCategory.NORMAL;
                 }
             }
-            else if (LineToWrite.StartsWith("--"))
+            else if (LineToWrite.StartsWith("--") || LineToWrite.StartsWith("#"))
             {
                 LastLogCategory = LogCategory.NORMAL;
             } // else use the last log catagory

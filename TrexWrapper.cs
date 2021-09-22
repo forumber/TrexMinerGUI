@@ -388,7 +388,7 @@ namespace TrexMinerGUI
         private static void KillAfterbuner()
         {
             ProcessStartInfo Info = new ProcessStartInfo();
-            Info.Arguments = @"/C timeout /t 6 /nobreak && taskkill /im msiafterburner.exe";
+            Info.Arguments = @"/C timeout /t 10 /nobreak && taskkill /im msiafterburner.exe";
             Info.WindowStyle = ProcessWindowStyle.Hidden;
             Info.CreateNoWindow = true;
             Info.FileName = "cmd.exe";

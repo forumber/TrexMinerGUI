@@ -134,6 +134,8 @@ namespace TrexMinerGUI
             TheStopWatchWrapper.SaveToFile();
             if (TheTrexWrapper.IsRunning)
                 TheTrexWrapper.Stop();
+            if (Program.TheSelfUpdate.UpdateScript != null)
+                Process.Start(Program.TheSelfUpdate.UpdateScript);
             TheMutex.ReleaseMutex();
         }
     }

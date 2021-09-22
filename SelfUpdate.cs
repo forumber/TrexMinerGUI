@@ -26,6 +26,7 @@ namespace TrexMinerGUI
         private JsonClass JsonContents { get; set; }
         public bool IsTrexUpdating { get; set; }
         public string TrexUpdatingTo { get; set; }
+        public ProcessStartInfo UpdateScript;
 
         public SelfUpdate()
         {
@@ -36,6 +37,7 @@ namespace TrexMinerGUI
             TheTimer = new System.Threading.Timer((e) => CheckForUpdate(), null, dueTime: TimeSpan.FromSeconds(2), period: TimeSpan.FromMinutes(1));
             IsTrexUpdating = false;
             TrexUpdatingTo = "";
+            UpdateScript = null;
         }
 
         private void CheckForUpdate()
@@ -61,20 +63,19 @@ namespace TrexMinerGUI
 
         private void Update()
         {
-            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating TrexMinerGUI...", " ", System.Windows.Forms.ToolTipIcon.Info);
+            Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating TrexMinerGUI...", "to version " + JsonContents.latestVersion, System.Windows.Forms.ToolTipIcon.Info);
 
             DownloadAndExtractZip(JsonContents.latestVersionURL);
 
-            ProcessStartInfo Info = new ProcessStartInfo();
-            Info.Arguments = "/C timeout /t 30 /nobreak && xcopy \"" +
+            UpdateScript = new ProcessStartInfo();
+            UpdateScript.Arguments = "/C timeout /t 5 /nobreak && xcopy \"" +
                 Program.ExecutionPath + UpdateFolderName + @"\" +
                 "\" \"" + Program.ExecutionPath +
                 "\" /E /H /Y && start \"\" \"" +
                 Program.ExecutionPath + "TrexMinerGUI.exe\"";
-            Info.WindowStyle = ProcessWindowStyle.Hidden;
-            Info.CreateNoWindow = true;
-            Info.FileName = "cmd.exe";
-            Process.Start(Info);
+            UpdateScript.WindowStyle = ProcessWindowStyle.Hidden;
+            UpdateScript.CreateNoWindow = true;
+            UpdateScript.FileName = "cmd.exe";
             Application.Exit();
         }
 

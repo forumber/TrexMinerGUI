@@ -16,38 +16,15 @@ namespace TrexMinerGUI.Forms
 
         private ButtonBackgroundImage buttonBackgroundImage { get; set; }
 
-        private bool IsArgsChanged { get; set; }
-
-        private bool IsInitialized { get; set; }
-
         public MainForm()
         {
-            IsInitialized = false;
-
             InitializeComponent();
-            InitSettingsBox();
 
             this.Icon = Resources.AppIcon;
             this.VersionLabel.Text = "v" + Program.TheSelfUpdate.TheAppVersion.ToString();
 
             this.buttonBackgroundImage = ButtonBackgroundImage.START;
             this.Select(); // make sure that none of the elemets are selected
-
-            IsInitialized = true;
-        }
-
-        private void InitSettingsBox()
-        {
-            this.StartOnStartupCheckBox.Checked = TaskSchedulerOperations.IsItInTS();
-            this.StartMiningOnAppStartCheckBox.Checked = Program.TheConfig.StartMiningOnAppStart;
-            this.ApplyAfterburnerProfileOnMinerStartCheckBox.Checked = Program.TheConfig.ApplyAfterburnerProfileOnMinerStart;
-            this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Checked = Program.TheConfig.ApplyAfterburnerProfileOnMinerClose;
-            this.ProfileToApplyOnMinerStartComboBox.Text = Program.TheConfig.ProfileToApplyOnMinerStart;
-            this.ProfileToApplyOnMinerCloseComboBox.Text = Program.TheConfig.ProfileToApplyOnMinerClose;
-            this.MinerArgsTextBox.Text = Program.TheConfig.MinerArgs;
-
-            this.ProfileToApplyOnMinerStartComboBox.Enabled = this.ApplyAfterburnerProfileOnMinerStartCheckBox.Checked;
-            this.ProfileToApplyOnMinerCloseComboBox.Enabled = this.ApplyAfterburnerProfileOnMinerCloseCheckBox.Checked;
         }
 
         private void StartStopButton_Click(object sender, EventArgs e)
@@ -100,8 +77,6 @@ namespace TrexMinerGUI.Forms
             }
             #endregion
 
-            this.SaveMinerArgButton.Enabled = IsArgsChanged;
-
             #region StatisticsGroup
             DurationTextBox.Text = Program.TheStopWatchWrapper.GetTotalElapsedTime().ToString("G");
             MinerStatusTextBox.Text = Program.TheTrexWrapper.GetStatus();
@@ -119,110 +94,6 @@ namespace TrexMinerGUI.Forms
             ErrorCountTextBox.Text = Program.TheTrexWrapper.GetErrorCount().ToString();
             SharesTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Shares;
             #endregion
-        }
-
-        private void StartOnStartupCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!IsInitialized)
-                return;
-
-            if (((CheckBox)sender).Checked)
-            {
-                TaskSchedulerOperations.AddToTS();
-            }
-            else
-            {
-                TaskSchedulerOperations.RemoveFromTS();
-            }
-        }
-
-        private void StartMiningOnAppStart_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!IsInitialized)
-                return;
-
-            Program.TheConfig.StartMiningOnAppStart = ((CheckBox)sender).Checked;
-            Program.TheConfig.SaveConfigToFile();
-        }
-
-        private void ApplyAfterburnerProfileOnMinerStartCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!IsInitialized)
-                return;
-
-            Program.TheConfig.ApplyAfterburnerProfileOnMinerStart = ((CheckBox)sender).Checked;
-            this.ProfileToApplyOnMinerStartComboBox.Enabled = ((CheckBox)sender).Checked;
-            Program.TheConfig.SaveConfigToFile();
-        }
-
-        private void ApplyAfterburnerProfileOnMinerCloseCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!IsInitialized)
-                return;
-
-            Program.TheConfig.ApplyAfterburnerProfileOnMinerClose = ((CheckBox)sender).Checked;
-            this.ProfileToApplyOnMinerCloseComboBox.Enabled = ((CheckBox)sender).Checked;
-            Program.TheConfig.SaveConfigToFile();
-        }
-
-        private void ProfileToApplyOnMinerStartComboBox_TextChanged(object sender, EventArgs e)
-        {
-            if (!IsInitialized)
-                return;
-
-            Program.TheConfig.ProfileToApplyOnMinerStart = ((ComboBox)sender).Text;
-            Program.TheConfig.SaveConfigToFile();
-        }
-
-        private void ProfileToApplyOnMinerCloseComboBox_TextChanged(object sender, EventArgs e)
-        {
-            if (!IsInitialized)
-                return;
-
-            Program.TheConfig.ProfileToApplyOnMinerClose = ((ComboBox)sender).Text;
-            Program.TheConfig.SaveConfigToFile();
-        }
-
-        private void MinerArgsLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://github.com/trexminer/T-Rex#examples",
-                UseShellExecute = true
-            });
-        }
-
-        private void MinerArgsTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (!IsInitialized)
-                return;
-
-            if (!IsArgsChanged)
-            {
-                IsArgsChanged = true;
-                TheToolTip.Show(@"Don't forget to save!", SaveMinerArgButton, 3000);
-            }
-        }
-
-        private void SaveMinerArg(object sender, EventArgs e)
-        {
-            Program.TheConfig.MinerArgs = this.MinerArgsTextBox.Text;
-            Program.TheConfig.SaveConfigToFile();
-
-            if (Program.TheTrexWrapper.IsRunning)
-            {
-                Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheTrexWrapper.Start());
-
-                Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Miner has been restarted", "MinerArgs has been changed", System.Windows.Forms.ToolTipIcon.Info);
-            }
-
-            IsArgsChanged = false;
-        }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (IsArgsChanged)
-                SaveMinerArg(sender, e);
         }
 
         private void WarningCountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -270,6 +141,30 @@ namespace TrexMinerGUI.Forms
             catch
             {
                 MessageBox.Show("There are logs to show!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void GUISettingsButton_Click(object sender, EventArgs e)
+        {
+            using (var TheGUISettingsForm = new GUISettingsForm())
+            {
+                TheGUISettingsForm.ShowDialog();
+            }
+        }
+
+        private void TrexMinerSettingsButton_Click(object sender, EventArgs e)
+        {
+            using (var TheTrexMinerSettingsForm = new TrexSettingsForm())
+            {
+                TheTrexMinerSettingsForm.ShowDialog();
+            }
+        }
+
+        private void GPUTuningSettingsButton_Click(object sender, EventArgs e)
+        {
+            using (var TheGPUTuningForm = new GPUTuningForm())
+            {
+                TheGPUTuningForm.ShowDialog();
             }
         }
     }

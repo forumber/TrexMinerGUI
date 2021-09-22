@@ -59,14 +59,15 @@ namespace TrexMinerGUI
             this.TheToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.VersionLabel = new System.Windows.Forms.Label();
             this.SessionGroupBox = new System.Windows.Forms.GroupBox();
+            this.SharesTextBox = new System.Windows.Forms.TextBox();
+            this.SharesLabel = new System.Windows.Forms.Label();
             this.ErrorCountLinkLabel = new System.Windows.Forms.LinkLabel();
             this.WarnCountLinkLabel = new System.Windows.Forms.LinkLabel();
             this.SessionStartedAtTextBox = new System.Windows.Forms.TextBox();
             this.StartedAtLabel = new System.Windows.Forms.Label();
             this.ErrorCountTextBox = new System.Windows.Forms.TextBox();
             this.WarnCountTextBox = new System.Windows.Forms.TextBox();
-            this.SharesLabel = new System.Windows.Forms.Label();
-            this.SharesTextBox = new System.Windows.Forms.TextBox();
+            this.InformationLogButton = new System.Windows.Forms.Button();
             this.StatisticsBox.SuspendLayout();
             this.SettingsBox.SuspendLayout();
             this.SessionGroupBox.SuspendLayout();
@@ -385,6 +386,7 @@ namespace TrexMinerGUI
             // 
             // SessionGroupBox
             // 
+            this.SessionGroupBox.Controls.Add(this.InformationLogButton);
             this.SessionGroupBox.Controls.Add(this.SharesTextBox);
             this.SessionGroupBox.Controls.Add(this.SharesLabel);
             this.SessionGroupBox.Controls.Add(this.ErrorCountLinkLabel);
@@ -399,6 +401,23 @@ namespace TrexMinerGUI
             this.SessionGroupBox.TabIndex = 24;
             this.SessionGroupBox.TabStop = false;
             this.SessionGroupBox.Text = "Session";
+            // 
+            // SharesTextBox
+            // 
+            this.SharesTextBox.Enabled = false;
+            this.SharesTextBox.Location = new System.Drawing.Point(257, 20);
+            this.SharesTextBox.Name = "SharesTextBox";
+            this.SharesTextBox.Size = new System.Drawing.Size(116, 23);
+            this.SharesTextBox.TabIndex = 25;
+            // 
+            // SharesLabel
+            // 
+            this.SharesLabel.AutoSize = true;
+            this.SharesLabel.Location = new System.Drawing.Point(207, 23);
+            this.SharesLabel.Name = "SharesLabel";
+            this.SharesLabel.Size = new System.Drawing.Size(44, 15);
+            this.SharesLabel.TabIndex = 24;
+            this.SharesLabel.Text = "Shares:";
             // 
             // ErrorCountLinkLabel
             // 
@@ -455,22 +474,15 @@ namespace TrexMinerGUI
             this.WarnCountTextBox.Size = new System.Drawing.Size(116, 23);
             this.WarnCountTextBox.TabIndex = 16;
             // 
-            // SharesLabel
+            // InformationLogButton
             // 
-            this.SharesLabel.AutoSize = true;
-            this.SharesLabel.Location = new System.Drawing.Point(207, 23);
-            this.SharesLabel.Name = "SharesLabel";
-            this.SharesLabel.Size = new System.Drawing.Size(44, 15);
-            this.SharesLabel.TabIndex = 24;
-            this.SharesLabel.Text = "Shares:";
-            // 
-            // SharesTextBox
-            // 
-            this.SharesTextBox.Enabled = false;
-            this.SharesTextBox.Location = new System.Drawing.Point(257, 20);
-            this.SharesTextBox.Name = "SharesTextBox";
-            this.SharesTextBox.Size = new System.Drawing.Size(116, 23);
-            this.SharesTextBox.TabIndex = 25;
+            this.InformationLogButton.Location = new System.Drawing.Point(207, 77);
+            this.InformationLogButton.Name = "InformationLogButton";
+            this.InformationLogButton.Size = new System.Drawing.Size(166, 23);
+            this.InformationLogButton.TabIndex = 26;
+            this.InformationLogButton.Text = "Information Log";
+            this.InformationLogButton.UseVisualStyleBackColor = true;
+            this.InformationLogButton.Click += new System.EventHandler(this.InformationLogButton_Click);
             // 
             // MainForm
             // 
@@ -542,5 +554,6 @@ namespace TrexMinerGUI
         private System.Windows.Forms.LinkLabel WarnCountLinkLabel;
         private System.Windows.Forms.TextBox SharesTextBox;
         private System.Windows.Forms.Label SharesLabel;
+        private System.Windows.Forms.Button InformationLogButton;
     }
 }

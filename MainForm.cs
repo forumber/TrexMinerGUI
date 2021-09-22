@@ -256,5 +256,21 @@ namespace TrexMinerGUI
                 MessageBox.Show("There are no errors to show!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void InformationLogButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = Program.TheTrexWrapper.GetLogPathForCurrentSession(),
+                    UseShellExecute = true
+                });
+            }
+            catch
+            {
+                MessageBox.Show("There are logs to show!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

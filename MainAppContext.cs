@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using TrexMinerGUI.Forms;
 
 namespace TrexMinerGUI
 {

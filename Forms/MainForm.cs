@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrexMinerGUI.Properties;
 
-namespace TrexMinerGUI
+namespace TrexMinerGUI.Forms
 {
     public partial class MainForm : Form
     {

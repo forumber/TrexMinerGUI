@@ -1,7 +1,7 @@
 ﻿
 using TrexMinerGUI.Properties;
 
-namespace TrexMinerGUI
+namespace TrexMinerGUI.Forms
 {
     partial class MainForm
     {

@@ -140,7 +140,7 @@ namespace TrexMinerGUI.Forms
             }
             catch
             {
-                MessageBox.Show("There are logs to show!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There are no logs to show!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

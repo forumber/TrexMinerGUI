@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -71,6 +72,30 @@ namespace TrexMinerGUI
 
                 File.Replace(tempPath, path, backup);
             }
+        }
+
+        public static void ApplyAfterburnerProfile(int ProfileNumber)
+        {
+            bool IsAlreadyRunning = Process.GetProcessesByName("MSIAfterburner").Length >= 1;
+
+            ProcessStartInfo Info = new ProcessStartInfo();
+            Info.Arguments = @"/m -Profile" + ProfileNumber;
+            Info.UseShellExecute = true;
+            Info.FileName = @"C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe";
+            Process.Start(Info);
+
+            if (!IsAlreadyRunning && Program.TheConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready)
+                KillAfterbuner();
+        }
+
+        public static void KillAfterbuner()
+        {
+            ProcessStartInfo Info = new ProcessStartInfo();
+            Info.Arguments = @"/C timeout /t 10 /nobreak && taskkill /im msiafterburner.exe";
+            Info.WindowStyle = ProcessWindowStyle.Hidden;
+            Info.CreateNoWindow = true;
+            Info.FileName = "cmd.exe";
+            Process.Start(Info);
         }
     }
 }

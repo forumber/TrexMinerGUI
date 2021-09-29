@@ -249,18 +249,8 @@ namespace TrexMinerGUI
             IsRunning = true;
 
             if (Program.TheConfig.ApplyAfterburnerProfileOnMinerStart)
-            {
-                bool IsAlreadyRunning = Process.GetProcessesByName("MSIAfterburner").Length >= 1;
+                ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerStart));
 
-                Process TheAfterburnerProcess = new Process();
-                TheAfterburnerProcess.StartInfo.Arguments = @"/m -Profile" + Program.TheConfig.ProfileToApplyOnMinerStart;
-                TheAfterburnerProcess.StartInfo.UseShellExecute = true;
-                TheAfterburnerProcess.StartInfo.FileName = @"C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe";
-                TheAfterburnerProcess.Start();
-
-                if (!IsAlreadyRunning && Program.TheConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready)
-                    KillAfterbuner();
-            }
             IsStarting = false;
 
             //ExternalMethods.OpenConsole();
@@ -280,19 +270,10 @@ namespace TrexMinerGUI
             if (IsTerminatedByGUI)
             {
                 IsTerminatedByGUI = false;
+
                 if (Program.TheConfig.ApplyAfterburnerProfileOnMinerClose)
-                {
-                    bool IsAlreadyRunning = Process.GetProcessesByName("MSIAfterburner").Length >= 1;
+                    ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerClose));
 
-                    Process TheAfterburnerProcess = new Process();
-                    TheAfterburnerProcess.StartInfo.Arguments = @"/m -Profile" + Program.TheConfig.ProfileToApplyOnMinerClose;
-                    TheAfterburnerProcess.StartInfo.UseShellExecute = true;
-                    TheAfterburnerProcess.StartInfo.FileName = @"C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe";
-                    TheAfterburnerProcess.Start();
-
-                    if (!IsAlreadyRunning && (bool)Program.TheConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready)
-                        KillAfterbuner();
-                }
                 IsStopping = false;
             }
             else
@@ -383,16 +364,6 @@ namespace TrexMinerGUI
                 return "Starting...";
             else //if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && !Program.TheTrexWrapper.IsRunning)
                 return "Not running";
-        }
-
-        private static void KillAfterbuner()
-        {
-            ProcessStartInfo Info = new ProcessStartInfo();
-            Info.Arguments = @"/C timeout /t 10 /nobreak && taskkill /im msiafterburner.exe";
-            Info.WindowStyle = ProcessWindowStyle.Hidden;
-            Info.CreateNoWindow = true;
-            Info.FileName = "cmd.exe";
-            Process.Start(Info);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace TrexMinerGUI
         public bool StartMiningOnAppStart { get; set; }
         public bool ApplyAfterburnerProfileOnMinerStart { get; set; }
         public bool ApplyAfterburnerProfileOnMinerClose { get; set; }
-        public bool? TryToCloseMSIAfterburnerIfItIsNotRunningAlready { get; set; }
+        public bool TryToCloseMSIAfterburnerIfItIsNotRunningAlready { get; set; }
         public string ProfileToApplyOnMinerStart { get; set; }
         public string ProfileToApplyOnMinerClose { get; set; }
 
@@ -41,12 +41,6 @@ namespace TrexMinerGUI
                         ProfileToApplyOnMinerStart = Sections[1];
                     else if (Sections[0] == "ProfileToApplyOnMinerClose")
                         ProfileToApplyOnMinerClose = Sections[1];
-                }
-
-                if (TryToCloseMSIAfterburnerIfItIsNotRunningAlready == null)
-                {
-                    TryToCloseMSIAfterburnerIfItIsNotRunningAlready = true;
-                    SaveConfigToFile();
                 }
 
                 if (String.IsNullOrEmpty(MinerArgs) ||

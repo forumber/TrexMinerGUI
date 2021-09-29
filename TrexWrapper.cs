@@ -258,7 +258,7 @@ namespace TrexMinerGUI
                 TheAfterburnerProcess.StartInfo.FileName = @"C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe";
                 TheAfterburnerProcess.Start();
 
-                if (!IsAlreadyRunning && (bool)Program.TheConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready)
+                if (!IsAlreadyRunning && Program.TheConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready)
                     KillAfterbuner();
             }
             IsStarting = false;

@@ -46,7 +46,7 @@ namespace TrexMinerGUI
         public bool IsStarting { get; set; }
         public bool IsStopping { get; set; }
         private LogCategory LastLogCategory { get; set; }
-        private bool ApplyAfterburnerProfile { get; set; }
+        private bool ApplyAfterburnerProfileB { get; set; }
 
         public TrexWrapper()
         {
@@ -69,7 +69,7 @@ namespace TrexMinerGUI
             TheTrexStatisctics = new TrexStatisctics();
             Session = "-";
             LastLogCategory = LogCategory.NORMAL;
-            ApplyAfterburnerProfile = true;
+            ApplyAfterburnerProfileB = true;
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)
@@ -90,7 +90,7 @@ namespace TrexMinerGUI
                     }
                     if (e.Data.Contains("download"))
                     {
-                        ApplyAfterburnerProfile = false;
+                        ApplyAfterburnerProfileB = false;
                         Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheSelfUpdate.UpdateTrex(e.Data.Split(" ")[2]));
                     }
                 }
@@ -251,7 +251,7 @@ namespace TrexMinerGUI
 
             IsRunning = true;
 
-            if (ApplyAfterburnerProfile && Program.TheConfig.ApplyAfterburnerProfileOnMinerStart)
+            if (ApplyAfterburnerProfileB && Program.TheConfig.ApplyAfterburnerProfileOnMinerStart)
                 ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerStart));
 
             IsStarting = false;
@@ -259,7 +259,7 @@ namespace TrexMinerGUI
             //ExternalMethods.OpenConsole();
 
             // Always reset just in case
-            ApplyAfterburnerProfile = true;
+            ApplyAfterburnerProfileB = true;
 
         }
 
@@ -277,14 +277,14 @@ namespace TrexMinerGUI
             {
                 IsTerminatedByGUI = false;
 
-                if (ApplyAfterburnerProfile && Program.TheConfig.ApplyAfterburnerProfileOnMinerClose)
+                if (ApplyAfterburnerProfileB && Program.TheConfig.ApplyAfterburnerProfileOnMinerClose)
                     ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerClose));
 
                 IsStopping = false;
             }
             else
             {
-                ApplyAfterburnerProfile = false;
+                ApplyAfterburnerProfileB = false;
                 IsStopping = false;
                 Start();
             }
@@ -374,7 +374,7 @@ namespace TrexMinerGUI
 
         public void Restart()
         {
-            ApplyAfterburnerProfile = false;
+            ApplyAfterburnerProfileB = false;
             Stop();
             Start();
         }

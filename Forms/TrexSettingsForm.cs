@@ -64,7 +64,7 @@ namespace TrexMinerGUI.Forms
 
             if (Program.TheTrexWrapper.IsRunning)
             {
-                Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheTrexWrapper.Start());
+                Task.Run(() => Program.TheTrexWrapper.Restart());
 
                 Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Miner has been restarted", "MinerArgs has been changed", System.Windows.Forms.ToolTipIcon.Info);
             }

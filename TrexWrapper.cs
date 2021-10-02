@@ -46,6 +46,7 @@ namespace TrexMinerGUI
         public bool IsStarting { get; set; }
         public bool IsStopping { get; set; }
         private LogCategory LastLogCategory { get; set; }
+        private bool ApplyAfterburnerProfile { get; set; }
 
         public TrexWrapper()
         {
@@ -68,6 +69,7 @@ namespace TrexMinerGUI
             TheTrexStatisctics = new TrexStatisctics();
             Session = "-";
             LastLogCategory = LogCategory.NORMAL;
+            ApplyAfterburnerProfile = true;
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)
@@ -88,6 +90,7 @@ namespace TrexMinerGUI
                     }
                     if (e.Data.Contains("download"))
                     {
+                        ApplyAfterburnerProfile = false;
                         Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheSelfUpdate.UpdateTrex(e.Data.Split(" ")[2]));
                     }
                 }
@@ -248,12 +251,15 @@ namespace TrexMinerGUI
 
             IsRunning = true;
 
-            if (Program.TheConfig.ApplyAfterburnerProfileOnMinerStart)
+            if (ApplyAfterburnerProfile && Program.TheConfig.ApplyAfterburnerProfileOnMinerStart)
                 ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerStart));
 
             IsStarting = false;
 
             //ExternalMethods.OpenConsole();
+
+            // Always reset just in case
+            ApplyAfterburnerProfile = true;
 
         }
 
@@ -271,17 +277,17 @@ namespace TrexMinerGUI
             {
                 IsTerminatedByGUI = false;
 
-                if (Program.TheConfig.ApplyAfterburnerProfileOnMinerClose)
+                if (ApplyAfterburnerProfile && Program.TheConfig.ApplyAfterburnerProfileOnMinerClose)
                     ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerClose));
 
                 IsStopping = false;
             }
             else
             {
+                ApplyAfterburnerProfile = false;
                 IsStopping = false;
                 Start();
             }
-
 
             //ExternalMethods.CloseConsole();
         }
@@ -364,6 +370,13 @@ namespace TrexMinerGUI
                 return "Starting...";
             else //if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning && !Program.TheTrexWrapper.IsRunning)
                 return "Not running";
+        }
+
+        public void Restart()
+        {
+            ApplyAfterburnerProfile = false;
+            Stop();
+            Start();
         }
     }
 }

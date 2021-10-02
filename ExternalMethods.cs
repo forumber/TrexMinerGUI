@@ -8,6 +8,8 @@ namespace TrexMinerGUI
 {
     public static class ExternalMethods
     {
+        #region EXTERNAL_CTRL_C
+
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool AttachConsole(uint dwProcessId);
 
@@ -47,6 +49,7 @@ namespace TrexMinerGUI
             else
                 throw new InvalidOperationException();
         }
+        #endregion
 
         // Credits: https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
         public static void WriteAllTextWithBackup(string path, string contents)

@@ -78,7 +78,6 @@ namespace TrexMinerGUI
             }
         }
 
-        #if false
         // Credits: https://stackoverflow.com/a/43229358/15302047
         // I need these because FileVersionInfo.GetVersionInfo(pathToExe) does not f**king work on t-rex.exe.
         #region EXTERNAL_VERSION
@@ -157,7 +156,6 @@ namespace TrexMinerGUI
             return kv;
         }
         #endregion
-        #endif
 
         public static void ApplyAfterburnerProfile(int ProfileNumber)
         {

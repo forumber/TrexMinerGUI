@@ -93,6 +93,17 @@ namespace TrexMinerGUI.Forms
             WarnCountTextBox.Text = Program.TheTrexWrapper.GetWarnCount().ToString();
             ErrorCountTextBox.Text = Program.TheTrexWrapper.GetErrorCount().ToString();
             SharesTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Shares;
+            if (Program.TheTrexWrapper.TheTrexStatisctics.RestartCount > 0)
+            {
+                if (!SharesWarningLinkLabel.Visible)
+                    SharesWarningLinkLabel.Visible = true;
+            }
+            else
+            {
+                if (SharesWarningLinkLabel.Visible)
+                    SharesWarningLinkLabel.Visible = false;
+            }
+
             #endregion
         }
 
@@ -166,6 +177,22 @@ namespace TrexMinerGUI.Forms
             {
                 TheGPUTuningForm.ShowDialog();
             }
+        }
+
+        private void SharesWarningLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("Miner has been restarted (check for logs to get more information). Share information may not be accurate for the current sesssion.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            if (Program.TheTrexWrapper.IsRunning)
+            {
+                var Result = MessageBox.Show("Do you want to restart the session?", "Restart?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (Result == DialogResult.Yes)
+                {
+                    Task.Run(() => Program.TheTrexWrapper.Restart());
+                }
+            }
+            
         }
     }
 }

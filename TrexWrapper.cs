@@ -17,6 +17,7 @@ namespace TrexMinerGUI
             public string Temp { get; set; }
             public string Shares { get; set; }
             public string LastUpdated { get; set; }
+            public int RestartCount { get; set; }
 
             public TrexStatisctics()
             {
@@ -27,6 +28,7 @@ namespace TrexMinerGUI
                 Temp = "0";
                 Shares = @"0/0";
                 LastUpdated = "-";
+                RestartCount = -1;
             }
         }
 
@@ -129,6 +131,9 @@ namespace TrexMinerGUI
 
                     //Debug.WriteLine("DateTimeHeader:" + DateTimeHeader);
                     //Debug.WriteLine("Info:" + Info);
+
+                    if (Info.Contains("Starting on:"))
+                        TheTrexStatisctics.RestartCount++;
 
                     if (Info.Contains("OK"))
                     {

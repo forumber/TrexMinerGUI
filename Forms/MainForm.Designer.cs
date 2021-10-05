@@ -70,7 +70,7 @@ namespace TrexMinerGUI.Forms
             // MinerStatusLabel
             // 
             this.MinerStatusLabel.AutoSize = true;
-            this.MinerStatusLabel.Location = new System.Drawing.Point(6, 19);
+            this.MinerStatusLabel.Location = new System.Drawing.Point(18, 17);
             this.MinerStatusLabel.Name = "MinerStatusLabel";
             this.MinerStatusLabel.Size = new System.Drawing.Size(41, 15);
             this.MinerStatusLabel.TabIndex = 0;
@@ -79,7 +79,7 @@ namespace TrexMinerGUI.Forms
             // MinerStatusTextBox
             // 
             this.MinerStatusTextBox.Enabled = false;
-            this.MinerStatusTextBox.Location = new System.Drawing.Point(77, 16);
+            this.MinerStatusTextBox.Location = new System.Drawing.Point(89, 14);
             this.MinerStatusTextBox.Name = "MinerStatusTextBox";
             this.MinerStatusTextBox.Size = new System.Drawing.Size(153, 23);
             this.MinerStatusTextBox.TabIndex = 1;
@@ -87,7 +87,7 @@ namespace TrexMinerGUI.Forms
             // DurationLabel
             // 
             this.DurationLabel.AutoSize = true;
-            this.DurationLabel.Location = new System.Drawing.Point(6, 48);
+            this.DurationLabel.Location = new System.Drawing.Point(18, 46);
             this.DurationLabel.Name = "DurationLabel";
             this.DurationLabel.Size = new System.Drawing.Size(56, 15);
             this.DurationLabel.TabIndex = 2;
@@ -96,7 +96,7 @@ namespace TrexMinerGUI.Forms
             // DurationTextBox
             // 
             this.DurationTextBox.Enabled = false;
-            this.DurationTextBox.Location = new System.Drawing.Point(77, 45);
+            this.DurationTextBox.Location = new System.Drawing.Point(89, 43);
             this.DurationTextBox.Name = "DurationTextBox";
             this.DurationTextBox.Size = new System.Drawing.Size(153, 23);
             this.DurationTextBox.TabIndex = 3;
@@ -104,7 +104,7 @@ namespace TrexMinerGUI.Forms
             // SpeedTextBox
             // 
             this.SpeedTextBox.Enabled = false;
-            this.SpeedTextBox.Location = new System.Drawing.Point(77, 74);
+            this.SpeedTextBox.Location = new System.Drawing.Point(77, 22);
             this.SpeedTextBox.Name = "SpeedTextBox";
             this.SpeedTextBox.Size = new System.Drawing.Size(153, 23);
             this.SpeedTextBox.TabIndex = 4;
@@ -112,7 +112,7 @@ namespace TrexMinerGUI.Forms
             // PowerTextBox
             // 
             this.PowerTextBox.Enabled = false;
-            this.PowerTextBox.Location = new System.Drawing.Point(77, 104);
+            this.PowerTextBox.Location = new System.Drawing.Point(77, 52);
             this.PowerTextBox.Name = "PowerTextBox";
             this.PowerTextBox.Size = new System.Drawing.Size(153, 23);
             this.PowerTextBox.TabIndex = 5;
@@ -120,7 +120,7 @@ namespace TrexMinerGUI.Forms
             // FanSpeedTextBox
             // 
             this.FanSpeedTextBox.Enabled = false;
-            this.FanSpeedTextBox.Location = new System.Drawing.Point(77, 163);
+            this.FanSpeedTextBox.Location = new System.Drawing.Point(77, 111);
             this.FanSpeedTextBox.Name = "FanSpeedTextBox";
             this.FanSpeedTextBox.Size = new System.Drawing.Size(153, 23);
             this.FanSpeedTextBox.TabIndex = 6;
@@ -128,7 +128,7 @@ namespace TrexMinerGUI.Forms
             // TempTextBox
             // 
             this.TempTextBox.Enabled = false;
-            this.TempTextBox.Location = new System.Drawing.Point(77, 192);
+            this.TempTextBox.Location = new System.Drawing.Point(77, 140);
             this.TempTextBox.Name = "TempTextBox";
             this.TempTextBox.Size = new System.Drawing.Size(153, 23);
             this.TempTextBox.TabIndex = 7;
@@ -136,7 +136,7 @@ namespace TrexMinerGUI.Forms
             // SpeedLabel
             // 
             this.SpeedLabel.AutoSize = true;
-            this.SpeedLabel.Location = new System.Drawing.Point(6, 77);
+            this.SpeedLabel.Location = new System.Drawing.Point(6, 25);
             this.SpeedLabel.Name = "SpeedLabel";
             this.SpeedLabel.Size = new System.Drawing.Size(42, 15);
             this.SpeedLabel.TabIndex = 8;
@@ -145,7 +145,7 @@ namespace TrexMinerGUI.Forms
             // PowerLabel
             // 
             this.PowerLabel.AutoSize = true;
-            this.PowerLabel.Location = new System.Drawing.Point(6, 107);
+            this.PowerLabel.Location = new System.Drawing.Point(6, 55);
             this.PowerLabel.Name = "PowerLabel";
             this.PowerLabel.Size = new System.Drawing.Size(43, 15);
             this.PowerLabel.TabIndex = 9;
@@ -154,7 +154,7 @@ namespace TrexMinerGUI.Forms
             // FanSpeedLabel
             // 
             this.FanSpeedLabel.AutoSize = true;
-            this.FanSpeedLabel.Location = new System.Drawing.Point(8, 166);
+            this.FanSpeedLabel.Location = new System.Drawing.Point(8, 114);
             this.FanSpeedLabel.Name = "FanSpeedLabel";
             this.FanSpeedLabel.Size = new System.Drawing.Size(29, 15);
             this.FanSpeedLabel.TabIndex = 10;
@@ -163,7 +163,7 @@ namespace TrexMinerGUI.Forms
             // TempLabel
             // 
             this.TempLabel.AutoSize = true;
-            this.TempLabel.Location = new System.Drawing.Point(8, 195);
+            this.TempLabel.Location = new System.Drawing.Point(8, 143);
             this.TempLabel.Name = "TempLabel";
             this.TempLabel.Size = new System.Drawing.Size(39, 15);
             this.TempLabel.TabIndex = 11;
@@ -172,7 +172,7 @@ namespace TrexMinerGUI.Forms
             // LastUpdatedLabel
             // 
             this.LastUpdatedLabel.AutoSize = true;
-            this.LastUpdatedLabel.Location = new System.Drawing.Point(8, 232);
+            this.LastUpdatedLabel.Location = new System.Drawing.Point(8, 176);
             this.LastUpdatedLabel.Name = "LastUpdatedLabel";
             this.LastUpdatedLabel.Size = new System.Drawing.Size(72, 15);
             this.LastUpdatedLabel.TabIndex = 16;
@@ -181,7 +181,7 @@ namespace TrexMinerGUI.Forms
             // LastUpdatedText
             // 
             this.LastUpdatedText.AutoSize = true;
-            this.LastUpdatedText.Location = new System.Drawing.Point(77, 232);
+            this.LastUpdatedText.Location = new System.Drawing.Point(77, 176);
             this.LastUpdatedText.Name = "LastUpdatedText";
             this.LastUpdatedText.Size = new System.Drawing.Size(94, 15);
             this.LastUpdatedText.TabIndex = 17;
@@ -190,7 +190,7 @@ namespace TrexMinerGUI.Forms
             // EfficiencyLabel
             // 
             this.EfficiencyLabel.AutoSize = true;
-            this.EfficiencyLabel.Location = new System.Drawing.Point(6, 137);
+            this.EfficiencyLabel.Location = new System.Drawing.Point(6, 85);
             this.EfficiencyLabel.Name = "EfficiencyLabel";
             this.EfficiencyLabel.Size = new System.Drawing.Size(61, 15);
             this.EfficiencyLabel.TabIndex = 18;
@@ -199,20 +199,16 @@ namespace TrexMinerGUI.Forms
             // EfficiencyTextBox
             // 
             this.EfficiencyTextBox.Enabled = false;
-            this.EfficiencyTextBox.Location = new System.Drawing.Point(77, 134);
+            this.EfficiencyTextBox.Location = new System.Drawing.Point(77, 82);
             this.EfficiencyTextBox.Name = "EfficiencyTextBox";
             this.EfficiencyTextBox.Size = new System.Drawing.Size(153, 23);
             this.EfficiencyTextBox.TabIndex = 19;
             // 
             // StatisticsBox
             // 
-            this.StatisticsBox.Controls.Add(this.MinerStatusLabel);
             this.StatisticsBox.Controls.Add(this.EfficiencyTextBox);
-            this.StatisticsBox.Controls.Add(this.MinerStatusTextBox);
             this.StatisticsBox.Controls.Add(this.EfficiencyLabel);
-            this.StatisticsBox.Controls.Add(this.DurationLabel);
             this.StatisticsBox.Controls.Add(this.LastUpdatedText);
-            this.StatisticsBox.Controls.Add(this.DurationTextBox);
             this.StatisticsBox.Controls.Add(this.LastUpdatedLabel);
             this.StatisticsBox.Controls.Add(this.SpeedTextBox);
             this.StatisticsBox.Controls.Add(this.PowerTextBox);
@@ -222,9 +218,9 @@ namespace TrexMinerGUI.Forms
             this.StatisticsBox.Controls.Add(this.TempLabel);
             this.StatisticsBox.Controls.Add(this.PowerLabel);
             this.StatisticsBox.Controls.Add(this.FanSpeedLabel);
-            this.StatisticsBox.Location = new System.Drawing.Point(12, 12);
+            this.StatisticsBox.Location = new System.Drawing.Point(12, 72);
             this.StatisticsBox.Name = "StatisticsBox";
-            this.StatisticsBox.Size = new System.Drawing.Size(246, 259);
+            this.StatisticsBox.Size = new System.Drawing.Size(246, 199);
             this.StatisticsBox.TabIndex = 20;
             this.StatisticsBox.TabStop = false;
             this.StatisticsBox.Text = "Statistics";
@@ -414,11 +410,15 @@ namespace TrexMinerGUI.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 313);
+            this.Controls.Add(this.MinerStatusLabel);
             this.Controls.Add(this.SessionGroupBox);
             this.Controls.Add(this.VersionLabel);
+            this.Controls.Add(this.MinerStatusTextBox);
             this.Controls.Add(this.SettingsBox);
             this.Controls.Add(this.StartStopButton);
+            this.Controls.Add(this.DurationLabel);
             this.Controls.Add(this.StatisticsBox);
+            this.Controls.Add(this.DurationTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";

@@ -85,7 +85,9 @@ namespace TrexMinerGUI.Forms
             EfficiencyTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Efficiency;
             FanSpeedTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.FanSpeed;
             TempTextBox.Text = Program.TheTrexWrapper.TheTrexStatisctics.Temp;
-            LastUpdatedText.Text = Program.TheTrexWrapper.TheTrexStatisctics.LastUpdated;
+            LastUpdatedText.Text = Program.TheTrexWrapper.TheTrexStatisctics.LastUpdated.ToString("HH:mm:ss");
+            if (Program.TheTrexWrapper.IsRunning)
+                LastUpdatedText.Text += String.Format(" ({0} seconds ago)", (DateTime.Now - Program.TheTrexWrapper.TheTrexStatisctics.LastUpdated).TotalSeconds.ToString("F0"));
             #endregion
 
             #region SessionGroup

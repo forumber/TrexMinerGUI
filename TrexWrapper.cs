@@ -16,7 +16,7 @@ namespace TrexMinerGUI
             public string Efficiency { get; set; }
             public string Temp { get; set; }
             public string Shares { get; set; }
-            public string LastUpdated { get; set; }
+            public DateTime LastUpdated { get; set; }
             public int RestartCount { get; set; }
 
             public TrexStatisctics()
@@ -27,7 +27,7 @@ namespace TrexMinerGUI
                 Efficiency = "0";
                 Temp = "0";
                 Shares = @"0/0";
-                LastUpdated = "-";
+                LastUpdated = DateTime.Now;
                 RestartCount = -1;
             }
         }
@@ -96,12 +96,10 @@ namespace TrexMinerGUI
                         Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheSelfUpdate.UpdateTrex(e.Data.Split(" ")[2]));
                     }
                 }
-                else if (e.Data.StartsWith("-"))
-                {
-                    TheTrexStatisctics.LastUpdated = e.Data.Split(" ")[1];
-                }
                 else if (e.Data.StartsWith(@"GPU #0:"))
                 {
+                    TheTrexStatisctics.LastUpdated = DateTime.Now;
+
                     try
                     {
                         var Statistics = e.Data.Split(" - ")[1].Split(",");

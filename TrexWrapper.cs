@@ -130,7 +130,7 @@ namespace TrexMinerGUI
                     //Debug.WriteLine("DateTimeHeader:" + DateTimeHeader);
                     //Debug.WriteLine("Info:" + Info);
 
-                    if ((Info.Contains("epoch") || (Info.Contains("OK")) && !Program.TheStopWatchWrapper.TheStopWatch.IsRunning))
+                    if (Info.Contains("OK") && !Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
                     {
                         Program.TheStopWatchWrapper.TheStopWatch.Start();
                     }

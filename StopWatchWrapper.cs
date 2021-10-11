@@ -11,11 +11,6 @@ namespace TrexMinerGUI
         private readonly string FileName;
         private readonly System.Threading.Timer TheTimer;
 
-        public class MD5Exception : Exception
-        {
-            public MD5Exception() : base("MD5Mismatch!") { }
-        }
-
         public StopWatchWrapper()
         {
             FileName = System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + ".bin";

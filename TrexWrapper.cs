@@ -49,6 +49,7 @@ namespace TrexMinerGUI
         public bool IsStopping { get; set; }
         private LogCategory LastLogCategory { get; set; }
         private bool ApplyAfterburnerProfileB { get; set; }
+        public Version CurrentTrexVersion { get; set; }
 
         public TrexWrapper()
         {
@@ -72,6 +73,7 @@ namespace TrexMinerGUI
             Session = "-";
             LastLogCategory = LogCategory.NORMAL;
             ApplyAfterburnerProfileB = true;
+            CurrentTrexVersion = null;
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)
@@ -93,7 +95,7 @@ namespace TrexMinerGUI
                     if (e.Data.Contains("download"))
                     {
                         ApplyAfterburnerProfileB = false;
-                        Task.Run(() => Program.TheTrexWrapper.Stop()).ContinueWith((_) => Program.TheSelfUpdate.UpdateTrex(e.Data.Split(" ")[2]));
+                        Task.Run(() => Program.TheSelfUpdate.DownloadAndInstallTrex(DownloadURL: e.Data.Split(" ")[2]));
                     }
                 }
                 else if (e.Data.StartsWith(@"GPU #0:"))
@@ -142,6 +144,10 @@ namespace TrexMinerGUI
                     {
                         if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
                             Program.TheStopWatchWrapper.TheStopWatch.Stop();
+                    }
+                    else if (Info.StartsWith("T-Rex NVIDIA GPU miner v"))
+                    {
+                        CurrentTrexVersion = new Version(Info.Split(" ")[4].Substring(1));
                     }
                 }
             }
@@ -232,7 +238,7 @@ namespace TrexMinerGUI
 
             if (!File.Exists(Program.ExecutionPath + "t-rex.exe"))
             {
-                Task.Run(() => Program.TheSelfUpdate.UpdateTrex(@"https://github.com/trexminer/T-Rex/releases/download/0.22.1/t-rex-0.22.1-win.zip"));
+                Task.Run(() => Program.TheSelfUpdate.DownloadAndInstallTrex());
                 return;
             }
 

@@ -29,7 +29,6 @@ namespace TrexMinerGUI
         public bool IsTrexUpdating { get; set; }
         public string TrexUpdatingTo { get; set; }
         public ProcessStartInfo UpdateScript;
-        private readonly string LogFileName;
 
         public SelfUpdate()
         {
@@ -42,7 +41,6 @@ namespace TrexMinerGUI
             IsTrexUpdating = false;
             TrexUpdatingTo = "";
             UpdateScript = null;
-            LogFileName = "log_SelfUpdate.txt";
         }
 
         private void CheckForGUIUpdate()
@@ -111,7 +109,7 @@ namespace TrexMinerGUI
             }
             catch (Exception TheException)
             {
-                File.AppendAllText(Program.ExecutionPath + LogFileName, Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + TheException.ToString() + Environment.NewLine);
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), Environment.NewLine + TheException.ToString());
             }
             Logging.WriteLog(MethodBase.GetCurrentMethod(), "done");
         }
@@ -162,7 +160,7 @@ namespace TrexMinerGUI
             }
             catch (Exception TheException)
             {
-                File.AppendAllText(Program.ExecutionPath + LogFileName, Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + TheException.ToString());
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), Environment.NewLine + TheException.ToString());
             }
         }
 

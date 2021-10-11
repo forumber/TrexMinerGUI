@@ -62,6 +62,7 @@ namespace TrexMinerGUI.Forms
             this.StartedAtLabel = new System.Windows.Forms.Label();
             this.ErrorCountTextBox = new System.Windows.Forms.TextBox();
             this.WarnCountTextBox = new System.Windows.Forms.TextBox();
+            this.TrexVersionLabel = new System.Windows.Forms.Label();
             this.StatisticsBox.SuspendLayout();
             this.SettingsBox.SuspendLayout();
             this.SessionGroupBox.SuspendLayout();
@@ -405,11 +406,21 @@ namespace TrexMinerGUI.Forms
             this.WarnCountTextBox.Size = new System.Drawing.Size(116, 23);
             this.WarnCountTextBox.TabIndex = 16;
             // 
+            // TrexVersionLabel
+            // 
+            this.TrexVersionLabel.AutoSize = true;
+            this.TrexVersionLabel.Location = new System.Drawing.Point(266, 292);
+            this.TrexVersionLabel.Name = "TrexVersionLabel";
+            this.TrexVersionLabel.Size = new System.Drawing.Size(66, 15);
+            this.TrexVersionLabel.TabIndex = 25;
+            this.TrexVersionLabel.Text = "TrexVersion";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 313);
+            this.Controls.Add(this.TrexVersionLabel);
             this.Controls.Add(this.MinerStatusLabel);
             this.Controls.Add(this.SessionGroupBox);
             this.Controls.Add(this.VersionLabel);
@@ -472,5 +483,6 @@ namespace TrexMinerGUI.Forms
         private System.Windows.Forms.Button TrexMinerSettingsButton;
         private System.Windows.Forms.Button GUISettingsButton;
         private System.Windows.Forms.LinkLabel SharesWarningLinkLabel;
+        private System.Windows.Forms.Label TrexVersionLabel;
     }
 }

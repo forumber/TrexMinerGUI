@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -67,19 +68,17 @@ namespace TrexMinerGUI
 
         private void CheckForTrexUpdate()
         {
-            string LogTag = "CheckForTrexUpdate";
-
-            WriteLog(LogTag, "start");
+            Logging.WriteLog(MethodBase.GetCurrentMethod(), "start");
 
             if (IsTrexUpdating)
             {
-                WriteLog(LogTag, "an update process is already running, aborting update check");
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), "an update process is already running, aborting update check");
                 return;
             }
 
             if (!Program.TheTrexWrapper.IsRunning)
             {
-                WriteLog(LogTag, "miner is not running, aborting update check");
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), "miner is not running, aborting update check");
                 return;
             }
 
@@ -88,25 +87,25 @@ namespace TrexMinerGUI
                 Version CurrentTrexVersion;
                 try
                 {
-                    WriteLog(LogTag, "trying to get current miner version information by checking file metadata");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by checking file metadata");
                     CurrentTrexVersion = new Version(ExternalMethods.GetVersionInfo(Program.ExecutionPath + "t-rex.exe", "ProductVersion")[0].Item2.Split(" ")[0]);
                 }
                 catch
                 {
-                    WriteLog(LogTag, "trying to get current miner version information by checking file metadata...failed");
-                    WriteLog(LogTag, "trying to get current miner version information by using miner version information from miner output");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by checking file metadata...failed");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by using miner version information from miner output");
                     CurrentTrexVersion = Program.TheTrexWrapper.CurrentTrexVersion;
                 }
 
-                WriteLog(LogTag, "CurrentTrexVersion: " + CurrentTrexVersion.ToString());
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), "CurrentTrexVersion: " + CurrentTrexVersion.ToString());
 
                 (Version LatestTrexVersion, string LatestTrexVersionDownloadURL) = GithubAPI.GetLatestTrexRelease();
 
-                WriteLog(LogTag, "LatestTrexVersion: " + LatestTrexVersion.ToString());
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), "LatestTrexVersion: " + LatestTrexVersion.ToString());
 
                 if (LatestTrexVersion > CurrentTrexVersion)
                 {
-                    WriteLog(LogTag, "firing up update procedure");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "firing up update procedure");
                     DownloadAndInstallTrex(LatestTrexVersionDownloadURL, LatestTrexVersion);
                 }
             }
@@ -114,30 +113,28 @@ namespace TrexMinerGUI
             {
                 File.AppendAllText(Program.ExecutionPath + LogFileName, Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + TheException.ToString() + Environment.NewLine);
             }
-            WriteLog(LogTag, "done");
+            Logging.WriteLog(MethodBase.GetCurrentMethod(), "done");
         }
 
         public void DownloadAndInstallTrex(String DownloadURL = null, Version TrexVersion = null)
         {
-            string LogTag = "DownloadAndInstallLatestTrex";
-
-            WriteLog(LogTag, "start");
+            Logging.WriteLog(MethodBase.GetCurrentMethod(), "start");
             try
             {
                 if (DownloadURL == null)
                 {
-                    WriteLog(LogTag, "there are no args provided, requesting latest version");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "there are no args provided, requesting latest version");
                     (TrexVersion, DownloadURL) = GithubAPI.GetLatestTrexRelease();
                 }
 
                 if (TrexVersion == null)
                 {
-                    WriteLog(LogTag, "version information is null, using TrexUpdatingTo");
-                    WriteLog(LogTag, "TrexUpdatingTo: " + TrexUpdatingTo);
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "version information is null, using TrexUpdatingTo");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "TrexUpdatingTo: " + TrexUpdatingTo);
                 }
                 else
                 {
-                    WriteLog(LogTag, "TrexVersion: " + TrexVersion.ToString());
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "TrexVersion: " + TrexVersion.ToString());
                     TrexUpdatingTo = TrexVersion.ToString() + " (Github)";
                 }
                 
@@ -147,11 +144,11 @@ namespace TrexMinerGUI
                 Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating Trex...", "to version " + TrexUpdatingTo, System.Windows.Forms.ToolTipIcon.Info);
 
                 DownloadAndExtractZip(DownloadURL);
-                WriteLog(LogTag, "updating...");
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), "updating...");
 
                 File.Copy(Program.ExecutionPath + UpdateFolderName + @"\" + "t-rex.exe", Program.ExecutionPath + "t-rex.exe", overwrite: true);
                 IsTrexUpdating = false;
-                WriteLog(LogTag, "update has been completed, restarting miner...");
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), "update has been completed, restarting miner...");
 
                 Task.Run(() => Program.TheTrexWrapper.Start());
 
@@ -160,18 +157,13 @@ namespace TrexMinerGUI
                 TrexUpdatingTo = "";
 
                 Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Trex update completed", "Miner has been restarted", System.Windows.Forms.ToolTipIcon.Info);
-                WriteLog(LogTag, "done");
+                Logging.WriteLog(MethodBase.GetCurrentMethod(), "done");
 
             }
             catch (Exception TheException)
             {
                 File.AppendAllText(Program.ExecutionPath + LogFileName, Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + TheException.ToString());
             }
-        }
-
-        private void WriteLog(string LogTag, string Message)
-        {
-            File.AppendAllText(Program.ExecutionPath + LogFileName, DateTime.Now.ToString("s") + " " + LogTag + ": " + Message + Environment.NewLine);
         }
 
         private void UpdateGUI()
@@ -194,23 +186,19 @@ namespace TrexMinerGUI
 
         private void DownloadAndExtractZip(string URL)
         {
-            string LogTag = "DownloadAndExtractZip";
-
-            WriteLog(LogTag, "downloading file: " + URL);
+            Logging.WriteLog(MethodBase.GetCurrentMethod(), "downloading file: " + URL);
             using (var webClient = new WebClient())
             {
                 webClient.DownloadFile(URL, Program.ExecutionPath + UpdateFileName);
             }
-            WriteLog(LogTag, "unzipping " + Program.ExecutionPath + UpdateFileName);
+            Logging.WriteLog(MethodBase.GetCurrentMethod(), "unzipping " + Program.ExecutionPath + UpdateFileName);
 
             System.IO.Compression.ZipFile.ExtractToDirectory(Program.ExecutionPath + UpdateFileName, Program.ExecutionPath + UpdateFolderName + @"\", overwriteFiles: true);
         }
 
         public void CleanUp()
         {
-            string LogTag = "CleanUp";
-
-            WriteLog(LogTag, "cleaning...");
+            Logging.WriteLog(MethodBase.GetCurrentMethod(), "cleaning...");
 
             File.Delete(Program.ExecutionPath + UpdateFileName);
             Directory.Delete(Program.ExecutionPath + UpdateFolderName, recursive: true);

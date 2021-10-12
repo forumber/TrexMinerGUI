@@ -8,10 +8,10 @@ namespace TrexMinerGUI
 {
     public static class Logging
     {
-        private static readonly string LogFilePath = Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location) + "_log.txt";
-
         public static void WriteLog(MethodBase methodBase, string message)
         {
+            string LogFilePath = Program.ExecutionPath + Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location) + ".log";
+
             // The replace method is ugly, i know
             string Tag = methodBase.DeclaringType.ToString().Replace("TrexMinerGUI.","") + "." + methodBase.Name;
 

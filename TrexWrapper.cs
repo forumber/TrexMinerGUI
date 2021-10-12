@@ -278,6 +278,7 @@ namespace TrexMinerGUI
         private void ProcExitedHandler(object sender, EventArgs e)
         {
             Program.TheSelfUpdate.StopTrexUpdateTimer();
+            CurrentTrexVersion = null;
 
             IsRunning = false;
 

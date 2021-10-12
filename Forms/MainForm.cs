@@ -109,16 +109,9 @@ namespace TrexMinerGUI.Forms
             #endregion
 
             #region TrexVersionLabel
-            if (Program.TheTrexWrapper.IsRunning)
+            if (Program.TheTrexWrapper.CurrentTrexVersion != null)
             {
-                if (Program.TheTrexWrapper.CurrentTrexVersion != null)
-                {
-                    TrexVersionLabel.Text = "T-Rex v" + Program.TheTrexWrapper.CurrentTrexVersion.ToString();
-                }
-                else
-                {
-                    TrexVersionLabel.Text = "";
-                }
+                TrexVersionLabel.Text = "T-Rex v" + Program.TheTrexWrapper.CurrentTrexVersion.ToString();
             }
             else
             {

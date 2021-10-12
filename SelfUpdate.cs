@@ -85,14 +85,17 @@ namespace TrexMinerGUI
                 Version CurrentTrexVersion;
                 try
                 {
-                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by checking file metadata");
-                    CurrentTrexVersion = new Version(ExternalMethods.GetVersionInfo(Program.ExecutionPath + "t-rex.exe", "ProductVersion")[0].Item2.Split(" ")[0]);
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by using miner version information from miner output");
+                    CurrentTrexVersion = Program.TheTrexWrapper.CurrentTrexVersion;
+
+                    if (CurrentTrexVersion < (new Version("0.20.0")))
+                        throw new Exception();
                 }
                 catch
                 {
-                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by checking file metadata...failed");
-                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by using miner version information from miner output");
-                    CurrentTrexVersion = Program.TheTrexWrapper.CurrentTrexVersion;
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by using miner version information from miner output...failed");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by checking file metadata");
+                    CurrentTrexVersion = new Version(ExternalMethods.GetVersionInfo(Program.ExecutionPath + "t-rex.exe", "ProductVersion")[0].Item2.Split(" ")[0]);
                 }
 
                 Logging.WriteLog(MethodBase.GetCurrentMethod(), "CurrentTrexVersion: " + CurrentTrexVersion.ToString());
@@ -210,7 +213,7 @@ namespace TrexMinerGUI
         public void StartTrexUpdateTimer()
         {
             if (TheTrexTimer == null)
-                TheTrexTimer = new System.Threading.Timer((_) => CheckForTrexUpdate(), null, dueTime: TimeSpan.FromSeconds(2), period: TimeSpan.FromDays(1));
+                TheTrexTimer = new System.Threading.Timer((_) => CheckForTrexUpdate(), null, dueTime: TimeSpan.FromSeconds(10), period: TimeSpan.FromDays(1));
             else
                 throw new InvalidOperationException("Timer is already running");
         }

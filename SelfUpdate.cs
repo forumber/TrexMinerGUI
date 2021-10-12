@@ -85,7 +85,6 @@ namespace TrexMinerGUI
                 Version CurrentTrexVersion;
                 try
                 {
-                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by using miner version information from miner output");
                     CurrentTrexVersion = Program.TheTrexWrapper.CurrentTrexVersion;
 
                     if (CurrentTrexVersion < (new Version("0.20.0")))
@@ -93,8 +92,7 @@ namespace TrexMinerGUI
                 }
                 catch
                 {
-                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by using miner version information from miner output...failed");
-                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "trying to get current miner version information by checking file metadata");
+                    Logging.WriteLog(MethodBase.GetCurrentMethod(), "failed to get current miner version information by using miner version information from miner output, trying again by checking file metadata");
                     CurrentTrexVersion = new Version(ExternalMethods.GetVersionInfo(Program.ExecutionPath + "t-rex.exe", "ProductVersion")[0].Item2.Split(" ")[0]);
                 }
 

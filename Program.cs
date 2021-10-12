@@ -69,11 +69,8 @@ namespace TrexMinerGUI
 
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
 
-            try
-            {
-                TheSelfUpdate.CleanUp();
-            }
-            catch { }
+            TheSelfUpdate.CleanUp();
+
 
             Application.Run(TheMainAppContext);
         }

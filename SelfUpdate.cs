@@ -200,12 +200,30 @@ namespace TrexMinerGUI
             Logging.WriteLog(MethodBase.GetCurrentMethod(), "cleaning...");
 
             #region REMOVE_ON_NEXT_VERSION
-            File.Delete(@"C:\Windows\System32\TrexMinerGUI_log.txt");
-            File.Delete(Program.ExecutionPath + "TrexMinerGUI_log.txt");
+            try
+            {
+                File.Delete(@"C:\Windows\System32\TrexMinerGUI_log.txt");
+            }
+            catch { }
+
+            try
+            {
+                File.Delete(Program.ExecutionPath + "TrexMinerGUI_log.txt");
+            }
+            catch { }
             #endregion
 
-            File.Delete(Program.ExecutionPath + UpdateFileName);
-            Directory.Delete(Program.ExecutionPath + UpdateFolderName, recursive: true);
+            try
+            {
+                File.Delete(Program.ExecutionPath + UpdateFileName);
+            }
+            catch { }
+
+            try
+            {
+                Directory.Delete(Program.ExecutionPath + UpdateFolderName, recursive: true);
+            }
+            catch { }
         }
 
         public void StartTrexUpdateTimer()

@@ -199,20 +199,6 @@ namespace TrexMinerGUI
         {
             Logging.WriteLog(MethodBase.GetCurrentMethod(), "cleaning...");
 
-            #region REMOVE_ON_NEXT_VERSION
-            try
-            {
-                File.Delete(@"C:\Windows\System32\TrexMinerGUI_log.txt");
-            }
-            catch { }
-
-            try
-            {
-                File.Delete(Program.ExecutionPath + "TrexMinerGUI_log.txt");
-            }
-            catch { }
-            #endregion
-
             try
             {
                 File.Delete(Program.ExecutionPath + UpdateFileName);

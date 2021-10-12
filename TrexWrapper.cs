@@ -271,10 +271,14 @@ namespace TrexMinerGUI
             // Always reset just in case
             ApplyAfterburnerProfileB = true;
 
+            Program.TheSelfUpdate.StartTrexUpdateTimer();
+
         }
 
         private void ProcExitedHandler(object sender, EventArgs e)
         {
+            Program.TheSelfUpdate.StopTrexUpdateTimer();
+
             IsRunning = false;
 
             TrexProcess.CancelOutputRead();

@@ -20,7 +20,7 @@ namespace TrexMinerGUI
         }
 
         private readonly System.Threading.Timer TheGUITimer;
-        private readonly System.Threading.Timer TheTrexTimer;
+        private System.Threading.Timer TheTrexTimer;
         private readonly string JsonURL;
         public readonly Version TheAppVersion;
         private readonly string UpdateFileName;
@@ -37,7 +37,7 @@ namespace TrexMinerGUI
             TheAppVersion = typeof(Program).Assembly.GetName().Version;
             JsonURL = "https://raw.githubusercontent.com/forumber/TrexMinerGUI_Updater-API/main/update.json";
             TheGUITimer = new System.Threading.Timer((_) => CheckForGUIUpdate(), null, dueTime: TimeSpan.FromSeconds(2), period: TimeSpan.FromMinutes(1));
-            TheTrexTimer = new System.Threading.Timer((_) => CheckForTrexUpdate(), null, dueTime: TimeSpan.FromSeconds(2), period: TimeSpan.FromHours(1));
+            TheTrexTimer = null;
             IsTrexUpdating = false;
             TrexUpdatingTo = "";
             UpdateScript = null;
@@ -205,6 +205,25 @@ namespace TrexMinerGUI
 
             File.Delete(Program.ExecutionPath + UpdateFileName);
             Directory.Delete(Program.ExecutionPath + UpdateFolderName, recursive: true);
+        }
+
+        public void StartTrexUpdateTimer()
+        {
+            if (TheTrexTimer == null)
+                TheTrexTimer = new System.Threading.Timer((_) => CheckForTrexUpdate(), null, dueTime: TimeSpan.FromSeconds(2), period: TimeSpan.FromDays(1));
+            else
+                throw new InvalidOperationException("Timer is already running");
+        }
+
+        public void StopTrexUpdateTimer()
+        {
+            if (TheTrexTimer != null)
+            {
+                TheTrexTimer.Dispose();
+                TheTrexTimer = null;
+            }
+            else
+                throw new InvalidOperationException("Timer is not running already");
         }
     }
 }

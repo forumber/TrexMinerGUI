@@ -207,5 +207,10 @@ namespace TrexMinerGUI.Forms
             }
             
         }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            Activate();
+        }
     }
 }

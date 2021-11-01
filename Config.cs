@@ -87,6 +87,8 @@ namespace TrexMinerGUI
                 ProfileToApplyOnMinerStart = "1";
                 ProfileToApplyOnMinerClose = "1";
 
+                MessageBox.Show("The configuration has been reset! Please reconfigure your settings.", "Welcome!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 Task.Run(() =>
                 {
                     using (var TheMainForm = new MainForm())

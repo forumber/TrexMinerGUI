@@ -435,6 +435,7 @@ namespace TrexMinerGUI.Forms
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrexMinerGUI";
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.StatisticsBox.ResumeLayout(false);
             this.StatisticsBox.PerformLayout();
             this.SettingsBox.ResumeLayout(false);

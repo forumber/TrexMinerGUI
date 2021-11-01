@@ -95,8 +95,6 @@ namespace TrexMinerGUI
                     }
                 });
             }
-
-
         }
 
         public void SaveConfigToFile()

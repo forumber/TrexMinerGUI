@@ -111,14 +111,14 @@ namespace TrexMinerGUI
 
         public void SaveConfigToFile()
         {
-            string TheFileContent =
-                "MinerArgs=" + MinerArgs + Environment.NewLine +
-                "StartMiningOnAppStart=" + StartMiningOnAppStart + Environment.NewLine +
-                "ApplyAfterburnerProfileOnMinerStart=" + ApplyAfterburnerProfileOnMinerStart + Environment.NewLine +
-                "ApplyAfterburnerProfileOnMinerClose=" + ApplyAfterburnerProfileOnMinerClose + Environment.NewLine +
-                "TryToCloseMSIAfterburnerIfItIsNotRunningAlready=" + TryToCloseMSIAfterburnerIfItIsNotRunningAlready + Environment.NewLine +
-                "ProfileToApplyOnMinerStart=" + ProfileToApplyOnMinerStart + Environment.NewLine +
-                "ProfileToApplyOnMinerClose=" + ProfileToApplyOnMinerClose + Environment.NewLine;
+            string TheFileContent = string.Join(Environment.NewLine,
+                "MinerArgs=" + MinerArgs,
+                "StartMiningOnAppStart=" + StartMiningOnAppStart,
+                "ApplyAfterburnerProfileOnMinerStart=" + ApplyAfterburnerProfileOnMinerStart,
+                "ApplyAfterburnerProfileOnMinerClose=" + ApplyAfterburnerProfileOnMinerClose,
+                "TryToCloseMSIAfterburnerIfItIsNotRunningAlready=" + TryToCloseMSIAfterburnerIfItIsNotRunningAlready,
+                "ProfileToApplyOnMinerStart=" + ProfileToApplyOnMinerStart,
+                "ProfileToApplyOnMinerClose=" + ProfileToApplyOnMinerClose);
 
             ExternalMethods.WriteAllTextWithBackup(Program.ExecutionPath + "trex_gui.conf", TheFileContent);
         }

@@ -4,13 +4,35 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 using TrexMinerGUI.Forms;
 
 namespace TrexMinerGUI
 {
     public class Config
     {
-        public string MinerArgs { get; set; }
+        private readonly string InvalidMinerArgsMessage = "Invalid MinerArgs!";
+        private string _minerArgs;
+        public string MinerArgs { 
+            get
+            {
+                return _minerArgs;
+            }
+            set
+            {
+                string[] fields = value.Split(" ");
+                if (
+                    fields[0] == "t-rex" ||
+                    (!fields.Contains("-a") && !fields.Contains("--algo")) ||
+                    (!fields.Contains("-o") && !fields.Contains("--url"))
+                )
+                {
+                    throw new ArgumentException(InvalidMinerArgsMessage);
+                }
+
+                _minerArgs = value;
+            }
+        }
         public bool StartMiningOnAppStart { get; set; }
         public bool ApplyAfterburnerProfileOnMinerStart { get; set; }
         public bool ApplyAfterburnerProfileOnMinerClose { get; set; }
@@ -51,9 +73,13 @@ namespace TrexMinerGUI
                 }
 
             }
-            catch
+            catch (Exception TheException)
             {
-                MinerArgs = "";
+                if (TheException.Message == InvalidMinerArgsMessage)
+                    throw TheException;
+
+                // https://github.com/trexminer/T-Rex#examples
+                MinerArgs = "-a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rigTrexTest";
                 StartMiningOnAppStart = false;
                 ApplyAfterburnerProfileOnMinerStart = false;
                 ApplyAfterburnerProfileOnMinerClose = false;

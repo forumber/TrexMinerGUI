@@ -46,7 +46,7 @@ namespace TrexMinerGUI.Forms
             this.SaveMinerArgButton.Size = new System.Drawing.Size(25, 23);
             this.SaveMinerArgButton.TabIndex = 20;
             this.SaveMinerArgButton.UseVisualStyleBackColor = true;
-            this.SaveMinerArgButton.Click += new System.EventHandler(this.SaveMinerArgs);
+            this.SaveMinerArgButton.Click += new System.EventHandler(this.SaveMinerArgButton_Click);
             // 
             // MinerArgsLabel
             // 

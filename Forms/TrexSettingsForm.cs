@@ -57,9 +57,19 @@ namespace TrexMinerGUI.Forms
             }
         }
 
-        private void SaveMinerArgs(object sender, EventArgs e)
+        private bool SaveMinerArgs()
         {
-            Program.TheConfig.MinerArgs = this.MinerArgsTextBox.Text;
+            try
+            {
+                Program.TheConfig.MinerArgs = this.MinerArgsTextBox.Text;
+            }
+            catch
+            {
+                MessageBox.Show("Arguments are not valid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+
             Program.TheConfig.SaveConfigToFile();
 
             if (Program.TheTrexWrapper.IsRunning)
@@ -72,6 +82,7 @@ namespace TrexMinerGUI.Forms
             IsArgsChanged = false;
 
             SaveMinerArgButton.Enabled = false;
+            return true;
         }
 
         private void TrexSettingsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -82,7 +93,8 @@ namespace TrexMinerGUI.Forms
 
                 if (Result == DialogResult.Yes)
                 {
-                    SaveMinerArgs(sender, e);
+                    if(!SaveMinerArgs())
+                        e.Cancel = true;
                 }
                 else if (Result == DialogResult.Cancel)
                 {
@@ -90,6 +102,11 @@ namespace TrexMinerGUI.Forms
                 }
             }
                 
+        }
+
+        private void SaveMinerArgButton_Click(object sender, EventArgs e)
+        {
+            SaveMinerArgs();
         }
     }
 }

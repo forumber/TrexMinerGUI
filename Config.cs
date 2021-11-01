@@ -49,20 +49,30 @@ namespace TrexMinerGUI
                 foreach (string Line in Lines)
                 {
                     string[] Sections = Line.Split("=");
-                    if (Sections[0] == "MinerArgs")
-                        MinerArgs = Sections[1];
-                    else if (Sections[0] == "StartMiningOnAppStart")
-                        StartMiningOnAppStart = Sections[1] == "True";
-                    else if (Sections[0] == "ApplyAfterburnerProfileOnMinerStart")
-                        ApplyAfterburnerProfileOnMinerStart = Sections[1] == "True";
-                    else if (Sections[0] == "ApplyAfterburnerProfileOnMinerClose")
-                        ApplyAfterburnerProfileOnMinerClose = Sections[1] == "True";
-                    else if (Sections[0] == "TryToCloseMSIAfterburnerIfItIsNotRunningAlready")
-                        TryToCloseMSIAfterburnerIfItIsNotRunningAlready = Sections[1] == "True";
-                    else if (Sections[0] == "ProfileToApplyOnMinerStart")
-                        ProfileToApplyOnMinerStart = Sections[1];
-                    else if (Sections[0] == "ProfileToApplyOnMinerClose")
-                        ProfileToApplyOnMinerClose = Sections[1];
+                    switch (Sections[0])
+                    {
+                        case "MinerArgs":
+                            MinerArgs = Sections[1];
+                            break;
+                        case "StartMiningOnAppStart":
+                            StartMiningOnAppStart = Sections[1] == "True";
+                            break;
+                        case "ApplyAfterburnerProfileOnMinerStart":
+                            ApplyAfterburnerProfileOnMinerStart = Sections[1] == "True";
+                            break;
+                        case "ApplyAfterburnerProfileOnMinerClose":
+                            ApplyAfterburnerProfileOnMinerClose = Sections[1] == "True";
+                            break;
+                        case "TryToCloseMSIAfterburnerIfItIsNotRunningAlready":
+                            TryToCloseMSIAfterburnerIfItIsNotRunningAlready = Sections[1] == "True";
+                            break;
+                        case "ProfileToApplyOnMinerStart":
+                            ProfileToApplyOnMinerStart = Sections[1];
+                            break;
+                        case "ProfileToApplyOnMinerClose":
+                            ProfileToApplyOnMinerClose = Sections[1];
+                            break;
+                    }
                 }
 
                 if (String.IsNullOrEmpty(MinerArgs) ||

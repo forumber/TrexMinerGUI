@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TrexMinerGUI
 {
@@ -50,6 +51,7 @@ namespace TrexMinerGUI
         private LogCategory LastLogCategory { get; set; }
         private bool ApplyAfterburnerProfileB { get; set; }
         public Version CurrentTrexVersion { get; set; }
+        private int HardRestartCount { get; set; }
 
         public TrexWrapper()
         {
@@ -74,6 +76,7 @@ namespace TrexMinerGUI
             LastLogCategory = LogCategory.NORMAL;
             ApplyAfterburnerProfileB = true;
             CurrentTrexVersion = null;
+            HardRestartCount = 0;
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)
@@ -219,7 +222,7 @@ namespace TrexMinerGUI
             File.AppendAllText(LogPathToWrite, LineToWrite + Environment.NewLine);
         }
 
-        public void Start()
+        public void Start(bool ResetHardRestartCount = true)
         {
             if (Program.TheSelfUpdate.IsTrexUpdating || IsStarting)
             {
@@ -243,6 +246,9 @@ namespace TrexMinerGUI
             }
 
             IsStarting = true;
+
+            if (ResetHardRestartCount)
+                HardRestartCount = 0;
 
             TheTrexStatisctics = new TrexStatisctics();
 
@@ -297,11 +303,19 @@ namespace TrexMinerGUI
 
                 IsStopping = false;
             }
-            else
+            else if (!IsStopping)
             {
+                HardRestartCount++;
                 ApplyAfterburnerProfileB = false;
                 IsStopping = false;
-                Start();
+                if (HardRestartCount > 2)
+                {
+                    Stop();
+                    MessageBox.Show("Trex got hard restarted multiple times.\nPlease review your miner arguments!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } else
+                {
+                    Start(ResetHardRestartCount: false);
+                }
             }
 
             //ExternalMethods.CloseConsole();

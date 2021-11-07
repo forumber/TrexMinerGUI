@@ -65,6 +65,7 @@ namespace TrexMinerGUI.Forms
             this.WarnCountTextBox = new System.Windows.Forms.TextBox();
             this.TrexVersionLabel = new System.Windows.Forms.Label();
             this.HTTPUrlLabel = new System.Windows.Forms.LinkLabel();
+            this.DownloadProgressBar = new System.Windows.Forms.ProgressBar();
             this.StatisticsBox.SuspendLayout();
             this.SettingsBox.SuspendLayout();
             this.SessionGroupBox.SuspendLayout();
@@ -438,11 +439,20 @@ namespace TrexMinerGUI.Forms
             this.HTTPUrlLabel.Text = "HTTPUrl";
             this.HTTPUrlLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.HTTPUrlLabel_LinkClicked);
             // 
+            // DownloadProgressBar
+            // 
+            this.DownloadProgressBar.Location = new System.Drawing.Point(51, 278);
+            this.DownloadProgressBar.Name = "DownloadProgressBar";
+            this.DownloadProgressBar.Size = new System.Drawing.Size(207, 23);
+            this.DownloadProgressBar.TabIndex = 27;
+            this.DownloadProgressBar.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 313);
+            this.Controls.Add(this.DownloadProgressBar);
             this.Controls.Add(this.HTTPUrlLabel);
             this.Controls.Add(this.TrexVersionLabel);
             this.Controls.Add(this.MinerStatusLabel);
@@ -512,5 +522,6 @@ namespace TrexMinerGUI.Forms
         private System.Windows.Forms.ComboBox ProfileComboBox;
         private System.Windows.Forms.Label ActiveProfileLabel;
         private System.Windows.Forms.LinkLabel HTTPUrlLabel;
+        private System.Windows.Forms.ProgressBar DownloadProgressBar;
     }
 }

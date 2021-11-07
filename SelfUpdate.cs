@@ -29,6 +29,7 @@ namespace TrexMinerGUI
         public bool IsTrexUpdating { get; set; }
         public string TrexUpdatingTo { get; set; }
         public ProcessStartInfo UpdateScript;
+        public int DownloadPercentage { get; set; }
 
         public SelfUpdate()
         {
@@ -41,6 +42,7 @@ namespace TrexMinerGUI
             IsTrexUpdating = false;
             TrexUpdatingTo = "";
             UpdateScript = null;
+            DownloadPercentage = -1;
         }
 
         private void CheckForGUIUpdate()
@@ -188,7 +190,21 @@ namespace TrexMinerGUI
             Logging.WriteLog(MethodBase.GetCurrentMethod(), "downloading file: " + URL);
             using (var webClient = new WebClient())
             {
-                webClient.DownloadFile(URL, Program.ExecutionPath + UpdateFileName);
+                webClient.DownloadProgressChanged += (sender, e) =>
+                {
+                    double bytesIn = double.Parse(e.BytesReceived.ToString());
+                    double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+                    double percentage = bytesIn / totalBytes * 100;
+                    DownloadPercentage = int.Parse(Math.Truncate(percentage).ToString());
+                };
+                webClient.DownloadFileCompleted += (sender, e) => DownloadPercentage = -2;
+                webClient.DownloadFileAsync(new Uri(URL), Program.ExecutionPath + UpdateFileName);
+
+                while (DownloadPercentage != -2)
+                {
+                    Task.Delay(100).Wait();
+                }
+                DownloadPercentage = -1;
             }
             Logging.WriteLog(MethodBase.GetCurrentMethod(), "unzipping " + Program.ExecutionPath + UpdateFileName);
 

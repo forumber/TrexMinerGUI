@@ -152,6 +152,21 @@ namespace TrexMinerGUI.Forms
             #region HTTPUrl
             HTTPUrlLabel.Text = Program.TheTrexWrapper.HTTPUrl;
             #endregion
+
+            #region DownloadProgressBar
+            if (Program.TheSelfUpdate.DownloadPercentage >= 0)
+            {
+                if (!this.DownloadProgressBar.Visible)
+                    this.DownloadProgressBar.Visible = true;
+
+                this.DownloadProgressBar.Value = Program.TheSelfUpdate.DownloadPercentage;
+            }
+            else
+            {
+                if (this.DownloadProgressBar.Visible)
+                    this.DownloadProgressBar.Visible = false;
+            }
+            #endregion
         }
 
         private void WarningCountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

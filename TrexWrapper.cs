@@ -52,6 +52,7 @@ namespace TrexMinerGUI
         private bool ApplyAfterburnerProfileB { get; set; }
         public Version CurrentTrexVersion { get; set; }
         private int HardRestartCount { get; set; }
+        public string HTTPUrl { get; set; }
 
         public TrexWrapper()
         {
@@ -77,6 +78,7 @@ namespace TrexMinerGUI
             ApplyAfterburnerProfileB = true;
             CurrentTrexVersion = null;
             HardRestartCount = 0;
+            HTTPUrl = "";
         }
 
         private void OutputHandler(object sender, DataReceivedEventArgs e)
@@ -137,6 +139,9 @@ namespace TrexMinerGUI
 
                     if (Info.Contains("Starting on:"))
                         TheTrexStatisctics.RestartCount++;
+
+                    if (Info.Contains("For control navigate to: "))
+                        HTTPUrl = Info.Replace("For control navigate to: ", "");
 
                     if (Info.Contains("OK"))
                     {
@@ -259,7 +264,7 @@ namespace TrexMinerGUI
                 Directory.CreateDirectory(Program.ExecutionPath + @"logs\");
             }
 
-            TrexProcess.StartInfo.Arguments = Program.TheConfig.ActiveProfile.MinerArgs;
+            TrexProcess.StartInfo.Arguments = Program.TheConfig.ActiveProfile.MinerArgs + " --api-read-only";
 
             TrexProcess.Start();
             TrexProcess.BeginOutputReadLine();
@@ -285,6 +290,7 @@ namespace TrexMinerGUI
         {
             Program.TheSelfUpdate.StopTrexUpdateTimer();
             CurrentTrexVersion = null;
+            HTTPUrl = "";
 
             IsRunning = false;
 

@@ -148,6 +148,10 @@ namespace TrexMinerGUI.Forms
                 TrexVersionLabel.Text = "";
             }
             #endregion
+
+            #region HTTPUrl
+            HTTPUrlLabel.Text = Program.TheTrexWrapper.HTTPUrl;
+            #endregion
         }
 
         private void WarningCountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -234,6 +238,15 @@ namespace TrexMinerGUI.Forms
         private void MainForm_Shown(object sender, EventArgs e)
         {
             Activate();
+        }
+
+        private void HTTPUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = Program.TheTrexWrapper.HTTPUrl,
+                UseShellExecute = true
+            });
         }
     }
 }

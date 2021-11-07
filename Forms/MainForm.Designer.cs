@@ -64,6 +64,7 @@ namespace TrexMinerGUI.Forms
             this.ErrorCountTextBox = new System.Windows.Forms.TextBox();
             this.WarnCountTextBox = new System.Windows.Forms.TextBox();
             this.TrexVersionLabel = new System.Windows.Forms.Label();
+            this.HTTPUrlLabel = new System.Windows.Forms.LinkLabel();
             this.StatisticsBox.SuspendLayout();
             this.SettingsBox.SuspendLayout();
             this.SessionGroupBox.SuspendLayout();
@@ -426,11 +427,23 @@ namespace TrexMinerGUI.Forms
             this.TrexVersionLabel.TabIndex = 25;
             this.TrexVersionLabel.Text = "TrexVersion";
             // 
+            // HTTPUrlLabel
+            // 
+            this.HTTPUrlLabel.AutoSize = true;
+            this.HTTPUrlLabel.Location = new System.Drawing.Point(388, 292);
+            this.HTTPUrlLabel.Name = "HTTPUrlLabel";
+            this.HTTPUrlLabel.Size = new System.Drawing.Size(50, 15);
+            this.HTTPUrlLabel.TabIndex = 26;
+            this.HTTPUrlLabel.TabStop = true;
+            this.HTTPUrlLabel.Text = "HTTPUrl";
+            this.HTTPUrlLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.HTTPUrlLabel_LinkClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 313);
+            this.Controls.Add(this.HTTPUrlLabel);
             this.Controls.Add(this.TrexVersionLabel);
             this.Controls.Add(this.MinerStatusLabel);
             this.Controls.Add(this.SessionGroupBox);
@@ -498,5 +511,6 @@ namespace TrexMinerGUI.Forms
         private System.Windows.Forms.Label TrexVersionLabel;
         private System.Windows.Forms.ComboBox ProfileComboBox;
         private System.Windows.Forms.Label ActiveProfileLabel;
+        private System.Windows.Forms.LinkLabel HTTPUrlLabel;
     }
 }

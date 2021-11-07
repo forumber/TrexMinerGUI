@@ -264,7 +264,10 @@ namespace TrexMinerGUI
                 Directory.CreateDirectory(Program.ExecutionPath + @"logs\");
             }
 
-            TrexProcess.StartInfo.Arguments = Program.TheConfig.ActiveProfile.MinerArgs + " --api-read-only";
+            TrexProcess.StartInfo.Arguments = Program.TheConfig.ActiveProfile.MinerArgs;
+
+            if (!TrexProcess.StartInfo.Arguments.Contains("--api-read-only"))
+                TrexProcess.StartInfo.Arguments += "--api-read-only";
 
             TrexProcess.Start();
             TrexProcess.BeginOutputReadLine();

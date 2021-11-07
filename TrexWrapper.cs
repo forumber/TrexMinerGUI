@@ -267,7 +267,7 @@ namespace TrexMinerGUI
             TrexProcess.StartInfo.Arguments = Program.TheConfig.ActiveProfile.MinerArgs;
 
             if (!TrexProcess.StartInfo.Arguments.Contains("--api-read-only"))
-                TrexProcess.StartInfo.Arguments += "--api-read-only";
+                TrexProcess.StartInfo.Arguments += " --api-read-only";
 
             TrexProcess.Start();
             TrexProcess.BeginOutputReadLine();

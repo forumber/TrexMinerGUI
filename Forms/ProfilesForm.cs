@@ -221,7 +221,7 @@ namespace TrexMinerGUI.Forms
 
             if (Result == DialogResult.Yes)
             {
-                if (!Program.TheConfig.DeleteProfile(GetCurrentProfile().Name))
+                if (!Program.TheConfig.DeleteProfile(GetCurrentProfile()))
                 {
                     MessageBox.Show("You cant delete active profile!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

@@ -82,14 +82,21 @@ namespace TrexMinerGUI
             ExternalMethods.WriteAllTextWithBackup(ConfigFilePath, TheFileContent);
         }
 
-        public bool DeleteProfile(string ProfileName)
+        public bool DeleteProfile(Profile TheProfile)
         {
-            if (ProfileName == ActiveProfileName)
+            if (TheProfile == ActiveProfile)
                 return false;
 
-            Profiles = Profiles.Where(s => s.Name != ProfileName).ToList();
-            SaveConfigToFile();
-            return true;
+            if (Profiles.Remove(TheProfile))
+            {
+                SaveConfigToFile();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         private static Profile GenerateNewProfile(String ProfileName = null)

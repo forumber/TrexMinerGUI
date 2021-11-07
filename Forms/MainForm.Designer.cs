@@ -278,9 +278,9 @@ namespace TrexMinerGUI.Forms
             // 
             // ProfilesButton
             // 
-            this.ProfilesButton.Location = new System.Drawing.Point(6, 60);
+            this.ProfilesButton.Location = new System.Drawing.Point(6, 45);
             this.ProfilesButton.Name = "ProfilesButton";
-            this.ProfilesButton.Size = new System.Drawing.Size(378, 23);
+            this.ProfilesButton.Size = new System.Drawing.Size(378, 50);
             this.ProfilesButton.TabIndex = 1;
             this.ProfilesButton.Text = "Profiles";
             this.ProfilesButton.UseVisualStyleBackColor = true;
@@ -288,9 +288,9 @@ namespace TrexMinerGUI.Forms
             // 
             // GUISettingsButton
             // 
-            this.GUISettingsButton.Location = new System.Drawing.Point(6, 89);
+            this.GUISettingsButton.Location = new System.Drawing.Point(6, 101);
             this.GUISettingsButton.Name = "GUISettingsButton";
-            this.GUISettingsButton.Size = new System.Drawing.Size(378, 23);
+            this.GUISettingsButton.Size = new System.Drawing.Size(378, 50);
             this.GUISettingsButton.TabIndex = 0;
             this.GUISettingsButton.Text = "GUI Settings";
             this.GUISettingsButton.UseVisualStyleBackColor = true;

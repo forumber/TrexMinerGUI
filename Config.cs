@@ -32,13 +32,19 @@ namespace TrexMinerGUI
                 set
                 {
                     string[] fields = value.Split(" ");
-                    if (
-                        fields[0] == "t-rex" ||
-                        (!fields.Contains("-a") && !fields.Contains("--algo")) ||
+                    if ((!fields.Contains("-a") && !fields.Contains("--algo")) ||
                         (!fields.Contains("-o") && !fields.Contains("--url"))
                     )
                     {
                         throw new ArgumentException(InvalidMinerArgsMessage);
+                    }
+
+                    for (int i = 0; i < fields.Length; i += 2)
+                    {
+                        if (!fields[i].StartsWith("-"))
+                        {
+                            throw new ArgumentException(InvalidMinerArgsMessage);
+                        }
                     }
 
                     _minerArgs = value;

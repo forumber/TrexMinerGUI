@@ -7,6 +7,8 @@ A simple Trex -miner- GUI app for single GPU users.
 
 ## Features
 - Features stopwatch that only runs if miner actually mines
+- Profile support
+- Validity check for miner arguments
 - Shows GPU statistics
 - Full automatic updates for both miner (even the miner does not notify user about update) and the application itself
 - Filter miner logs for warnings & errors
@@ -16,13 +18,11 @@ A simple Trex -miner- GUI app for single GPU users.
 - (Optional) Automatically start miner on app startup
 
 ## To-Do
-- (Feature) Validity check for miner arguments
 - (Feature) Window for creating miner arguments interactively
 - (Feature) Start/Stop the miner based on running apps
 - (Feature) Handle miner outputs for LHR cards
 - (Feature) Handle miner outputs for dual mining on LHR cards
 - (Feature) Duration reset
-- (Feature) Profile support
 - (Fix) MSI Afterburner sometimes fails to get terminated after applying profile
 - (?) Removal of administrator privilege requirement
 

@@ -155,7 +155,7 @@ namespace TrexMinerGUI
 
                 TrexUpdatingTo = "";
 
-                Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Trex update completed", "Miner has been restarted", System.Windows.Forms.ToolTipIcon.Info);
+                //Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Trex update completed", "Miner has been restarted", System.Windows.Forms.ToolTipIcon.Info);
                 Logging.WriteLog(MethodBase.GetCurrentMethod(), "done");
 
             }

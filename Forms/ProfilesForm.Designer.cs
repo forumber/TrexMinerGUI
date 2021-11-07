@@ -219,7 +219,7 @@ namespace TrexMinerGUI.Forms
             this.DeleteCurrentProfileButton.EnabledChanged += new System.EventHandler(this.DeleteCurrentProfileButton_EnabledChanged);
             this.DeleteCurrentProfileButton.Click += new System.EventHandler(this.DeleteCurrentProfileButton_Click);
             // 
-            // TrexSettingsForm
+            // ProfilesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -231,9 +231,9 @@ namespace TrexMinerGUI.Forms
             this.Controls.Add(this.SelectedProfileGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-            this.Name = "TrexSettingsForm";
+            this.Name = "ProfilesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Trex Settings";
+            this.Text = "Profiles";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TrexSettingsForm_FormClosing);
             this.SelectedProfileGroupBox.ResumeLayout(false);
             this.SelectedProfileGroupBox.PerformLayout();

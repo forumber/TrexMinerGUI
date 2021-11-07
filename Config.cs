@@ -6,121 +6,157 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
 using TrexMinerGUI.Forms;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace TrexMinerGUI
 {
     public class Config
     {
-        private readonly string InvalidMinerArgsMessage = "Invalid MinerArgs!";
-        private string _minerArgs;
-        public string MinerArgs { 
-            get
+        private static readonly string InvalidMinerArgsMessage = "Invalid MinerArgs!";
+        private static readonly string InvalidDefaultProfileNameMessage = "Invalid DefaultProfileName!";
+        private static readonly string InvalidProfileNamesMessage = "Invalid Profile Names!";
+        private string _activeProfileName;
+        private static string ConfigFilePath { get => Program.ExecutionPath + "config.json"; }
+
+        public class Profile
+        {
+            public string Name { get; set; }
+            private string _minerArgs;
+            public string MinerArgs
             {
-                return _minerArgs;
+                get
+                {
+                    return _minerArgs;
+                }
+                set
+                {
+                    string[] fields = value.Split(" ");
+                    if (
+                        fields[0] == "t-rex" ||
+                        (!fields.Contains("-a") && !fields.Contains("--algo")) ||
+                        (!fields.Contains("-o") && !fields.Contains("--url"))
+                    )
+                    {
+                        throw new ArgumentException(InvalidMinerArgsMessage);
+                    }
+
+                    _minerArgs = value;
+                }
             }
+            public bool ApplyAfterburnerProfileOnMinerStart { get; set; }
+            public bool ApplyAfterburnerProfileOnMinerClose { get; set; }
+            public string ProfileToApplyOnMinerStart { get; set; }
+            public string ProfileToApplyOnMinerClose { get; set; }
+        }
+
+        public bool StartMiningOnAppStart { get; set; }
+        public bool TryToCloseMSIAfterburnerIfItIsNotRunningAlready { get; set; }
+        public List<Profile> Profiles { get; set; }
+        [JsonIgnore]
+        public Profile ActiveProfile { get; private set; }
+        [JsonProperty]
+        public string ActiveProfileName
+        {
+            private get => _activeProfileName;
             set
             {
-                string[] fields = value.Split(" ");
-                if (
-                    fields[0] == "t-rex" ||
-                    (!fields.Contains("-a") && !fields.Contains("--algo")) ||
-                    (!fields.Contains("-o") && !fields.Contains("--url"))
-                )
-                {
-                    throw new ArgumentException(InvalidMinerArgsMessage);
-                }
-
-                _minerArgs = value;
+                ActiveProfile = Profiles.Find(x => x.Name == value);
+                if (ActiveProfile == null) throw new ArgumentException(InvalidDefaultProfileNameMessage);
+                _activeProfileName = value;
             }
         }
-        public bool StartMiningOnAppStart { get; set; }
-        public bool ApplyAfterburnerProfileOnMinerStart { get; set; }
-        public bool ApplyAfterburnerProfileOnMinerClose { get; set; }
-        public bool TryToCloseMSIAfterburnerIfItIsNotRunningAlready { get; set; }
-        public string ProfileToApplyOnMinerStart { get; set; }
-        public string ProfileToApplyOnMinerClose { get; set; }
-
-        public Config()
-        {
-            try
-            {
-                var Lines = File.ReadAllLines(Program.ExecutionPath + "trex_gui.conf");
-
-                foreach (string Line in Lines)
-                {
-                    string[] Sections = Line.Split("=");
-                    switch (Sections[0])
-                    {
-                        case "MinerArgs":
-                            MinerArgs = Sections[1];
-                            break;
-                        case "StartMiningOnAppStart":
-                            StartMiningOnAppStart = Sections[1] == "True";
-                            break;
-                        case "ApplyAfterburnerProfileOnMinerStart":
-                            ApplyAfterburnerProfileOnMinerStart = Sections[1] == "True";
-                            break;
-                        case "ApplyAfterburnerProfileOnMinerClose":
-                            ApplyAfterburnerProfileOnMinerClose = Sections[1] == "True";
-                            break;
-                        case "TryToCloseMSIAfterburnerIfItIsNotRunningAlready":
-                            TryToCloseMSIAfterburnerIfItIsNotRunningAlready = Sections[1] == "True";
-                            break;
-                        case "ProfileToApplyOnMinerStart":
-                            ProfileToApplyOnMinerStart = Sections[1];
-                            break;
-                        case "ProfileToApplyOnMinerClose":
-                            ProfileToApplyOnMinerClose = Sections[1];
-                            break;
-                    }
-                }
-
-                if (String.IsNullOrEmpty(MinerArgs) ||
-                        String.IsNullOrEmpty(ProfileToApplyOnMinerStart) ||
-                        String.IsNullOrEmpty(ProfileToApplyOnMinerClose))
-                {
-                    throw new ArgumentException();
-                }
-
-            }
-            catch (Exception TheException)
-            {
-                if (TheException.Message == InvalidMinerArgsMessage)
-                    throw TheException;
-
-                // https://github.com/trexminer/T-Rex#examples
-                MinerArgs = "-a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rigTrexTest";
-                StartMiningOnAppStart = false;
-                ApplyAfterburnerProfileOnMinerStart = false;
-                ApplyAfterburnerProfileOnMinerClose = false;
-                TryToCloseMSIAfterburnerIfItIsNotRunningAlready = true;
-                ProfileToApplyOnMinerStart = "1";
-                ProfileToApplyOnMinerClose = "1";
-
-                MessageBox.Show("The configuration has been reset! Please reconfigure your settings.", "Welcome!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                Task.Run(() =>
-                {
-                    using (var TheMainForm = new MainForm())
-                    {
-                        TheMainForm.ShowDialog();
-                    }
-                });
-            }
-        }
+        [JsonIgnore]
+        public bool IsConfigHasBeenReset { get; private set; } = false;
 
         public void SaveConfigToFile()
         {
-            string TheFileContent = string.Join(Environment.NewLine,
-                "MinerArgs=" + MinerArgs,
-                "StartMiningOnAppStart=" + StartMiningOnAppStart,
-                "ApplyAfterburnerProfileOnMinerStart=" + ApplyAfterburnerProfileOnMinerStart,
-                "ApplyAfterburnerProfileOnMinerClose=" + ApplyAfterburnerProfileOnMinerClose,
-                "TryToCloseMSIAfterburnerIfItIsNotRunningAlready=" + TryToCloseMSIAfterburnerIfItIsNotRunningAlready,
-                "ProfileToApplyOnMinerStart=" + ProfileToApplyOnMinerStart,
-                "ProfileToApplyOnMinerClose=" + ProfileToApplyOnMinerClose);
+            string TheFileContent = JsonConvert.SerializeObject(this, Formatting.Indented);
 
-            ExternalMethods.WriteAllTextWithBackup(Program.ExecutionPath + "trex_gui.conf", TheFileContent);
+            ExternalMethods.WriteAllTextWithBackup(ConfigFilePath, TheFileContent);
+        }
+
+        public bool DeleteProfile(string ProfileName)
+        {
+            if (ProfileName == ActiveProfileName)
+                return false;
+
+            Profiles = Profiles.Where(s => s.Name != ProfileName).ToList();
+            SaveConfigToFile();
+            return true;
+        }
+
+        private static Profile GenerateNewProfile(String ProfileName = null)
+        {
+            string NewProfileName = ProfileName != null ? ProfileName : "default";
+
+            return new Profile
+            {
+                // https://github.com/trexminer/T-Rex#examples
+                MinerArgs = "-a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rigTrexTest",
+                Name = NewProfileName,
+                ApplyAfterburnerProfileOnMinerClose = false,
+                ApplyAfterburnerProfileOnMinerStart = false,
+                ProfileToApplyOnMinerClose = "1",
+                ProfileToApplyOnMinerStart = "1"
+            };
+        }
+
+        public int CreateProfile()
+        {
+            string NewProfileName = "NewProfile";
+            int prefix = 1;
+
+            while (Profiles.Find(x => x.Name == NewProfileName + prefix) != null)
+            {
+                prefix++;
+            }
+
+            Profiles.Add(GenerateNewProfile(NewProfileName + prefix));
+            SaveConfigToFile();
+
+            return Profiles.Count - 1;
+        }
+
+        public static Config LoadConfigFile()
+        {
+            try
+            {
+                var JsonString = File.ReadAllText(ConfigFilePath);
+
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    CheckAdditionalContent = true,
+                    MissingMemberHandling = MissingMemberHandling.Error
+                };
+
+                var LoadedConfig = JsonConvert.DeserializeObject<Config>(JsonString, jsonSerializerSettings);
+
+                if (LoadedConfig == null)
+                    throw new FileNotFoundException();
+
+                if (LoadedConfig.Profiles.Select(s => s.Name).Distinct().Count() != LoadedConfig.Profiles.Select(s => s.Name).Count() ||
+                    LoadedConfig.ActiveProfile == null)
+                    throw new ArgumentException(InvalidProfileNamesMessage);
+
+                return LoadedConfig;
+            }
+            catch (FileNotFoundException)
+            {
+                List<Profile> NewProfileList = new List<Profile>
+                {
+                    GenerateNewProfile()
+                };
+
+                return new Config
+                {
+                    StartMiningOnAppStart = false,
+                    TryToCloseMSIAfterburnerIfItIsNotRunningAlready = true,
+                    Profiles = NewProfileList,
+                    ActiveProfileName = NewProfileList[0].Name,
+                    IsConfigHasBeenReset = true
+                };
+            }
         }
     }
 }

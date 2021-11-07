@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrexMinerGUI.Properties;
@@ -22,9 +23,26 @@ namespace TrexMinerGUI.Forms
 
             this.Icon = Resources.AppIcon;
             this.VersionLabel.Text = "v" + Program.TheSelfUpdate.TheAppVersion.ToString();
+            UpdateProfileList();
 
             this.buttonBackgroundImage = ButtonBackgroundImage.START;
             this.Select(); // make sure that none of the elemets are selected
+        }
+
+        private void UpdateProfileList()
+        {
+            this.ProfileComboBox.Items.Clear();
+            this.ProfileComboBox.Items.AddRange(Program.TheConfig.Profiles.Select(s => s.Name).ToArray());
+            this.ProfileComboBox.SelectedIndex = this.ProfileComboBox.FindString(Program.TheConfig.ActiveProfile.Name);
+        }
+
+        private void ProfileComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.ProfileComboBox.SelectedIndex == this.ProfileComboBox.FindString(Program.TheConfig.ActiveProfile.Name))
+                return;
+
+            Program.TheConfig.ActiveProfileName = ((ComboBox)sender).Text;
+            Program.TheConfig.SaveConfigToFile();
         }
 
         private void StartStopButton_Click(object sender, EventArgs e)
@@ -37,7 +55,7 @@ namespace TrexMinerGUI.Forms
 
         private void UpdateForm(object sender, EventArgs e)
         {
-            #region StartStopButton
+            #region StartStopButton_Profile
             if (Program.TheTrexWrapper.IsStarting || Program.TheSelfUpdate.IsTrexUpdating)
             {
                 this.StartStopButton.Enabled = false;
@@ -46,6 +64,9 @@ namespace TrexMinerGUI.Forms
                     this.StartStopButton.BackgroundImage = Resources.Stop_red_icon;
                     buttonBackgroundImage = ButtonBackgroundImage.STOP;
                 }
+
+                if (this.ProfileComboBox.Enabled)
+                    this.ProfileComboBox.Enabled = false;
 
             }
             else if (Program.TheTrexWrapper.IsStopping)
@@ -56,6 +77,9 @@ namespace TrexMinerGUI.Forms
                     this.StartStopButton.BackgroundImage = Resources.Start_icon;
                     buttonBackgroundImage = ButtonBackgroundImage.START;
                 }
+
+                if (this.ProfileComboBox.Enabled)
+                    this.ProfileComboBox.Enabled = false;
             }
             else if (Program.TheTrexWrapper.IsRunning)
             {
@@ -65,6 +89,9 @@ namespace TrexMinerGUI.Forms
                     this.StartStopButton.BackgroundImage = Resources.Stop_red_icon;
                     buttonBackgroundImage = ButtonBackgroundImage.STOP;
                 }
+
+                if (this.ProfileComboBox.Enabled)
+                    this.ProfileComboBox.Enabled = false;
             }
             else
             {
@@ -74,6 +101,9 @@ namespace TrexMinerGUI.Forms
                     this.StartStopButton.BackgroundImage = Resources.Start_icon;
                     buttonBackgroundImage = ButtonBackgroundImage.START;
                 }
+
+                if (!this.ProfileComboBox.Enabled)
+                    this.ProfileComboBox.Enabled = true;
             }
             #endregion
 
@@ -176,20 +206,14 @@ namespace TrexMinerGUI.Forms
             }
         }
 
-        private void TrexMinerSettingsButton_Click(object sender, EventArgs e)
+        private void ProfilesButton_Click(object sender, EventArgs e)
         {
-            using (var TheTrexMinerSettingsForm = new TrexSettingsForm())
+            using (var TheProfilesForm = new ProfilesForm())
             {
-                TheTrexMinerSettingsForm.ShowDialog();
+                TheProfilesForm.ShowDialog();
             }
-        }
 
-        private void GPUTuningSettingsButton_Click(object sender, EventArgs e)
-        {
-            using (var TheGPUTuningForm = new GPUTuningForm())
-            {
-                TheGPUTuningForm.ShowDialog();
-            }
+            UpdateProfileList();
         }
 
         private void SharesWarningLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -205,7 +229,6 @@ namespace TrexMinerGUI.Forms
                     Task.Run(() => Program.TheTrexWrapper.Restart());
                 }
             }
-            
         }
 
         private void MainForm_Shown(object sender, EventArgs e)

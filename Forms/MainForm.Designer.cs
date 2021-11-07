@@ -47,8 +47,9 @@ namespace TrexMinerGUI.Forms
             this.StartStopButton = new System.Windows.Forms.Button();
             this.TimerUpdateForm = new System.Windows.Forms.Timer(this.components);
             this.SettingsBox = new System.Windows.Forms.GroupBox();
-            this.GPUTuningSettingsButton = new System.Windows.Forms.Button();
-            this.TrexMinerSettingsButton = new System.Windows.Forms.Button();
+            this.ProfileComboBox = new System.Windows.Forms.ComboBox();
+            this.ActiveProfileLabel = new System.Windows.Forms.Label();
+            this.ProfilesButton = new System.Windows.Forms.Button();
             this.GUISettingsButton = new System.Windows.Forms.Button();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.SessionGroupBox = new System.Windows.Forms.GroupBox();
@@ -244,8 +245,9 @@ namespace TrexMinerGUI.Forms
             // 
             // SettingsBox
             // 
-            this.SettingsBox.Controls.Add(this.GPUTuningSettingsButton);
-            this.SettingsBox.Controls.Add(this.TrexMinerSettingsButton);
+            this.SettingsBox.Controls.Add(this.ProfileComboBox);
+            this.SettingsBox.Controls.Add(this.ActiveProfileLabel);
+            this.SettingsBox.Controls.Add(this.ProfilesButton);
             this.SettingsBox.Controls.Add(this.GUISettingsButton);
             this.SettingsBox.Location = new System.Drawing.Point(264, 12);
             this.SettingsBox.Name = "SettingsBox";
@@ -254,29 +256,38 @@ namespace TrexMinerGUI.Forms
             this.SettingsBox.TabStop = false;
             this.SettingsBox.Text = "Settings";
             // 
-            // GPUTuningSettingsButton
+            // ProfileComboBox
             // 
-            this.GPUTuningSettingsButton.Location = new System.Drawing.Point(8, 102);
-            this.GPUTuningSettingsButton.Name = "GPUTuningSettingsButton";
-            this.GPUTuningSettingsButton.Size = new System.Drawing.Size(378, 23);
-            this.GPUTuningSettingsButton.TabIndex = 2;
-            this.GPUTuningSettingsButton.Text = "GPU Tuning Settings";
-            this.GPUTuningSettingsButton.UseVisualStyleBackColor = true;
-            this.GPUTuningSettingsButton.Click += new System.EventHandler(this.GPUTuningSettingsButton_Click);
+            this.ProfileComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ProfileComboBox.FormattingEnabled = true;
+            this.ProfileComboBox.Location = new System.Drawing.Point(92, 16);
+            this.ProfileComboBox.Name = "ProfileComboBox";
+            this.ProfileComboBox.Size = new System.Drawing.Size(292, 23);
+            this.ProfileComboBox.TabIndex = 4;
+            this.ProfileComboBox.SelectedIndexChanged += new System.EventHandler(this.ProfileComboBox_SelectedIndexChanged);
             // 
-            // TrexMinerSettingsButton
+            // ActiveProfileLabel
             // 
-            this.TrexMinerSettingsButton.Location = new System.Drawing.Point(8, 73);
-            this.TrexMinerSettingsButton.Name = "TrexMinerSettingsButton";
-            this.TrexMinerSettingsButton.Size = new System.Drawing.Size(378, 23);
-            this.TrexMinerSettingsButton.TabIndex = 1;
-            this.TrexMinerSettingsButton.Text = "Trex Miner Settings";
-            this.TrexMinerSettingsButton.UseVisualStyleBackColor = true;
-            this.TrexMinerSettingsButton.Click += new System.EventHandler(this.TrexMinerSettingsButton_Click);
+            this.ActiveProfileLabel.AutoSize = true;
+            this.ActiveProfileLabel.Location = new System.Drawing.Point(6, 19);
+            this.ActiveProfileLabel.Name = "ActiveProfileLabel";
+            this.ActiveProfileLabel.Size = new System.Drawing.Size(80, 15);
+            this.ActiveProfileLabel.TabIndex = 3;
+            this.ActiveProfileLabel.Text = "Active Profile:";
+            // 
+            // ProfilesButton
+            // 
+            this.ProfilesButton.Location = new System.Drawing.Point(6, 60);
+            this.ProfilesButton.Name = "ProfilesButton";
+            this.ProfilesButton.Size = new System.Drawing.Size(378, 23);
+            this.ProfilesButton.TabIndex = 1;
+            this.ProfilesButton.Text = "Profiles";
+            this.ProfilesButton.UseVisualStyleBackColor = true;
+            this.ProfilesButton.Click += new System.EventHandler(this.ProfilesButton_Click);
             // 
             // GUISettingsButton
             // 
-            this.GUISettingsButton.Location = new System.Drawing.Point(8, 44);
+            this.GUISettingsButton.Location = new System.Drawing.Point(6, 89);
             this.GUISettingsButton.Name = "GUISettingsButton";
             this.GUISettingsButton.Size = new System.Drawing.Size(378, 23);
             this.GUISettingsButton.TabIndex = 0;
@@ -439,6 +450,7 @@ namespace TrexMinerGUI.Forms
             this.StatisticsBox.ResumeLayout(false);
             this.StatisticsBox.PerformLayout();
             this.SettingsBox.ResumeLayout(false);
+            this.SettingsBox.PerformLayout();
             this.SessionGroupBox.ResumeLayout(false);
             this.SessionGroupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -480,10 +492,11 @@ namespace TrexMinerGUI.Forms
         private System.Windows.Forms.TextBox SharesTextBox;
         private System.Windows.Forms.Label SharesLabel;
         private System.Windows.Forms.Button InformationLogButton;
-        private System.Windows.Forms.Button GPUTuningSettingsButton;
-        private System.Windows.Forms.Button TrexMinerSettingsButton;
+        private System.Windows.Forms.Button ProfilesButton;
         private System.Windows.Forms.Button GUISettingsButton;
         private System.Windows.Forms.LinkLabel SharesWarningLinkLabel;
         private System.Windows.Forms.Label TrexVersionLabel;
+        private System.Windows.Forms.ComboBox ProfileComboBox;
+        private System.Windows.Forms.Label ActiveProfileLabel;
     }
 }

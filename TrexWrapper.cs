@@ -259,7 +259,7 @@ namespace TrexMinerGUI
                 Directory.CreateDirectory(Program.ExecutionPath + @"logs\");
             }
 
-            TrexProcess.StartInfo.Arguments = Program.TheConfig.MinerArgs;
+            TrexProcess.StartInfo.Arguments = Program.TheConfig.ActiveProfile.MinerArgs;
 
             TrexProcess.Start();
             TrexProcess.BeginOutputReadLine();
@@ -267,8 +267,8 @@ namespace TrexMinerGUI
 
             IsRunning = true;
 
-            if (ApplyAfterburnerProfileB && Program.TheConfig.ApplyAfterburnerProfileOnMinerStart)
-                ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerStart));
+            if (ApplyAfterburnerProfileB && Program.TheConfig.ActiveProfile.ApplyAfterburnerProfileOnMinerStart)
+                ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ActiveProfile.ProfileToApplyOnMinerStart));
 
             IsStarting = false;
 
@@ -298,8 +298,8 @@ namespace TrexMinerGUI
             {
                 IsTerminatedByGUI = false;
 
-                if (ApplyAfterburnerProfileB && Program.TheConfig.ApplyAfterburnerProfileOnMinerClose)
-                    ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ProfileToApplyOnMinerClose));
+                if (ApplyAfterburnerProfileB && Program.TheConfig.ActiveProfile.ApplyAfterburnerProfileOnMinerClose)
+                    ExternalMethods.ApplyAfterburnerProfile(int.Parse(Program.TheConfig.ActiveProfile.ProfileToApplyOnMinerClose));
 
                 IsStopping = false;
             }

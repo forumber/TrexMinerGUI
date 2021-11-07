@@ -39,7 +39,7 @@ namespace TrexMinerGUI
             trayIcon.DoubleClick += ShowMainForm;
         }
 
-        private void ShowMainForm(object sender, EventArgs e)
+        public void ShowMainForm(object sender, EventArgs e)
         {
             if (Application.OpenForms.OfType<MainForm>().Count() == 0)
             {

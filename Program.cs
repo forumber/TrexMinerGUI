@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -11,6 +12,8 @@ namespace TrexMinerGUI
 {
     static class Program
     {
+        private static EventHandler IdleEventHandler;
+
         public static MainAppContext TheMainAppContext;
         public static StopWatchWrapper TheStopWatchWrapper;
         public static TrexWrapper TheTrexWrapper;
@@ -19,10 +22,13 @@ namespace TrexMinerGUI
         public static string ExecutionPath;
         public static string ExceptionLogFileName;
         public static Mutex TheMutex;
+        public static bool ApplicationStarted;
 
         [STAThread]
         public static void Main(string[] args)
         {
+            ApplicationStarted = false;
+
             ExecutionPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\";
             ExceptionLogFileName = "trex_gui_exception_log.txt";
 
@@ -58,7 +64,8 @@ namespace TrexMinerGUI
                 }
             }
 
-            TheConfig = new Config();
+            TheConfig = Config.LoadConfigFile();
+            //TheConfig.SaveConfigToFile();
             TheSelfUpdate = new SelfUpdate();
             TheMainAppContext = new MainAppContext();
             TheStopWatchWrapper = new StopWatchWrapper();
@@ -71,8 +78,48 @@ namespace TrexMinerGUI
 
             TheSelfUpdate.CleanUp();
 
+            IdleEventHandler = new EventHandler((sender, eventArgs) =>
+            {
+                ApplicationStarted = true;
+
+                Application.Idle -= IdleEventHandler;
+
+                if (Program.TheConfig.IsConfigHasBeenReset)
+                {
+                    MessageBox.Show("The configuration has been reset! Please reconfigure your settings.", "Welcome!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Program.TheMainAppContext.ShowMainForm(sender, eventArgs);
+                }
+
+                IdleEventHandler = null;
+            });
+
+            Application.Idle += IdleEventHandler;
 
             Application.Run(TheMainAppContext);
+        }
+
+        private static void ShowExceptionMessage(Exception TheException)
+        {
+            if (TheException.InnerException != null)
+                ShowExceptionMessage(TheException.InnerException);
+
+            try
+            {
+                MessageBox.Show(TheException.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception GUIException)
+            {
+                try
+                {
+                    MessageBox.Show("Fatal exception: \n\n"
+                        + GUIException.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    Application.Exit();
+                }
+            }
         }
 
         private static void UIThreadUnhandledExceptionMessageBox(object sender, ThreadExceptionEventArgs e)
@@ -80,24 +127,8 @@ namespace TrexMinerGUI
             File.AppendAllText(ExecutionPath + ExceptionLogFileName,
                 Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + e.Exception.ToString() + Environment.NewLine);
 
-            try
-            {
-                MessageBox.Show(e.Exception.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch
-            {
-                try
-                {
-                    MessageBox.Show("Fatal exception happend inside UIThreadException handler",
-                        "Fatal Windows Forms Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    Application.Exit();
-                }
-            }
+            ShowExceptionMessage(e.Exception);
 
-            // Here we can decide if we want to end our application or do something else
             Application.Exit();
         }
 
@@ -106,23 +137,9 @@ namespace TrexMinerGUI
             File.AppendAllText(ExecutionPath + ExceptionLogFileName,
                 Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + ((Exception)e.ExceptionObject).ToString() + Environment.NewLine);
 
-            try
-            {
-                Exception ex = (Exception)e.ExceptionObject;
-                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception exc)
-            {
-                try
-                {
-                    MessageBox.Show("Fatal exception happend inside UnhadledExceptionHandler: \n\n"
-                        + exc.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    Application.Exit();
-                }
-            }
+            ShowExceptionMessage((Exception)e.ExceptionObject);
+
+            Application.Exit();
         }
 
         private static void OnApplicationExit(object sender, EventArgs e)

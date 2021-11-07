@@ -28,6 +28,7 @@ namespace TrexMinerGUI.Forms
         {
             this.StartOnStartupCheckBox.Checked = TaskSchedulerOperations.IsItInTS();
             this.StartMiningOnAppStartCheckBox.Checked = Program.TheConfig.StartMiningOnAppStart;
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.Checked = Program.TheConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready;
         }
 
         private void StartOnStartupCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -51,6 +52,15 @@ namespace TrexMinerGUI.Forms
                 return;
 
             Program.TheConfig.StartMiningOnAppStart = ((CheckBox)sender).Checked;
+            Program.TheConfig.SaveConfigToFile();
+        }
+
+        private void TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!IsInitialized)
+                return;
+
+            Program.TheConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready = ((CheckBox)sender).Checked;
             Program.TheConfig.SaveConfigToFile();
         }
     }

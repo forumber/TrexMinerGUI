@@ -31,6 +31,7 @@ namespace TrexMinerGUI.Forms
         {
             this.StartMiningOnAppStartCheckBox = new System.Windows.Forms.CheckBox();
             this.StartOnStartupCheckBox = new System.Windows.Forms.CheckBox();
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // StartMiningOnAppStartCheckBox
@@ -55,11 +56,23 @@ namespace TrexMinerGUI.Forms
             this.StartOnStartupCheckBox.UseVisualStyleBackColor = true;
             this.StartOnStartupCheckBox.CheckedChanged += new System.EventHandler(this.StartOnStartupCheckBox_CheckedChanged);
             // 
+            // TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox
+            // 
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.Location = new System.Drawing.Point(12, 62);
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.Name = "TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox";
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.Size = new System.Drawing.Size(226, 52);
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.TabIndex = 20;
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.Text = "If the MSI Afterburner is not already running before applying profile, try to clo" +
+    "se it after applying profile";
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.UseVisualStyleBackColor = true;
+            this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox.CheckedChanged += new System.EventHandler(this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox_CheckedChanged);
+            // 
             // GUISettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(250, 69);
+            this.ClientSize = new System.Drawing.Size(250, 126);
+            this.Controls.Add(this.TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox);
             this.Controls.Add(this.StartMiningOnAppStartCheckBox);
             this.Controls.Add(this.StartOnStartupCheckBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -76,5 +89,6 @@ namespace TrexMinerGUI.Forms
 
         private System.Windows.Forms.CheckBox StartMiningOnAppStartCheckBox;
         private System.Windows.Forms.CheckBox StartOnStartupCheckBox;
+        private System.Windows.Forms.CheckBox TryToCloseMSIAfterburnerIfItIsNotRunningAlreadyCheckBox;
     }
 }

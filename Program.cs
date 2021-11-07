@@ -65,7 +65,6 @@ namespace TrexMinerGUI
             }
 
             TheConfig = Config.LoadConfigFile();
-            //TheConfig.SaveConfigToFile();
             TheSelfUpdate = new SelfUpdate();
             TheMainAppContext = new MainAppContext();
             TheStopWatchWrapper = new StopWatchWrapper();

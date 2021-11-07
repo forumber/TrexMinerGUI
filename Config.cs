@@ -128,6 +128,64 @@ namespace TrexMinerGUI
         {
             try
             {
+                if (File.Exists(Program.ExecutionPath + "trex_gui.conf"))
+                {
+                    Config newConfig = new Config
+                    {
+                        Profiles = new List<Profile>
+                        {
+                            GenerateNewProfile()
+                        }
+                    };
+
+                    newConfig.ActiveProfileName = newConfig.Profiles[0].Name;
+
+                    var Lines = File.ReadAllLines(Program.ExecutionPath + "trex_gui.conf");
+
+                    foreach (string Line in Lines)
+                    {
+                        string[] Sections = Line.Split("=");
+                        switch (Sections[0])
+                        {
+                            case "MinerArgs":
+                                newConfig.Profiles[0].MinerArgs = Sections[1];
+                                break;
+                            case "StartMiningOnAppStart":
+                                newConfig.StartMiningOnAppStart = Sections[1] == "True";
+                                break;
+                            case "ApplyAfterburnerProfileOnMinerStart":
+                                newConfig.Profiles[0].ApplyAfterburnerProfileOnMinerStart = Sections[1] == "True";
+                                break;
+                            case "ApplyAfterburnerProfileOnMinerClose":
+                                newConfig.Profiles[0].ApplyAfterburnerProfileOnMinerClose = Sections[1] == "True";
+                                break;
+                            case "TryToCloseMSIAfterburnerIfItIsNotRunningAlready":
+                                newConfig.TryToCloseMSIAfterburnerIfItIsNotRunningAlready = Sections[1] == "True";
+                                break;
+                            case "ProfileToApplyOnMinerStart":
+                                newConfig.Profiles[0].ProfileToApplyOnMinerStart = Sections[1];
+                                break;
+                            case "ProfileToApplyOnMinerClose":
+                                newConfig.Profiles[0].ProfileToApplyOnMinerClose = Sections[1];
+                                break;
+                        }
+                    }
+
+                    if (String.IsNullOrEmpty(newConfig.Profiles[0].MinerArgs) ||
+                            String.IsNullOrEmpty(newConfig.Profiles[0].ProfileToApplyOnMinerStart) ||
+                            String.IsNullOrEmpty(newConfig.Profiles[0].ProfileToApplyOnMinerClose))
+                    {
+                        throw new ArgumentException();
+                    }
+
+                    newConfig.SaveConfigToFile();
+
+                    File.Delete(Program.ExecutionPath + "trex_gui.conf");
+                    File.Delete(Program.ExecutionPath + "trex_gui.conf.backup");
+
+                    return newConfig;
+                }
+
                 var JsonString = File.ReadAllText(ConfigFilePath);
 
                 var jsonSerializerSettings = new JsonSerializerSettings

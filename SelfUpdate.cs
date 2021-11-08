@@ -176,11 +176,9 @@ namespace TrexMinerGUI
             DownloadAndExtractZip(JsonContents.latestVersionURL);
 
             UpdateScript = new ProcessStartInfo();
-            UpdateScript.Arguments = "/C timeout /t 5 /nobreak && xcopy \"" +
-                Program.ExecutionPath + UpdateFolderName + @"\" +
-                "\" \"" + Program.ExecutionPath +
-                "\" /E /H /Y && start \"\" \"" +
-                Program.ExecutionPath + "TrexMinerGUI.exe\"";
+            UpdateScript.Arguments = String.Format("/C timeout /t 5 /nobreak && xcopy \"{0}\\\" \"{1}\" /E /H /Y && start \"\" \"{2}TrexMinerGUI.exe\"",
+                Program.ExecutionPath + UpdateFolderName,
+                Program.ExecutionPath, Program.ExecutionPath);
             UpdateScript.WindowStyle = ProcessWindowStyle.Hidden;
             UpdateScript.CreateNoWindow = true;
             UpdateScript.FileName = "cmd.exe";

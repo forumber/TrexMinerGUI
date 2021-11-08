@@ -171,6 +171,8 @@ namespace TrexMinerGUI
         {
             Program.TheMainAppContext.trayIcon.ShowBalloonTip(0, "Updating TrexMinerGUI...", "to version " + JsonContents.latestVersion, System.Windows.Forms.ToolTipIcon.Info);
 
+            Task.Delay(2000).Wait();
+
             DownloadAndExtractZip(JsonContents.latestVersionURL);
 
             UpdateScript = new ProcessStartInfo();

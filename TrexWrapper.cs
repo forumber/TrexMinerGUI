@@ -22,11 +22,11 @@ namespace TrexMinerGUI
 
             public TrexStatisctics()
             {
-                Speed = "0";
-                FanSpeed = "0";
-                Power = "0";
-                Efficiency = "0";
-                Temp = "0";
+                Speed = "-";
+                FanSpeed = "-";
+                Power = "-";
+                Efficiency = "-";
+                Temp = "-";
                 Shares = @"0/0";
                 LastUpdated = DateTime.Now;
                 RestartCount = -1;
@@ -109,12 +109,9 @@ namespace TrexMinerGUI
 
                     try
                     {
-                        var Statistics = e.Data.Split(" - ")[1].Split(",");
-                        TheTrexStatisctics.Speed = Statistics[0];
-                        TheTrexStatisctics.Temp = Statistics[1].Substring(4);
-                        TheTrexStatisctics.Power = Statistics[2].Substring(3);
-                        TheTrexStatisctics.FanSpeed = Statistics[3].Substring(3);
-                        TheTrexStatisctics.Efficiency = Statistics[4].Substring(3).Replace(']', ' ');
+                        var Statistics = e.Data.Split(" - ")[1].Split(", ");
+
+                        TheTrexStatisctics.Speed = Statistics.FirstOrDefault();
 
                         // If we can get this far on that code, that means the miner is running. Start the stopwatch if it has not been fired already.
                         if (!Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
@@ -122,11 +119,27 @@ namespace TrexMinerGUI
                             Program.TheStopWatchWrapper.TheStopWatch.Start();
                         }
 
-                        TheTrexStatisctics.Shares = Statistics[5].Split(" ")[1];
-                    }
-                    catch
-                    {
+                        foreach (var TheStatistic in Statistics)
+                        {
+                            var TrimmedStat = TheStatistic.Replace("[", "").Replace("]", "").Split(":");
 
+                            if (TrimmedStat[0] == "T")
+                                TheTrexStatisctics.Temp = TrimmedStat[1];
+                            else if (TrimmedStat[0] == "P")
+                                TheTrexStatisctics.Power = TrimmedStat[1];
+                            else if (TrimmedStat[0] == "F")
+                                TheTrexStatisctics.FanSpeed = TrimmedStat[1];
+                            else if (TrimmedStat[0] == "E")
+                                TheTrexStatisctics.Efficiency = TrimmedStat[1];
+                        }
+
+                        if (char.IsDigit(Statistics.LastOrDefault()[0]))
+                            TheTrexStatisctics.Shares = Statistics.LastOrDefault();
+                    }
+                    catch (Exception TheException)
+                    {
+                        if (!(TheException is ArgumentOutOfRangeException))
+                            File.AppendAllText(Program.ExecutionPath + Program.ExceptionLogFileName, Environment.NewLine + DateTime.Now.ToString() + Environment.NewLine + TheException.ToString() + Environment.NewLine);
                     }
                 }
                 else

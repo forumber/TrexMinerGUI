@@ -165,6 +165,9 @@ namespace TrexMinerGUI
                     {
                         if (Program.TheStopWatchWrapper.TheStopWatch.IsRunning)
                             Program.TheStopWatchWrapper.TheStopWatch.Stop();
+
+                        if (Program.TheConfig.TheEmailSetting.SendMail)
+                            SendEmail(e.Data);
                     }
                     else if (Info.StartsWith("T-Rex NVIDIA GPU miner v"))
                     {
@@ -428,6 +431,24 @@ namespace TrexMinerGUI
             ApplyAfterburnerProfileB = false;
             Stop();
             Start();
+        }
+
+        private void SendEmail(string Message)
+        {
+            try
+            {
+                using (var smtpClient = new System.Net.Mail.SmtpClient(host: Program.TheConfig.TheEmailSetting.Host, port: Program.TheConfig.TheEmailSetting.Port))
+                {
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.Credentials = new System.Net.NetworkCredential(Program.TheConfig.TheEmailSetting.UserName, Program.TheConfig.TheEmailSetting.Password);
+                    smtpClient.EnableSsl = true;
+
+                    smtpClient.Send(from: Program.TheConfig.TheEmailSetting.SendFrom,
+                        recipients: Program.TheConfig.TheEmailSetting.SendTo,
+                        subject: Program.TheConfig.TheEmailSetting.Subject,
+                        body: Message);
+                }
+            } catch { }
         }
     }
 }

@@ -50,6 +50,18 @@ namespace TrexMinerGUI
             public string ProfileToApplyOnMinerClose { get; set; }
         }
 
+        public class EmailSetting
+        {
+            public bool SendMail { get; set; } = false;
+            public string Host { get; set; } = "smtp.gmail.com";
+            public int Port { get; set; } = 587;
+            public string UserName { get; set; }
+            public string Password { get; set; }
+            public string SendFrom { get; set; }
+            public string SendTo { get; set; }
+            public string Subject { get; set; } = "TrexMinerGUI: Error";
+        }
+
         public bool StartMiningOnAppStart { get; set; }
         public bool TryToCloseMSIAfterburnerIfItIsNotRunningAlready { get; set; }
         public List<Profile> Profiles { get; set; }
@@ -68,6 +80,7 @@ namespace TrexMinerGUI
         }
         [JsonIgnore]
         public bool IsConfigHasBeenReset { get; private set; } = false;
+        public EmailSetting TheEmailSetting { get; set; }
 
         public void SaveConfigToFile()
         {
@@ -192,7 +205,7 @@ namespace TrexMinerGUI
                 var jsonSerializerSettings = new JsonSerializerSettings
                 {
                     CheckAdditionalContent = true,
-                    MissingMemberHandling = MissingMemberHandling.Error
+                    MissingMemberHandling = MissingMemberHandling.Ignore
                 };
 
                 var LoadedConfig = JsonConvert.DeserializeObject<Config>(JsonString, jsonSerializerSettings);
@@ -203,6 +216,9 @@ namespace TrexMinerGUI
                 if (LoadedConfig.Profiles.Select(s => s.Name).Distinct().Count() != LoadedConfig.Profiles.Select(s => s.Name).Count() ||
                     LoadedConfig.ActiveProfile == null)
                     throw new ArgumentException(InvalidProfileNamesMessage);
+
+                if (LoadedConfig.TheEmailSetting == null)
+                    LoadedConfig.TheEmailSetting = new EmailSetting();
 
                 return LoadedConfig;
             }
@@ -219,7 +235,8 @@ namespace TrexMinerGUI
                     TryToCloseMSIAfterburnerIfItIsNotRunningAlready = true,
                     Profiles = NewProfileList,
                     ActiveProfileName = NewProfileList[0].Name,
-                    IsConfigHasBeenReset = true
+                    IsConfigHasBeenReset = true,
+                    TheEmailSetting = new EmailSetting()
                 };
             }
         }

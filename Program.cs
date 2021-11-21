@@ -98,7 +98,7 @@ namespace TrexMinerGUI
             Application.Run(TheMainAppContext);
         }
 
-        private static void ShowExceptionMessage(Exception TheException)
+        public static void ShowExceptionMessage(Exception TheException)
         {
             if (TheException.InnerException != null)
                 ShowExceptionMessage(TheException.InnerException);

@@ -213,7 +213,7 @@ namespace TrexMinerGUI.Forms
             this.DeleteCurrentProfileButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.DeleteCurrentProfileButton.Location = new System.Drawing.Point(351, 6);
             this.DeleteCurrentProfileButton.Name = "DeleteCurrentProfileButton";
-            this.DeleteCurrentProfileButton.Size = new System.Drawing.Size(39, 33);
+            this.DeleteCurrentProfileButton.Size = new System.Drawing.Size(36, 33);
             this.DeleteCurrentProfileButton.TabIndex = 25;
             this.DeleteCurrentProfileButton.UseVisualStyleBackColor = true;
             this.DeleteCurrentProfileButton.EnabledChanged += new System.EventHandler(this.DeleteCurrentProfileButton_EnabledChanged);

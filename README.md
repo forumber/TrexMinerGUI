@@ -13,6 +13,7 @@ A simple Trex -miner- GUI app for single GPU users.
 - Full automatic updates for both miner (even the miner does not notify user about update) and the application itself
 - Filter miner logs for warnings & errors
 - Warning indicator on GUI if the miner has been restarted (ex. because of a GPU crash)
+- (Optional) Send email when error occurs
 - (Optional) Apply selected MSI Afterburner profile on miner startup/termination
 - (Optional) Opens at Windows startup
 - (Optional) Automatically start miner on app startup

@@ -48,6 +48,16 @@ namespace TrexMinerGUI
                     TheMainForm.ShowDialog();
                 }
             }
+            else
+            {
+                var TheMainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+                if (TheMainForm.WindowState == FormWindowState.Minimized)
+                {
+                    TheMainForm.WindowState = FormWindowState.Normal;
+                }
+
+                TheMainForm.Activate();
+            }
         }
 
         private void UpdateStatistics(bool SwitchToEnable)
